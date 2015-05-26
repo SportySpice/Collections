@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.collections" name="YoutTube Collections" version="1.0.0" provider-name="SportySpice">
+    <requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.youtube.dl" version="15.318.0"/>		
+        <import addon="script.module.googleapi" version="1.4.0"/>
+        <import addon="script.module.oauth2client" version="1.4.7"/>              	
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Access multiple YouTube channels &amp; playlists in one place!</summary>
+		<description lang="en">Access multiple YouTube channels &amp; playlists in one place!</description>
+		<license>GNU General Public License, v2</license>
+		<language></language>
+		<forum>http://forum.kodi.tv/showthread.php?tid=227806</forum>
+		<source>https://github.com/SportySpice/Collections</source>
+		<email>sportyspice@outlook.com</email>
+	</extension>
+</addon>

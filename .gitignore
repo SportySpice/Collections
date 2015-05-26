@@ -99,3 +99,16 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+
+
+
+
+
+#Eclipse project files
+*.project
+*.pydevproject
+
+#Compiled python files
+*.pyo

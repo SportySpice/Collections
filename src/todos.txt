@@ -1,0 +1,25 @@
+* http 500 error
+
+
+
+FUTURE PLANS & FEATRUES:
+* More sorting methods (currently always by newest)
+* Options to prevent consecutive videos from the same source (maxRepeat and push)
+* Custom titles for each source
+* Custom video title formats
+* Add a default collection to my collections via context menu, or in browse mode
+* Video quality selection (currently always 720p)
+* Recognize difference between username and channel id automatically
+* Thumbnails, icons and fanart quality selection (currently always highest)
+* Collection Store: download collections created by others and share your own collections with the world
+* Add specific videos to a collection
+* Enable/Disable video fanart (currently disabled)
+* Playlist videos fanart from channel instead of playlist
+* Presentation improvements (addon icon, addon fanart, text styles, etc) 
+* Collection creation within the addon using search/browse/subscriptions
+* Collection creation from other sources (onlines services, kodi plugins, files&playlists) + change addon name to Collections
+* Super/Sub Collections: create a collection of collections
+* Individual unwatched: set unwatched for specific sources instead of entire collection (needed?)
+* Performance improvements by imporoving caching functions (video info, source info, video lists, etc)
+* Performance imrpovements by removing 3rd party libraries and using only needed code
+* Nag Kodi devs to add DASH support so we can all enjoy 1080p/4k/60fps streams

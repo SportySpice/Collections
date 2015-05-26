@@ -1,0 +1,5 @@
+<settings>
+	<setting label="Home Page" id="homepage" type="labelenum" values="Home|Default Collections|My Collections" />
+	<setting label="When Clicking Collection" id="collection_behaviour" type="labelenum" values="Browse Into|Play All" />	
+	<setting label="When Clicking Video" id="video_behaviour" type="labelenum" values="Play & Queue Rest|Play Video Only" />	
+</settings>
