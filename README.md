@@ -1,7 +1,5 @@
-####Introduction
-Welcome to the YouTube Collections wiki!
-
-This [Kodi](http://kodi.tv/) add-on mimics the now discontinued Collections feature in [YouTube](https://www.youtube.com/), while taking it a few steps further. A collection uses multiple YouTube channels/playlists in order to create one single mixed video list. Currently this list will always be sorted by the newest video (which is what you'd usually want). In the future though, more sorting options will be added. You can use any of the predefined collections or easily create your own collections as explained in the wiki.
+####YouTube Collections
+YouTube Collections is a  [Kodi](http://kodi.tv/) add-on which mimics the now discontinued Collections feature in [YouTube](https://www.youtube.com/), while taking it a few steps further. A collection uses multiple YouTube channels/playlists in order to create one single mixed video list. Currently this list will always be sorted by the newest video (which is what you'd usually want). In the future though, more sorting options will be added. You can use any of the predefined collections or easily create your own collections as explained in the wiki.
 
 
 ####Links
