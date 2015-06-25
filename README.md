@@ -1,5 +1,7 @@
-####YouTube Collections
-YouTube Collections is a  [Kodi](http://kodi.tv/) add-on which mimics the now discontinued Collections feature in [YouTube](https://www.youtube.com/), while taking it a few steps further. A collection uses multiple YouTube channels/playlists in order to create one single mixed video list. Currently this list will always be sorted by the newest video (which is what you'd usually want). In the future though, more sorting options will be added. You can use any of the predefined collections or easily create your own collections as explained in the wiki.
+####CollectionTV
+CollectionTV is a  [Kodi](http://kodi.tv/) add-on which mimics the now discontinued Collections feature in [YouTube](https://www.youtube.com/), while taking it a few steps further. A collection uses multiple sources in order to create one single feed, or in other words, a combined video list. Sources can be YouTube Channels/Playlists, and as of version 2.0, ANY folder inside. Whether it's a local folder, or a folder inside another add-on, it can be added as a source to your collection.
+
+You can use any of the predefined collections or easily create your own collections as explained in the wiki.
 
 
 ####Links
