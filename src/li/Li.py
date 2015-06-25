@@ -3,7 +3,7 @@ import xbmcgui
 #abstract
 class Li(object):
     def __init__(self, title, icon, thumb, url, isFolder, isPlayalbe, 
-                 videoInfoLabels, generalInfoLabels):    
+                 videoInfoLabels, generalInfoLabels, contextMenus=None):    
               
         li = xbmcgui.ListItem (title, iconImage=icon, thumbnailImage=thumb)
         
@@ -21,3 +21,13 @@ class Li(object):
         self.li = li
         self.di = (url, li, isFolder)
         self.url = url
+        
+        
+        if contextMenus:
+            li.addContextMenuItems(contextMenus)
+            
+            
+            
+            
+def runPluginCm(label, url):
+    return ('%s' %label, 'RunPlugin(%s)' %url)

@@ -1,0 +1,25 @@
+* http 500 error
+* different colors/text settings for queued playlists
+* items per page('pagesize' or 'pageitems") instead of climit. Also add options: 'play and queue page" 'play and queue entire collection'
+* for sources: instead of just limit. limit and limit per page
+* batch resolve + cache videos?
+* problem with playcount and lastwatched. do i also store this info for direct plugin videos? do i put this info 
+  inside the video class or keep it seperate? need to think of this
+* add cool sound when successfully added a source to a collection. (can do either when dialog pops up, or when user presses ok. or both)
+* kodi folder titles. currently all 3 use the user defined title. maybe "studioTitle" for example should be the plugin's title
+* auto set view
+* Custom video title formats
+* Add a default collection to my collections via context menu, or in browse mode
+* Add specific videos to a collection (all will go under a special "source" folder called "individual media' or "individual items" or something
+* Enable/Disable video fanart (currently disabled)
+* Playlist videos fanart from channel instead of playlist
+* Presentation improvements (addon icon, addon fanart, text styles, etc) 
+* Individual unwatched: set unwatched for specific sources instead of entire collection (needed?)
+* maybe change to browsing dialog in add to collection to a select dialog
+* currently all api calls are made via oauth(if user signed in). check if this is really needed or
+  is it better to just use public key for most requests
+* Super/Sub Collections: create a collection of collections
+* cache service for better performance?
+* Performance improvements by imporoving caching functions (video info, source info, video lists, etc)
+* Performance imrpovements by removing 3rd party libraries and using only needed code
+* Nag Kodi devs to add DASH support so we can all enjoy 1080p/4k/60fps streams

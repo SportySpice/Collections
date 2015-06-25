@@ -1,66 +1,61 @@
+import DataDictionary as dd
 from src.file import File
 from datetime import datetime
 
-WATCHED_DIC_FILE           = 'special://profile/addon_data/plugin.video.collections/watched.dic'
 
 
-dicFile = File.fromFullpath(WATCHED_DIC_FILE)    
-
-if dicFile.exists():
-    watchedDic = dicFile.loadObject()    
-else:
-    watchedDic = {}
+class WatchedDic(dd.DataDictionary):
+    def __init__(self, dicFile):
+        super(WatchedDic, self).__init__(dicFile)
     
 
 
-
-
-def videoPlayed(videoId):
-    global dicFile
-    global watchedDic
-    
-    if videoId in watchedDic:        
-        watchedDic[videoId]['plays'] += 1
-    else:
-        watchedDic[videoId] = {}
-        watchedDic[videoId]['plays'] = 1
-        
-    watchedDic[videoId]['lastplayed'] =  datetime.now()
-    
-        
-    dicFile.dumpObject(watchedDic)
+    def watched(self, videoId):
+        return self.has(videoId)
 
 
 
-def watched(videoId):
-    if videoId in watchedDic:
-        return True
-    
-    return False    
-
-
-
-def playCount(videoId):
-    if videoId in watchedDic:
-        return watchedDic[videoId]['plays']
-
-    return 0
-    
-    
-    
-    
-
-def info(videoId):
-    if videoId in watchedDic:
-        item = watchedDic[videoId]
-        
+    def info(self, videoId):
+        if not self.watched(videoId):
+            return 0, None
+                
+        item = self.get(videoId)                
         playCount = item['plays']
-        lastPlayed = item['lastplayed']
+        lastPlayed = item['lastPlayed']
         
         return playCount, lastPlayed
-    
-    
-    return 0, None
+        
+        
+    def playCount(self, videoId):
+        return self.info(videoId)[0]
 
 
- 
+
+
+    
+    def videoPlayed(self, videoId):        
+        if self.watched(videoId):
+            item = self.get(videoId) 
+            item['plays'] += 1
+            
+        else:
+            item = {}
+            item['plays'] = 1
+            
+        item['lastPlayed'] = datetime.now()
+        
+        self.set(videoId, item)
+
+
+
+  
+
+def load(fileName, fileDir):
+    fullpath = fileDir + '/' + fileName
+    
+    watchedDic = dd._loadFromMemory(fullpath)
+    if watchedDic:
+        return watchedDic
+    
+    dicFile = File.fromFullpath(fullpath)
+    return WatchedDic(dicFile)

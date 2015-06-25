@@ -1,12 +1,11 @@
-import xbmcaddon
+from src.collection import Collection
 from src.li.ItemList import ItemList
 from visual.browse_folder import foldersVisual, collectionsVisual, viewStyle
 
 
 
 
-
-def explore(folder):
+def browse(folder):
     items = ItemList()    
     files, subfolders = folder.listFolder()
     
@@ -15,16 +14,10 @@ def explore(folder):
         if subfolder.name != "_images":
             items.addFolder(subfolder, foldersVisual)
             
-        
-      
-        
-    if xbmcaddon.Addon().getSetting('collection_behaviour') == 'Play All':
-        shouldPlay = True
-    else:                                                                   #will happen even if nothing is set, aka it's the defualt
-        shouldPlay = False
 
     for collectionFile in files:
-        items.addCollection(collectionFile, collectionsVisual, shouldPlay)
+        collection = Collection.fromFile(collectionFile, loadSources=False)
+        items.addCollection(collection, collectionsVisual, deleteContext=True)
         
         
         

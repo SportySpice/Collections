@@ -1,16 +1,17 @@
 from Node import Node
 from TextRow import TextRow
+import shlex
 
 
-def root(xmlFile):
-    lines = xmlFile.lines()
-    return _processNodeLine(lines[0])
 
 
-def rootAndChildren(xmlFile):
+def load(xmlFile, rootOnly=False):
     lines = xmlFile.lines()
     
     root =  _processNodeLine(lines[0])
+    
+    if rootOnly:
+        return root
     
     
     children = []
@@ -42,23 +43,26 @@ def rootAndChildren(xmlFile):
 ####################
 def _processSettings(settingsStr):
     settings = {}    
-    settingsList = settingsStr.split()
+    settingsList = shlex.split(settingsStr)
             
     for setting in settingsList:    
         if '=' in setting:
             key,value = setting.split('=')            
             
-            if value[0] == '"' or value[0] == "'":        #string values, currently unused
-                pass
+            if value.isdigit():
+                value = int(value)
                 
-            elif value=='true':
+            elif value=='true':                         #boolean values
                 value = True
             
             elif value=='false':
                 value = False
                 
-            else:
-                value=int(value)
+            elif value=='none':
+                value = None
+                
+            else:            
+                value = value.replace('&%', "'")
                 
         else:
             key = setting

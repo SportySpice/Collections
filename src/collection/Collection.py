@@ -1,124 +1,273 @@
-from apiclient.http import BatchHttpRequest
-from datetime import datetime
-from src.tools import watchedDic
+import batchUpdater
+from settings import globalCollection
+from csource.KodiCollectionSource import KodiCollectionSource
+from csource.YoutubeCollectionSource import YoutubeCollectionSource
+from src.tools.enum import enum
+from src import router
+from src.tools.addonSettings import string as st
+
+from datetime import datetime, MINYEAR
+from src.tools import pytz
 
 
-FETCH_INFO_DELTA        =   7                   #in days
-VIDEOS_UPDATE_DELTA     =   300                 #in seconds. 300 seconds = 5 minutes
+loaded = {}
 
 
-#Sort = enum(NEWEST='newest', SHUFFLE='shuffle')
+OnCollectionClick = enum(FEED=1, SOURCES=2, SOURCES_ONLY=3, PLAYALL=4)
+
+GLOBAL_COLLECTION_FILE = 'globalCollection.xml'
+
+D_TITLE = st(400)
+D_THUMB = 'special://home/addons/plugin.video.collections/icon.png'
+D_DEFAULT = False
+D_ONCLICK = OnCollectionClick.FEED  #for global. for individual collection it's None
 
 
-
-
+gc = None
 class Collection(object):            
-    def __init__(self, title, collectionLimit, unwatched, collectionFile, sources, dumpFile):
-        self.videoList = None        
+    def __init__(self, title, thumb, feedSettings, sourcesSettings, collectionFile, default=False, onClick=None):        
         self.title = title
-        self.collectionLimit = collectionLimit
-        self.unwatched = unwatched
+        self.thumb = thumb
+        self.default = default
+        self._onClick = onClick      
+        
+        self.feedSettings = feedSettings
+        self.sourcesSettings = sourcesSettings
+        
         self.file = collectionFile
-        self.sources = sources
         
-        self.dumpFile = dumpFile
-        self.cachedXml = collectionFile.contents()
         
-        self.fetchInitialInfo()
-        self.updateVideoList()
+        
+        self.videos = None
+        
+         
+        self.cSources = []
+        self.cSourcesDic = {}
+        self.numSources = 0
+        
+        self.cSourcesKodi = []
+        self.cSourcesYt = []
+        
+        
+        self.loadedSources = False
+        
+        #self.dumpFile = dumpFile
+        #self.cachedXml = collectionFile.contents()
 
+        
 
 
 ###################
 ## Public Methods##
-###################                 
-    def fetchInitialInfo(self):        
-        batch = BatchHttpRequest()
-        for source in self.sources:
-            request, callback = source.getInitialRequest()            
-            batch.add(request, callback=callback)
-            #batch.add(*source.getInitialRequest())
- 
-        batch.execute()
-        #batch.execute(http=request.http)
-        
-        sourceDic = {}
-        for source in self.sources:
-            sourceDic[source.id] = source
-        self.sourceDic = sourceDic
-        
-         
-        self.fetchedInfoAt = datetime.now()
-        self.dump()
-        
-        
-    def fetchInfoIfTime(self):
-        lastFetchDelta = datetime.now() - self.fetchedInfoAt
-        
-        if lastFetchDelta.days > FETCH_INFO_DELTA:
-            self.fetchInitialInfo()
-        
-        
-        
-        
- 
+###################
+    def updateDatedSources(self, ytPages=1, forceUpdate=False):        
+        batchUpdater.videoUpdate(self.cSourcesKodi, self.cSourcesYt, ytPages, forceUpdate)
+        self.createCombinedList()
 
-    def updateVideoList(self):
-        batch = BatchHttpRequest()
-        for source in self.sources:
-            request, callback = source.getUpdateRequest()
-            batch.add(request, callback=callback)
-            #batch.add(*source.getUpdateRequest())
- 
-        batch.execute()
-        #batch.execute(http=request.http)
-         
-         
-                     
+
+
+    def createCombinedList(self):                       
         combinedVideoList = []
+        fs = self.feedSettings
         
-        if self.unwatched:
-            for source in self.sources:
+    
+        if fs.unwatched():
+            for source in self.cSources:
                 for video in source.videos():
-                    if not watchedDic.watched(video.id):
+                    if not video.watched():
                         combinedVideoList.append(video)
             
-        else:
-            for source in self.sources:
+        else:            
+            for source in self.cSources:
                 for video in source.videos():
                     combinedVideoList.append(video)
 
 
-        combinedVideoList.sort(key = lambda video: video.publishedDate, reverse=True)
+        combinedVideoList.sort(key = lambda video: video.date if video.date else  datetime(MINYEAR, 1, 1, tzinfo=pytz.utc), 
+                                reverse=True)
                 
         
         
         listLength = len(combinedVideoList)        
-        if listLength > self.collectionLimit:                        
-            extraItems = listLength - self.collectionLimit
+        if listLength > fs.limit():                        
+            extraItems = listLength - fs.limit()
             del combinedVideoList[-extraItems:]
             
         
         
-        self.videoList = combinedVideoList        
-        self.updatedVideosAt = datetime.now()
-        
-        self.dump()
-        
-        
-    def updateVideosIfTime(self):
-        lastUpdateDelta = datetime.now() - self.updatedVideosAt
-        
-        if lastUpdateDelta.seconds > VIDEOS_UPDATE_DELTA:
-            self.updateVideoList()
-        
-    
-    
-    def getSource(self, sourceId):
-        return self.sourceDic[sourceId]
+        self.videos = combinedVideoList        
+        #self.dump()
         
         
     
     
-    def dump(self):
-        self.dumpFile.dumpObject(self)
+    def getCSource(self, sourceId):
+        return self.cSourcesDic[sourceId]
+        
+#     def getCSourceIndex(self, index):
+#         return self.cSources[index]
+    
+    
+    def hasSource(self, sourceId):
+        if sourceId in self.cSourcesDic:
+            return True
+        
+        return False
+        
+    
+        
+        
+        
+    def addCollectionSource(self, vSource, onClick=None, limit=None, customTitle=None, customThumb=None):
+        if vSource.isYoutube():
+            cSource = YoutubeCollectionSource(self.numSources, self, vSource, onClick, limit, customTitle, customThumb)
+            self.cSourcesYt.append(cSource)
+                
+        else:
+            cSource = KodiCollectionSource(self.numSources, self, vSource, onClick, limit, customTitle, customThumb)
+            self.cSourcesKodi.append(cSource)
+        
+        self.cSources.append(cSource)
+        self.cSourcesDic[cSource.id] = cSource     
+        self.numSources  += 1
+        
+        
+    def setLoadedSources(self):
+        self.loadedSources = True
+        
+    
+    def removeCSource(self, sourceId):
+        cSource = self.cSourcesDic.pop(sourceId)
+        self.cSources.remove(cSource)
+        
+        if cSource.isKodiFolder():
+            self.cSourcesKodi.remove(cSource)
+        else:
+            self.cSourcesYt.remove(cSource)
+        
+        
+        
+    
+        
+    def writeCollectionFile(self):
+        if not self.loadedSources:
+            raise ValueError ('Cannot write collection file when collection is not fully loaded!')
+        
+        from xml import exporter
+        exporter.export(self)
+            
+    
+                
+
+    def onClick(self):
+        return self._onClick if self._onClick else gc.onClick()
+
+
+
+
+
+
+
+
+    def setTitle(self, title):
+        self.title = title
+        
+    def setOnClick(self, onCollectionClick):
+        self._onClick = onCollectionClick
+
+
+
+
+    def playAllContextMenu(self):
+        contextMenu =       (st(401),   'RunPlugin(%s)' % router.playCollectionUrl(self.file))
+        return contextMenu
+
+    def settingsContextMenu(self, globalC=False):
+        if not globalC:
+            contextMenu =   (st(402),   'RunPlugin(%s)' % router.editCollectionUrl(self.file))
+        else:
+            contextMenu =   (st(403),   'RunPlugin(%s)' % router.editCollectionUrl())
+            
+        return contextMenu
+
+    def deleteContextMenu(self):
+        contextMenu =       (st(404),   'RunPlugin(%s)' % router.deleteCollectionUrl(self.file))
+        return contextMenu
+
+
+
+
+    
+
+def init():
+    global gc
+    
+    if gc is None:
+        gc = globalCollection.gc()
+    
+    
+
+
+
+
+
+    
+
+def empty(title, collectionFile):
+    from settings import FeedSettings, SourcesSettings
+    global loaded
+    
+    fs = FeedSettings.default() 
+    ss = SourcesSettings.default()
+    
+    collection = Collection(title, D_THUMB, fs, ss, collectionFile)
+    collection.setLoadedSources()
+    
+    loaded[collectionFile.fullpath] = collection    
+    return collection
+    
+
+def emptyFromDirPath(title, dirPath):
+    from src.file import File
+    
+    collectionFile = File.fromInvalidNameAndDir(title + '.xml', dirPath)    
+    while collectionFile.exists():
+        collectionFile =  File.fromNameAndDir(collectionFile.soleName + '_.xml', dirPath)
+        
+    return empty(title, collectionFile)
+    
+        
+    
+def fromFile(collectionFile, loadSources=True, isGlobal=False):    
+    from xml import loader
+    global loaded
+        
+    if collectionFile.fullpath in loaded:
+        collection = loaded[collectionFile.fullpath]
+        
+        if (loadSources) and (not collection.loadedSources):
+            loader.loadSources(collection)
+                
+        return collection
+        
+        
+    collection = loader.load(collectionFile, loadSources, isGlobal)
+    loaded[collectionFile.fullpath] = collection  
+    
+    return collection
+        
+   
+      
+                
+#     def dump(self):
+#         self.dumpFile.dumpObject(self)
+        
+        
+
+#         self.cachedXml = self.file.contents()       #can use the filestring that is already in 
+#                                                     #memory instead writing to drive and then 
+#                                                     #loading back from drive.
+#                                                     #but not sure, maybe safer this way
+#         self.dump()
+
+

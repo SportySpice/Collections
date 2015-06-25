@@ -1,8 +1,6 @@
 from src.li.types.VideoVisual import VideoVisual
 from src.li.visual.TextSettings import TextSettings
 from src.li.visual.ViewStyle import ViewStyle
-from src.li.visual.ImageSettings import ImageSettings
-from src.youtube.Thumb import ThumbRes
 
 
 viewStyle          =       ViewStyle.EPISODES
@@ -22,10 +20,5 @@ videosVisual = VideoVisual(
           None,             #color
           False,            #bold?
           False             #italic?
-        ),
-                          
-        ImageSettings (
-            ThumbRes.HIGHEST,     #icon res
-            ThumbRes.HIGHEST      #thumb res                       
-        )                          
+        ),                    
 )      

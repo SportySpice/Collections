@@ -2,10 +2,22 @@ import xbmcplugin
 from src.tools.addonHandle import addonHandle
 from src.file import Folder
 from types.FolderLi import FolderLi
-from types.VideoLi import VideoLi
+from types import VideoLi
 from types.CollectionLi import CollectionLi
-from types.SourceListLi import SourceListLi
-from types.SourceLi import SourceLi
+from types.CollectionSourcesLi import CollectionSourcesLi
+from types.CollectionSourceLi import CollectionSourceLi
+from types.CustomFolderLi import CustomFolderLi
+from types.KodiFolderLi import KodiFolderLi
+from src.li.types.KodiVideoLi import KodiVideoLi
+from types.YoutubeCategoryLi import YoutubeCategoryLi
+from types.YoutubeChannelLi import YoutubeChannelLi
+from types.YoutubeChannelPlaylistsLi import YoutubeChannelPlaylistsLi
+from types.YoutubePlaylistLi import YoutubePlaylistLi
+from types.AddToCollectionLi import AddToCollectionLi
+from types.SelectableFolderLi import SelectableFolderLi
+from types.SelectableCollectionLi import SelectableCollectionLi
+from types.CustomFileLi import CustomFileLi
+from types.CollectionSettingsLi import CollectionSettingsLi
 #import types.FolderLi as FolderLi
 #import types.VideoLi as VideoLi
 #import types.CollectionLi as CollectionLi
@@ -30,24 +42,85 @@ class ItemList(object):
         
     
     
-    def addVideo(self, video,videoVisual, special=False, collectionFile=None, sourceSpecial=False, sourceId=None):
-        videoLi = VideoLi (video, videoVisual, special, collectionFile, sourceSpecial, sourceId)        
+    def addVideoPlay(self, video, videoVisual, collection=None):
+        videoLi = VideoLi.playVideoLi(video, videoVisual, collection)        
         self.items.append(videoLi.di)
         
-    
-    def addCollection(self, collectionFile, collectionVisual, shouldPlay=False):
-        collectionLi = CollectionLi(collectionFile, collectionVisual, shouldPlay)
+    def addVideoQueueCollection(self, video, collection, videoVisual):
+        videoLi = VideoLi.queueCollectionLi(video, collection, videoVisual)
+        self.items.append(videoLi.di)
+        
+        
+        
+        
+    def addCollection(self, collection, collectionVisual, onClick=None, deleteContext=False):
+        collectionLi = CollectionLi(collection, collectionVisual, onClick, deleteContext)
         self.items.append(collectionLi.di)
         
         
-    def addSourceList(self, collectionFile, sourceListVisual):
-        sourceListLi = SourceListLi(collectionFile, sourceListVisual)
-        self.items.append(sourceListLi.di)
+    def addCollectionSources(self, collection):
+        collectionSourcesLi = CollectionSourcesLi(collection)
+        self.items.append(collectionSourcesLi.di)
         
-    def addSource(self, source, collectionFile, sourceVisual):
-        sourceLi = SourceLi(source, collectionFile, sourceVisual)
-        self.items.append (sourceLi.di)
+    def addCollectionSource(self, cSource):
+        cSourceLi = CollectionSourceLi(cSource)
+        self.items.append (cSourceLi.di)
+        
     
+    def addCustomFolder(self, url, customFolderVisual):
+        customFolderLi = CustomFolderLi(url, customFolderVisual)
+        self.items.append(customFolderLi.di)
+    
+    
+    def addKodiFolder(self, kodiFolder, kodiFolderVisual, root=False):
+        kodiFolderLi = KodiFolderLi(kodiFolder, kodiFolderVisual, root)
+        self.items.append(kodiFolderLi.di)
+        
+    def addKodiVideo(self, kodiVideo, kodiVideoVisual):
+        kodiVideoLi = KodiVideoLi(kodiVideo, kodiVideoVisual)
+        self.items.append(kodiVideoLi.di)
+        
+        
+    
+    def addYoutubeCategory(self, category, youtubeCategoryVisual, pageNum=1):
+        youtubeCategoryLi = YoutubeCategoryLi(category, youtubeCategoryVisual, pageNum)
+        self.items.append(youtubeCategoryLi.di)
+        
+        
+    def addYoutubeChannel(self, channel, youtubeChannelVisual, pageNum=1):
+        youtubeChannelLi = YoutubeChannelLi(channel, youtubeChannelVisual, pageNum)
+        self.items.append(youtubeChannelLi.di)
+        
+    def addYoutubeChannelPlaylists(self, channel, youtubeChannelPlaylistsVisual, pageNum=1):
+        youtubeChannelPlaylistsLi = YoutubeChannelPlaylistsLi(channel, youtubeChannelPlaylistsVisual, pageNum)
+        self.items.append(youtubeChannelPlaylistsLi.di)
+        
+    def addYoutubePlaylist(self, playlist, youtubePlaylistVisual, pageNum=1):
+        youtubePlaylistLi = YoutubePlaylistLi(playlist, youtubePlaylistVisual, pageNum)
+        self.items.append(youtubePlaylistLi.di)
+        
+        
+    def addAddToCollection(self, vSource, addToCollectionVisual):
+        addToCollectionLi = AddToCollectionLi(vSource, addToCollectionVisual)
+        self.items.append(addToCollectionLi.di)
+        
+    def addSelectableFolder(self, folder, folderVisual, relativePath=None):
+        selectableFolderLi = SelectableFolderLi(folder, folderVisual, relativePath)
+        self.items.append(selectableFolderLi.di)
+        
+    def addSelectableCollection(self, collection, collectionVisual):
+        selectableCollectionLi = SelectableCollectionLi(collection, collectionVisual)
+        self.items.append(selectableCollectionLi.di) 
+        
+    def addCustomFile(self, url, customFileVisual):
+        customFileLi = CustomFileLi(url, customFileVisual)
+        self.items.append(customFileLi.di)
+        
+        
+    def addCollectionSettings(self, collection=None):
+        collectionSettingsLi = CollectionSettingsLi(collection)
+        self.items.append(collectionSettingsLi.di)
+        
         
     def present(self, viewStyle):
         xbmcplugin.setContent(addonHandle, viewStyle)       

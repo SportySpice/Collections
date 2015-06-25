@@ -1,6 +1,7 @@
 from src.li.visual.ViewStyle import ViewStyle
 from src.li.visual.TextSettings import TextSettings
 from src.li.types.FolderVisual import FolderVisual
+from src.li.types.CustomFolderVisual import CustomFolderVisual
 
 
 VIEW_STYLE           =       ViewStyle.TVSHOWS
@@ -30,4 +31,16 @@ myCollectionsVisual = FolderVisual(
         customTitle =   'My Collections',                                   
         customIcon  =   None,
         customThumb =   None                                            
+)
+
+browseForSourcesVisual = CustomFolderVisual(
+      'Browse For Sources',
+      TextSettings(
+          None,        #color
+          False,       #bold?
+          False        #italic?
+          ),     
+                                   
+        None,       #icon
+        None,       #thumb                                 
 )

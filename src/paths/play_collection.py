@@ -1,18 +1,12 @@
-from src.collection import loader
+from src.collection import Collection
 from src.li.ItemPlayList import ItemPlaylist
-from visual.play_collection import videosVisual
 
 
 def play(collectionFile):
-    collection = loader.load(collectionFile)
-    collection.updateVideosIfTime()
-    
-    
-    
-    #collection.updateVideoList()  
+    collection = Collection.fromFile(collectionFile)
+    collection.updateDatedSources()
 
-    
     playlist = ItemPlaylist()
-    
-    for video in collection.videoList:    
-        playlist.addVideo(video, videosVisual, playIfFirst=True)        
+        
+    for video in collection.videos:    
+        playlist.addVideo(video, collection.feedSettings.TS.videosVisual(), playIfFirst=True)        

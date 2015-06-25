@@ -21,7 +21,11 @@ class File(object):
         self.path = folder.fullpath
         self.fullpath = folder.fullpath + '/' + name
         
-        self.soleName, self.extension = name.split('.', 1)
+        if '.' in name:
+            self.soleName, self.extension = name.split('.', 1)
+        else:
+            self.soleName = name
+            self.extension = None
          
         
         self._pathTranslated = None
@@ -30,6 +34,14 @@ class File(object):
     
     def exists(self):
         return xbmcvfs.exists(self.fullpath)
+    
+    def delete(self):
+        xbmcvfs.delete(self.fullpath)
+        
+        
+    def deleteIfExists(self):
+        if self.exists():
+            self.delete()
         
         
     def pathTranslated(self):
@@ -45,17 +57,33 @@ class File(object):
     
     
     
-    def fileHandler(self):
+    def fileHandler(self, write=False):
+        if write:
+            permission = 'w'
+        else:
+            permission = 'r'
+        
         fullpath = self.fullpathTranslated()
-        return xbmcvfs.File(fullpath, 'r')
+        return xbmcvfs.File(fullpath, permission)
     
     def contents(self):
         fh = self.fileHandler();
-        return fh.read()
+        
+        contents = fh.read()
+        fh.close()
+        
+        return contents
+        
     
     def lines(self):
         contents = self.contents()
         return contents.split('\n')
+    
+    
+    def write(self, contentsStr):
+        fh = self.fileHandler(write=True)
+        fh.write(contentsStr)
+        fh.close()
         
     
     
@@ -71,19 +99,24 @@ class File(object):
     
     
     def dumpObject(self, dumpObject):
-        import pickle
+        import dill as pickle
         
         with open(self.fullpathTranslated(), 'wb') as f:
             pickle.dump(dumpObject, f)
             
             
     def loadObject(self):
-        import pickle
+        import dill as pickle
         
         with open(self.fullpathTranslated(),'rb') as f:
             loadedObject = pickle.load(f)
-        
+                
         return loadedObject
+
+
+
+
+        
     
 
 def fromQuery(query):
@@ -109,6 +142,18 @@ def fromFullpath(fullpath):
     newFile = File(fileName, folder)
     
     return newFile
+
+def fromNameAndDir(fileName, dirPath):
+    folder = Folder.fromFullpath(dirPath)
+    newFile = File(fileName, folder)
+    
+    return newFile
+
+def fromInvalidNameAndDir(originalName, dirPath):
+    import utils
+    
+    name = utils.createValidName(originalName)
+    return fromNameAndDir(name, dirPath) 
 
 
 def loadObjectFromFP(fullpath):

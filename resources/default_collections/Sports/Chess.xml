@@ -1,4 +1,4 @@
-<collection> Chess
+<collection default> Chess
 	<channels>
 		Chessexplained
 		ChessNetwork

@@ -22,8 +22,4 @@ collectionsVisual = CollectionVisual(
           False,       #bold?
           False        #italic?
           ),     
-                                   
-        'special://home/addons/plugin.video.collections/icon.png',  #default icon
-        None,                                                       #default thumb        
-        False,                                                       #force default images?
 )

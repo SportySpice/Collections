@@ -1,29 +1,30 @@
 class VideoVisual(object):
-    def __init__(self, showSource, sourceTextSettings, titleTextSettings, imageSettings):
-        self.showSource = showSource
-        self.sourceTextSettings = sourceTextSettings
-        self.titleTextSettings = titleTextSettings
-        self.imageSettings = imageSettings
+    def __init__(self, videoFTS):
+        self.videoFTS = videoFTS
+        
+        #self.imageSettings = imageSettings        
+        
         
     
     def title(self, video):
-        if self.showSource:
-            sourceText = video.source.title + ": "
-            sourceText = self.sourceTextSettings.apply(sourceText)
+        if video.isYoutube():
+            return self.videoFTS.fullText(video.title, video.source.title, video.viewCount)
         else:
-            sourceText = ''
+            return self.videoFTS.fullText(video.title, video.source.title)
         
         
-        titleText = video.title
-        titleText = self.titleTextSettings.apply(titleText)
+        
+    
+#     def description(self, video):
+#         if video.isKodiFolder():
+#             return video.description
         
         
-        title = sourceText + titleText
-        return title
     
     
-    def images(self, video):
-        icon = video.thumb.get(self.imageSettings.iconRes)
-        thumb = video.thumb.get(self.imageSettings.iconRes)
-        
-        return icon, thumb
+    
+#     def images(self, video):
+#         icon = video.thumb.get(self.imageSettings.iconRes)
+#         thumb = video.thumb.get(self.imageSettings.iconRes)
+#         
+#         return icon, thumb

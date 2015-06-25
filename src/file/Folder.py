@@ -3,6 +3,7 @@ import xbmc
 import File
 import urllib
 import urlparse
+import os.path
 
 
 NAME_QUERY = 'folderName'
@@ -12,6 +13,9 @@ PATH_QUERY = 'folderPath'
 
 class Folder(object):
     def __init__(self, name, path):
+        if path.endswith('/'):
+            path = path[:-1]
+        
         self.name = name
         self.path = path
         self.fullpath = path + '/' + name
@@ -27,7 +31,8 @@ class Folder(object):
         self.listed = False
         
     def exists(self):
-        return xbmcvfs.exists(self.fullpath)
+        #return xbmcvfs.exists(self.fullpath)
+        return os.path.exists(self.fullpathTranslated())
     
     def create(self):
         xbmcvfs.mkdirs(self.fullpath)
@@ -35,6 +40,14 @@ class Folder(object):
     def createIfNotExists(self):
         if not self.exists():
             self.create()
+            
+    def delete(self):
+        import shutil        
+        shutil.rmtree(self.fullpathTranslated(), ignore_errors=True)
+        
+    def deleteIfExists(self):
+        if self.exists():
+            self.delete()
         
     
     def pathTranslated(self):
@@ -60,8 +73,8 @@ class Folder(object):
             subfolderList = []
             subfolderDic = {}
                         
-            subfolderNames, fileNames = xbmcvfs.listdir(self.fullpathTranslated())        
-            
+            #subfolderNames, fileNames = xbmcvfs.listdir(self.fullpathTranslated())        
+            subfolderNames, fileNames = xbmcvfs.listdir(self.fullpath)
             
             
             for subfolderName in subfolderNames:
@@ -148,8 +161,13 @@ class Folder(object):
     
         return query
     
+
+def fromInvalidNameAndDir(originalName, dirPath):    
+    import utils
     
-    
+    name = utils.createValidName(originalName)
+    return Folder(name, dirPath)
+
     
 def fromQuery(query):
     parsedQuery = urlparse.parse_qs(query)
@@ -162,6 +180,8 @@ def fromQuery(query):
 
     
 def fromFullpath(fullpath):
+    if fullpath.endswith('/'):
+        fullpath = fullpath[:-1]
     path, name = fullpath.rsplit('/', 1)
     folder = Folder(name, path)
     

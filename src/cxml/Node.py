@@ -10,3 +10,9 @@ class Node(object):
         
     def addTextRow(self, textRow):
         self.textRows.append(textRow)
+        
+        
+        
+        
+def empty(name):
+    return Node(name, {}, '')

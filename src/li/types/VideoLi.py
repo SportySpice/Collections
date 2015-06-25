@@ -1,24 +1,16 @@
 from src import router
 from src.li.Li import Li
-from src.tools import watchedDic
+
 
 
 class VideoLi(Li):
-    def __init__(self, video, videoVisual, special=False, collectionFile=None,
-                  sourceSpecial=False, sourceId=None):
+    def __init__(self, video, url, isPlayable, videoVisual, collection=None):        
+        title = videoVisual.title(video) 
         
-        title = videoVisual.title(video)
-        icon, thumb = videoVisual.images(video) 
+        icon = video.thumb
+        thumb = video.thumb 
         
-        if special:
-            url = router.playVideoSpecialUrl(video.id, collectionFile)
-            isPlayalbe = False
-        elif sourceSpecial:
-            url = router.playVideoSourceUrl(video.id, sourceId, collectionFile)
-            isPlayalbe = False
-        else:
-            url = router.playVideoUrl(video.id)
-            isPlayalbe = True
+
         
         isFolder = False
         
@@ -27,51 +19,114 @@ class VideoLi(Li):
         videoInfoLabels = self._videoInfoLabels(video, title)
         
         
-        super(VideoLi, self).__init__(title, icon, thumb, url, isFolder, isPlayalbe,
-                                       videoInfoLabels, generalInfoLabels)
+        if collection: 
+            if collection.default:
+                contextMenus = (
+                    collection.settingsContextMenu(globalC=True),
+                )
+            else:
+                contextMenus = (
+                    collection.settingsContextMenu(),
+                    collection.settingsContextMenu(globalC=True)                        
+                )
+        else:
+            contextMenus = None
+        
+        
+        
+        super(VideoLi, self).__init__(title, icon, thumb, url, isFolder, isPlayable,
+                                       videoInfoLabels, generalInfoLabels, contextMenus)
 
 
     
         self.pi = (url, self.li)    #needs to be unpacked when using with playlist.add()
     
-    
+        if video.duration:
+            self.li.addStreamInfo('video', { 'duration': video.duration.seconds})
     
     
     @staticmethod
-    def _generalInfoLabels(video):    
-        return {'Date': video.publishedDate.strftime('%d.%m.%Y')}
+    def _generalInfoLabels(video):
+        return {'Date': video.date.strftime('%d.%m.%Y') if video.date else None}
     
     
         
     
     @staticmethod        
-    def _videoInfoLabels(video, title):        
-        date = video.publishedDate        
-        playCount, lastPlayed = watchedDic.info(video.id)
+    def _videoInfoLabels(video, title):
+        source = video.source    
+        date = video.date
+        
         
         return {
-                'title': title,                                                            
+                'title': title,
+                'studio': source.studioTitle,
+                'tvshowtitle': source.tvShowTitle,
                 'plot': video.description,
-                'year': date.year,
-                'studio': video.channelTitle,
-                'aired': date.strftime('%Y-%m-%d'),                                   
-                'tvshowtitle': video.source.title2,
-                'episode': video.position,    
-                                                                              
-                'playcount': playCount
-                #'lastplayed': maybe store last time played (string (%Y-%m-%d %h:%m:%s = 2009-04-05 23:16:04)
+                
+                'year': date.year if date else None,
+                'aired': date.strftime('%Y-%m-%d') if date else None,
+                'premiered': date.strftime('%Y-%m-%d') if date else None,
+                                                   
+                'episode': video.position,                                                                  
+                'playcount': video.playCount(),
+                #'lastplayed': can use this, storing it already in watchedDic (string (%Y-%m-%d %h:%m:%s = 2009-04-05 23:16:04)
+                
                
+               'votes': video.likeCount if video.isYoutube() else None,
+               'rating': video.rating,
+               
+               
+               #'duration': video.duration.seconds / 60
                
                 #'status': 'Online!',            #(didn't work)                                   
-                #'duration': duration in minutes                                   
-                #'votes': number of thumbs up        
+                                                   
+                
                
                 #'album': ?            
-                #'rating': maybe put some calculation between thumbs up and thumbs down  
-                #'premiered': date.strftime('%Y-%m-%d')                                                                                                                                          
+                
+                                                                                                                                                          
                 #'tracknumber': maybe put position on original list                                    
                 #'originaltitle': video.description    
                 #'Tagline': video.description,
                 #'Plotoutline': video.description,
                 #'Season': ?                                    
     }
+        
+        
+        
+        
+
+
+
+
+# def playKodiFolderLi(kodiVideo, videoVisual):        
+#     url = router.playVideoKodiUrl(kodiVideoVideo.url)
+#     isPlayable = True
+#     
+#     videoLi = VideoLi(KodiVideo, url, isPlayable, videoVisual) 
+#     return videoLi    
+#         
+#         
+# def playYoutubeLi(youtubeVideo, videoVisual):
+#     url = router.playVideoYoutubeUrl(youtubeVideo.id)
+#     isPlayable = True
+#     
+#     videoLi = VideoLi(youtubeVideo, url, isPlayable, videoVisual) 
+#     return videoLi
+
+def playVideoLi(video, videoVisual, collection=None):
+    url = video.playUrl()
+    isPlayable = True        
+    videoLi = VideoLi(video, url, isPlayable, videoVisual, collection)
+     
+    return videoLi
+
+
+
+def queueCollectionLi(video, collection, videoVisual):
+    url = router.playQueueCollectionUrl(video.id, collection.file)
+    isPlayable = False
+    videoLi = VideoLi(video, url, isPlayable, videoVisual, collection)
+     
+    return videoLi

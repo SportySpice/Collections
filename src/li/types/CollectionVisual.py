@@ -1,36 +1,29 @@
 class CollectionVisual(object):
-    def __init__(self, textSettings, defaultIcon, defaultThumb, forceDefaultImages, customTitle=None):
+    def __init__(self, textSettings, customTitle=None, customIcon=None, customThumb=None):
         self.textSettings = textSettings
-        self.defaultIcon = defaultIcon
-        self.defaultThumb = defaultThumb
-        self.forceDefaultImages = forceDefaultImages
         self.customTitle = customTitle
+        self.customIcon = customIcon
+        self.customThumb = customThumb        
+        
              
                  
-    def title(self, collectionRoot):
-        if self.customTitle is not None:
+    def title(self, collection):
+        if self.customTitle:
             title = self.customTitle
         else:
-            title = collectionRoot.text
+            title = collection.title
             
         title = self.textSettings.apply(title)
         return title
     
-    def images(self, collectionFile):
-        if self.forceDefaultImages:
-            return self.defaultIcon, self.defaultThumb
+    
+    def images(self, collection):
+        if self.customIcon:
+            icon  = self.customIcon
+            thumb = self.customThumb
         
-        
-        collectionFolder = collectionFile.folder
-        if collectionFolder.hasSubfolder('_images'):
-            imageFolder = collectionFolder.getSubfolder('_images')
-            soleName = collectionFile.soleName
+        else: 
+            icon  = collection.thumb
+            thumb = collection.thumb
             
-            if imageFolder.hasFile(soleName + '.png'):
-                return imageFolder.getFile(soleName + '.png').fullpath, None    #thumb not used for now
-            
-            elif imageFolder.hasFile(soleName + '.jpg'):
-                return imageFolder.getFile(soleName + '.jpg').fullpath, None    #thumb not used for now
-            
-            
-        return self.defaultIcon, self.defaultThumb
+        return icon, None

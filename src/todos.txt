@@ -1,25 +1,29 @@
-* http 500 error
-
-
-
-FUTURE PLANS & FEATRUES:
-* More sorting methods (currently always by newest)
+* settings for all views and counts (also Feed TS in browse sources)
+* Custom icons and titles for each source
+* choose image for collection when creating it (via built in icon packs and browse) + modify it later via context menus
+* date estimation algoritm for kodi folders
+* service/process that runs date estimation algoritm in the background all the time
+* browse/remove sources directly from video context menu (actualy browsing might not be possible? he did it on youtube plugin, need to check)
+* video stats context menu
 * Options to prevent consecutive videos from the same source (maxRepeat and push)
-* Custom titles for each source
-* Custom video title formats
-* Add a default collection to my collections via context menu, or in browse mode
+* More sorting methods (currently always by newest)
+* New items count for each source (figure out how to calculate and show this)
+* include in main feed option for each source
+* individual collection and source settings (on click behaviour, video behaviour, items per page, view type(source first, feed first, sources only) 
+* missing infolabels in most views
 * Video quality selection (currently always 720p)
-* Recognize difference between username and channel id automatically
-* Thumbnails, icons and fanart quality selection (currently always highest)
+* override context menus
+* force refresh content menus (both outside and inside item. inside item and maybe also add an item, with other optionsa and settings)
+* youtube comments?
+* clear cache once a week or so
+* count in only some of the views if possible (select which via gui)
+* youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
+* clean up context menus
+* play all and play queue for channels/playlists/folders
+* warnings about kodi folders inside a cocllection failing to update or being empty
+* more parsing methods for kodi folders (local dir list, jsonrpc walk, others?)
+
+
+
 * Collection Store: download collections created by others and share your own collections with the world
-* Add specific videos to a collection
-* Enable/Disable video fanart (currently disabled)
-* Playlist videos fanart from channel instead of playlist
-* Presentation improvements (addon icon, addon fanart, text styles, etc) 
-* Collection creation within the addon using search/browse/subscriptions
-* Collection creation from other sources (onlines services, kodi plugins, files&playlists) + change addon name to Collections
-* Super/Sub Collections: create a collection of collections
-* Individual unwatched: set unwatched for specific sources instead of entire collection (needed?)
-* Performance improvements by imporoving caching functions (video info, source info, video lists, etc)
-* Performance imrpovements by removing 3rd party libraries and using only needed code
-* Nag Kodi devs to add DASH support so we can all enjoy 1080p/4k/60fps streams
+* Map collections/sources to "channels" like pseudo tv

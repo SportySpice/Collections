@@ -1,0 +1,883 @@
+# XBMC Media Center language file
+# Addon Name: Collection TV
+# Addon id: plugin.program.collections
+# Addon Provider: SportySpice
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#********************************
+#*********** SETTINGS ***********
+#********************************
+#-----------TABS----------
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Views"
+msgstr ""
+
+msgctxt "#30002"
+msgid "YouTube"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Cache"
+msgstr ""
+
+
+#-----------GENERAL TAB----------
+#home setting
+msgctxt "#30010"
+msgid "Home Page"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Home"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Default Collections"
+msgstr ""
+
+msgctxt "#30013"
+msgid "My Collections"
+msgstr ""
+
+
+
+
+#-----------VIEWS TAB----------
+msgctxt "#30050"
+msgid "Collection (global)"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Kodi Folder"
+msgstr ""
+
+msgctxt "#30052"
+msgid "YouTube Channel"
+msgstr ""
+
+msgctxt "#30053"
+msgid "YouTube Channel Playlists"
+msgstr ""
+
+msgctxt "#30054"
+msgid "YouTube Playlist"
+msgstr ""
+
+msgctxt "#30055"
+msgid "YouTube Subscriptions"
+msgstr ""
+
+msgctxt "#30056"
+msgid "YouTube Search"
+msgstr ""
+
+msgctxt "#30057"
+msgid "YouTube Category"
+msgstr ""
+
+
+
+#-----------YOUTUBE TAB----------
+msgctxt "#30100"
+msgid "Sign In/Out"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Region"
+msgstr ""
+
+#subscriptions sorting
+msgctxt "#30110"
+msgid "Subscriptions Sorting"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Alphabetical"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Relevance"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Unread"
+msgstr ""
+
+
+#thumb quality
+msgctxt "#30120"
+msgid "Video Thumb Quality"
+msgstr ""
+
+msgctxt "#30121"
+msgid "Channel/Playlist Thumb Quality"
+msgstr ""
+
+
+msgctxt "#30122"
+msgid "Medium"
+msgstr ""
+
+msgctxt "#30123"
+msgid "High Or Lower"
+msgstr ""
+
+msgctxt "#30124"
+msgid "High Or Better"
+msgstr ""
+
+msgctxt "#30125"
+msgid "Highest"
+msgstr ""
+
+
+
+#-----------CACHE TAB----------
+msgctxt "#30150"
+msgid "Clear Cache"
+msgstr ""
+
+msgctxt "#30151"
+msgid "Kodi Folders (minutes)"
+msgstr ""
+
+msgctxt "#30152"
+msgid "YouTube Video Lists (minutes)"
+msgstr ""
+
+msgctxt "#30153"
+msgid "YouTube Channel Playlists (days)"
+msgstr ""
+
+msgctxt "#30154"
+msgid "YouTube Subscription Channels (days)"
+msgstr ""
+
+msgctxt "#30155"
+msgid "YouTube Category Channels (days)"
+msgstr ""
+
+msgctxt "#30156"
+msgid "YouTube Seraches (minutes)"
+msgstr ""
+
+msgctxt "#30157"
+msgid "YouTube Channel/Playlist Info(days)"
+msgstr ""
+
+
+
+#********************************
+#*********** CODE ***************
+#********************************
+#-----------COLLECTION----------
+msgctxt "#30400"
+msgid "No Title"
+msgstr ""
+
+msgctxt "#30401"
+msgid "Play All"
+msgstr ""
+
+msgctxt "#30402"
+msgid "Collection Settings"
+msgstr ""
+
+msgctxt "#30403"
+msgid "Global Collection Settings"
+msgstr ""
+
+
+msgctxt "#30404"
+msgid "Delete Collection"
+msgstr ""
+
+
+#-----------COLLECTION SOURCE----------
+msgctxt "#30410"
+msgid "Remove Source"
+msgstr ""
+
+
+
+#-----------VIDEO SOURCE----------
+msgctxt "#30420"
+msgid "Folder"
+msgstr ""
+
+msgctxt "#30421"
+msgid "Channel"
+msgstr ""
+
+msgctxt "#30422"
+msgid "Playlist"
+msgstr ""
+
+
+
+
+#-----------FEED TS----------
+msgctxt "#30430"
+msgid "Browse Sources"
+msgstr ""
+
+msgctxt "#30431"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30432"
+msgid "PLAY ALL"
+msgstr ""
+
+
+#-----------SOURCES TS----------
+msgctxt "#30440"
+msgid "Feed"
+msgstr ""
+
+
+
+
+
+#-----------EDIT COLLECTION----------
+msgctxt "#30500"
+msgid "Collection Settings (global)"
+msgstr ""
+
+#tabs
+msgctxt "#30501"
+msgid "General"
+msgstr ""
+
+msgctxt "#30502"
+msgid "Feed View"
+msgstr ""
+
+msgctxt "#30503"
+msgid "Feed Text"
+msgstr ""
+
+msgctxt "#30504"
+msgid "Sources View"
+msgstr ""
+
+msgctxt "#30505"
+msgid "Sources Text"
+msgstr ""
+
+
+
+#general tab
+msgctxt "#30510"
+msgid "Collection Name"
+msgstr ""
+
+msgctxt "#30515"
+msgid "On Click"
+msgstr ""
+
+
+msgctxt "#30516"
+msgid "Remove Source"
+msgstr ""
+
+msgctxt "#30517"
+msgid "Open Global Settings"
+msgstr ""
+
+
+
+
+
+msgctxt "#30520"
+msgid "[I]Use Global[/I]"
+msgstr ""
+
+msgctxt "#30521"
+msgid "Show Feed"
+msgstr ""
+
+msgctxt "#30522"
+msgid "Show Sources"
+msgstr ""
+
+msgctxt "#30523"
+msgid "Show Sources Only"
+msgstr ""
+
+msgctxt "#30524"
+msgid "Play All"
+msgstr ""
+
+
+#feed tab
+msgctxt "#30530"
+msgid "View Style"
+msgstr ""
+
+msgctxt "#30531"
+msgid "When clicking video"
+msgstr ""
+
+msgctxt "#30532"
+msgid "Unwatched Only"
+msgstr ""
+
+msgctxt "#30533"
+msgid "Collection Limit"
+msgstr ""
+
+msgctxt "#30534"
+msgid "Source Limit"
+msgstr ""
+
+msgctxt "#30535"
+msgid "Set Individually"
+msgstr ""
+
+    
+#Feed Text Tab
+msgctxt "#30540"
+msgid "Browse Sources"
+msgstr ""
+
+msgctxt "#30541"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30542"
+msgid "Play All"
+msgstr ""
+    
+
+
+msgctxt "#30550"
+msgid "YouTube Video Title"
+msgstr ""
+
+msgctxt "#30551"
+msgid "Channel Name"
+msgstr ""
+
+msgctxt "#30552"
+msgid "Kodi Video Title"
+msgstr ""
+
+msgctxt "#30553"
+msgid "Folder Name"
+msgstr ""
+
+    
+#Sources Tab
+msgctxt "#30560"
+msgid "View Style"
+msgstr ""
+
+msgctxt "#30561"
+msgid "When clicking Kodi Source"
+msgstr ""
+
+msgctxt "#30562"
+msgid "When clicking YouTube Source"
+msgstr ""
+
+msgctxt "#30563"
+msgid "Set Individually"
+msgstr ""
+
+msgctxt "#30565"
+msgid "Source Click Behaviour"
+msgstr ""
+
+
+
+
+
+msgctxt "#30570"
+msgid "Browse"
+msgstr "" 
+
+msgctxt "#30571"
+msgid "Play All"
+msgstr "" 
+
+msgctxt "#30572"
+msgid "Browse In Original Folder"
+msgstr "" 
+    
+    
+    
+    
+#Sources Text Tab
+msgctxt "#30580"
+msgid "Source Title"
+msgstr ""
+
+    
+
+
+
+
+
+#-----------SETTINGS WINDOW----------
+msgctxt "#30600"
+msgid "OK"
+msgstr ""
+
+msgctxt "#30601"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Defaults"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Prev"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Next"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Use Global"
+msgstr ""
+
+msgctxt "#30606"
+msgid "Use Main"
+msgstr ""
+
+
+
+           
+#viewstyle options
+msgctxt "#30610"
+msgid "Files"
+msgstr ""
+
+msgctxt "#30611"
+msgid "Songs"
+msgstr ""
+
+msgctxt "#30612"
+msgid "Artists"
+msgstr ""
+
+msgctxt "#30613"
+msgid "Albums"
+msgstr ""
+
+msgctxt "#30614"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#30615"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#30616"
+msgid "Episodes"
+msgstr ""
+
+msgctxt "#30617"
+msgid "Music Videos"
+msgstr ""
+
+
+
+#Video Click Options
+msgctxt "#30620"
+msgid "Play Video Only"
+msgstr ""
+
+msgctxt "#30621"
+msgid "Play & Queue Rest"
+msgstr ""
+
+
+
+
+#-----------ListItem Table----------
+msgctxt "#30650"
+msgid "Color"
+msgstr ""
+
+msgctxt "#30651"
+msgid "Bold"
+msgstr ""
+
+msgctxt "#30652"
+msgid "Italic"
+msgstr ""
+
+msgctxt "#30653"
+msgid "Location"
+msgstr ""
+
+
+
+msgctxt "#30660"
+msgid "Source"
+msgstr ""
+
+msgctxt "#30661"
+msgid "Title"
+msgstr ""
+
+msgctxt "#30665"
+msgid "Views"
+msgstr ""
+
+msgctxt "#30666"
+msgid "Subscribers"
+msgstr ""
+
+msgctxt "#30667"
+msgid "Videos"
+msgstr ""
+
+msgctxt "#30668"
+msgid "New Videos"
+msgstr ""
+
+
+msgctxt "#30670"
+msgid "Left"
+msgstr ""
+
+msgctxt "#30671"
+msgid "Middle"
+msgstr ""
+
+msgctxt "#30672"
+msgid "Right"
+msgstr ""
+
+
+#*********************************************
+#*********** CODE BROWSE PATHS ***************
+#*********************************************
+#-----------Browse For Sources----------
+msgctxt "#30700"
+msgid "YouTube Search"
+msgstr ""
+
+
+msgctxt "#30701"
+msgid "YouTube Subscriptions"
+msgstr ""
+
+msgctxt "#30702"
+msgid "YouTube Categories"
+msgstr ""
+
+
+
+msgctxt "#30710"
+msgid "Videos Root"
+msgstr ""
+
+msgctxt "#30711"
+msgid "Video Add-ons"
+msgstr ""
+
+msgctxt "#30712"
+msgid "Video Library"
+msgstr ""
+
+msgctxt "#30713"
+msgid "Video Files"
+msgstr ""
+
+msgctxt "#30714"
+msgid "Video Playlists"
+msgstr ""
+
+
+
+msgctxt "#30720"
+msgid "Music Add-ons"
+msgstr ""
+
+msgctxt "#30721"
+msgid "Music Library"
+msgstr ""
+
+msgctxt "#30722"
+msgid "Music Files"
+msgstr ""
+
+msgctxt "#30723"
+msgid "Music Playlists"
+msgstr ""
+
+
+
+msgctxt "#30730"
+msgid "Program Add-ons"
+msgstr ""
+
+msgctxt "#30731"
+msgid "Picture Add-ons"
+msgstr ""
+
+
+
+
+msgctxt "#30740"
+msgid "Local Storage"
+msgstr ""
+
+
+
+#-----------Browse Kodi Folder----------
+msgctxt "#30750"
+msgid "Add this folder to a collection"
+msgstr ""
+
+
+msgctxt "#30760"
+msgid "Parse Error"
+msgstr ""
+
+msgctxt "#30761"
+msgid "Unable to parse this folder, sorry. :("
+msgstr ""
+
+msgctxt "#30762"
+msgid "Feel free to report this error on the CollectionTV forum thread"
+msgstr ""
+
+
+
+#-----------Browse YouTube Channel----------
+msgctxt "#30770"
+msgid "Add this channel to a collection"
+msgstr ""
+
+msgctxt "#30771"
+msgid "Playlists"
+msgstr ""
+
+
+#-----------Browse YouTube Playlist----------
+msgctxt "#30780"
+msgid "Add this playlist to a collection"
+msgstr ""
+
+
+#-----------Search YouTube Select----------
+msgctxt "#30790"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#30791"
+msgid "Playlists"
+msgstr ""
+
+msgctxt "#30792"
+msgid "Both"
+msgstr ""
+
+
+#-----------Search YouTube----------
+msgctxt "#30800"
+msgid "Channel Search"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Playlist Search"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Channel & Playlist Search"
+msgstr ""
+
+
+#-----------Add To Collection----------
+msgctxt "#30810"
+msgid "Choose collection to add to"
+msgstr ""
+
+msgctxt "#30811"
+msgid "Oops!"
+msgstr ""
+
+msgctxt "#30812"
+msgid "%s [B]%s[/B] is already in collection [B]%s[/B]."
+msgstr ""
+
+msgctxt "#30813"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30814"
+msgid "%s [B]%s[/B] has been successfully added to collection [B]%s[/B]."
+msgstr ""
+
+
+
+#-----------Add To Collection Browse----------
+msgctxt "#30820"
+msgid "New Folder"
+msgstr ""
+
+msgctxt "#30821"
+msgid "New Collection"
+msgstr ""
+
+
+
+#-----------Remove From Collection----------
+msgctxt "#30830"
+msgid "Remove Source"
+msgstr ""
+
+msgctxt "#30831"
+msgid "Are you sure you want to remove %s [B]%s[/B] from collection [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30832"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30833"
+msgid "%s [B]%s[/B] has been successfully removed from collection [B]%s[/B]."
+msgstr ""
+
+
+#-----------Delete Collection----------
+msgctxt "#30840"
+msgid "Delete Collection'"
+msgstr ""
+
+msgctxt "#30841"
+msgid "Are you sure you want to delete collection [B]%s[/B]? (this cannot be undone!)"
+msgstr ""
+
+msgctxt "#30842"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30843"
+msgid "Collection [B]%s[/B] has been successfully deleted."
+msgstr ""
+    
+
+	
+	
+
+  
+
+
+
+    
+    
+
+
+#****************************************
+#*********** CODE GENERAL ***************
+#*****************************************    
+#-----------Sign In Out Youtube----------  
+msgctxt "#30850"
+msgid "Sign In YouTube"
+msgstr ""
+
+msgctxt "#30851"
+msgid "Launch browser for me and enter code"
+msgstr ""
+
+msgctxt "#30852"
+msgid "Launch browser manually and enter code"
+msgstr ""
+
+    
+
+msgctxt "#30855"
+msgid "Sign In YouTube"
+msgstr ""
+
+msgctxt "#30856"
+msgid "Please go to [B]youtube.com/activate[/B]"
+msgstr ""
+
+  
+msgctxt "#30857"
+msgid "and enter the following code: [B]%s[/B]"
+msgstr ""
+
+
+
+msgctxt "#30860"
+msgid "Sign out of YouTube"
+msgstr ""
+
+
+msgctxt "#30861"
+msgid "You are currently signed in to YouTube, would you like to sign out?"
+msgstr ""
+
+
+
+
+
+msgctxt "#30865"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30866"
+msgid "You are now signed in to YouTube."
+msgstr ""
+
+msgctxt "#30867"
+msgid "You are now signed out of YouTube."
+msgstr ""
+    
+    
+
+
+	
+	
+ #-----------Delete Cache----------  
+msgctxt "#30870"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30871"
+msgid "Cache has been successfully cleared."
+msgstr ""
+
+ 
+ 
+
+
+
+
+
+
+
+
+#from src.tools.addonSettings import string as st
+
+#-----------General----------
+msgctxt "#30980"
+msgid "Next Page (%d)"
+msgstr ""

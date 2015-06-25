@@ -1,4 +1,4 @@
-from types.VideoLi import VideoLi
+from types import VideoLi
 import xbmc
 
 class ItemPlaylist(object):
@@ -11,7 +11,7 @@ class ItemPlaylist(object):
         self.added = 0
     
     def addVideo(self, video, videoVisual, playIfFirst=False, index=-1):
-        videoLi = VideoLi (video, videoVisual)
+        videoLi = VideoLi.playVideoLi(video, videoVisual)
         
         self.playlist.add(*videoLi.pi, index=index)
                    
@@ -29,7 +29,7 @@ class ItemPlaylist(object):
         import xbmcplugin
         from src.tools.addonHandle import addonHandle
         
-        videoLi = VideoLi(video, videoVisual)
+        videoLi = VideoLi.playVideoLi(video, videoVisual)
         li = videoLi.li
                 
         self.playlist.add(videoLi.url, li)

@@ -1,2 +1,49 @@
+[B]2.0.0 MAJOR UPDATE[/B]:
+
+General & Collection related:
+ * Add-on name changed to CollectionTV
+ * New icon (still needs work)
+ * Ability to add [B]ANY[/B] folder inside Kodi, whether local or in a different add-on, as collection source
+ * Collections now support any type of media(music, images) and not just videos.
+ * Fully customize the appearance of each collection (viewstyle, fonts, colors, choose what to show, etc)
+ * Choose starting point for each collection (feed/sources/play all)
+ * All strings moved to language PO files as requested by Team Kodi
+ 
+UI Related:
+(everything can now be done with a UI inside the add-on, no more need for manual XML editing!)
+ * Create collections
+ * Create new directories
+ * Add Sources to a collection
+ * Edit settings globally for all collections
+ * Edit settings for each individual collection 
+ * Delete collections
+  
+ Kodi Sources:
+ * Browse other Kodi Add-Ons within Collection TV and add them as a collections source
+ * Browse local media within Collection TV and add it as a collection source
+ * Choose how each source gets browsed. Either using the internal parser with all its benefits, or going straight to the original folder (same functionality as favorties/super favorites)
+ 
+ YouTube Sources:
+ * Sign in to YouTube
+ * Search YouTube
+ * Browse subscriptions
+ * Browse categories
+ * Browse channel playlists
+ * Next page in all views
+ * View count for videos
+ * Region settings
+ * Subscription sorting settings
+ * Thumb quality settings
+ * Fixed issue with "wrong" dates. Dates are now the same as seen on youtube.com
+ 
+ Cache related:
+ * Individual caching for each source: Everything loads faster, plugin is more stable, and cache uses less space.
+ * Customize cache settings
+ * Clear cache via the menu at any time
+
+ 
+ 
+ 
+
 1.0.0 Release
 0.1.1 First beta release
