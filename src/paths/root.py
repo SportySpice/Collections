@@ -37,7 +37,7 @@ def root():
     
     #homeSetting = addonSettings.get('homepage', default=0,  isInt=True)    
     
-    homeSetting = addonSettings.get('homepage', default=0)  #temp thing cause of people changing version. remove later                      
+    homeSetting = addonSettings.get('homepage', default='0')  #temp thing cause of people changing version. remove later                      
     if not homeSetting.isdigit():          
         addonSettings.set('homepage', '0')
         homeSetting = 0
