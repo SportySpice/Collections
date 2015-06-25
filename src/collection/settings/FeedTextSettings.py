@@ -16,8 +16,10 @@ D_PLAY_ALL       = TextSettings         (None,          False,  False, show=Fals
 # D_VIDEO_COUNT  = CountTextSettings    ('yellow',      False,  False, Location.MIDDLE, CountType.VIEWS)
 # D_VIDEO_SOURCE = TextSettings         ('tan',         True,   True)
 # D_VIDEO_TITLE  = TextSettings         ('seashell',    False,  False)
+
 D_VIDEO_COUNT    = CountTextSettings    ('yellow',      False,  True, Location.MIDDLE, CountType.VIEWS)
-D_VIDEO_SOURCE   = TextSettings         ('chocolate',   False,  False)
+D_VIDEO_SOURCE   = TextSettings         ('red',         False,  False)
+#D_VIDEO_SOURCE  = TextSettings         ('chocolate',   False,  False)
 D_VIDEO_TITLE    = TextSettings         (None,          False,  False)
 
 D_USE = False
