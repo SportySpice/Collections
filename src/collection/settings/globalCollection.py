@@ -19,6 +19,7 @@ def gc():
         
     if gcFile.exists():        
         gc = Collection.fromFile(gcFile, loadSources=False, isGlobal=True)
+        gc.setLoadedSources()
     
     else:
         gc = Collection.empty('Global Collection', gcFile)
