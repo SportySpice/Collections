@@ -12,3 +12,5 @@
 * warnings about kodi folders inside a cocllection failing to update or being empty
 
 * youtube comments
+
+*seperate youtube collections addon

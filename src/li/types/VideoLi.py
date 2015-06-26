@@ -43,11 +43,16 @@ class VideoLi(Li):
     
         if video.duration:
             self.li.addStreamInfo('video', { 'duration': video.duration.seconds})
+            
+        
     
     
     @staticmethod
     def _generalInfoLabels(video):
-        return {'Date': video.date.strftime('%d.%m.%Y') if video.date else None}
+        return {
+            'date': video.date.strftime('%d.%m.%Y') if video.date else None,
+            'Date': video.date.strftime('%d.%m.%Y') if video.date else None     #not sure if date or Date, check later
+        }
     
     
         
@@ -59,22 +64,27 @@ class VideoLi(Li):
         
         
         return {
-                'title': title,
-                'studio': source.studioTitle,
-                'tvshowtitle': source.tvShowTitle,
-                'plot': video.description,
+                'title':        title,
+                #'originaltitle':video.title,
+                'studio':       source.studioTitle,
+                'tvshowtitle':  source.tvShowTitle,
+                'plot':         video.description,
                 
-                'year': date.year if date else None,
-                'aired': date.strftime('%Y-%m-%d') if date else None,
-                'premiered': date.strftime('%Y-%m-%d') if date else None,
+                
+                
+                
+                'year':         date.year                   if date else None,
+                'aired':        date.strftime('%Y-%m-%d')   if date else None,
+                'premiered':    date.strftime('%Y-%m-%d')   if date else None,
                                                    
-                'episode': video.position,                                                                  
-                'playcount': video.playCount(),
+                'episode':      video.position,                                                                  
+                'playcount':    video.playCount(),
                 #'lastplayed': can use this, storing it already in watchedDic (string (%Y-%m-%d %h:%m:%s = 2009-04-05 23:16:04)
                 
                
-               'votes': video.likeCount if video.isYoutube() else None,
-               'rating': video.rating,
+               'votes':     str(video.likeCount) if video.isYoutube() else None,
+               'rating':    video.rating,
+               
                
                
                #'duration': video.duration.seconds / 60

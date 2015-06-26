@@ -122,8 +122,29 @@ class ItemList(object):
         self.items.append(collectionSettingsLi.di)
         
         
-    def present(self, viewStyle):
-        xbmcplugin.setContent(addonHandle, viewStyle)       
+    def present(self, viewStyle):        
+        xbmcplugin.setContent(addonHandle, viewStyle)
         xbmcplugin.addDirectoryItems(addonHandle, self.items, totalItems=len(self.items))
+        
+        
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_LISTENERS)         
+#         
+#         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_DATEADDED)
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_STUDIO)
+#         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_TITLE)
+#         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_LABEL)
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_EPISODE)
+#         
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_VIDEO_RATING)
+#         
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_DURATION)
+#         
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_LASTPLAYED)
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_PLAYCOUNT)
+# 
+#         
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_NONE)
+#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_UNSORTED)
+        
         
         xbmcplugin.endOfDirectory(addonHandle)
