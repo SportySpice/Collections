@@ -30,7 +30,9 @@ UI Related:
  * Browse categories
  * Browse channel playlists
  * Next page in all views
- * View count for videos
+ * Video view count
+ * Video duration
+ * Video rating (based on likes and dislikes)
  * Region settings
  * Subscription sorting settings
  * Thumb quality settings

@@ -1,1 +1,14 @@
-# default colors
+* date estimation algoritm for kodi folders
+* More sorting methods (currently always by newest)
+
+
+* choose image for collection when creating it (via built in icon packs and browse) + modify it later via context menus
+* browse/remove sources directly from video context menu (actualy browsing might not be possible? he did it on youtube plugin, need to check)
+* video stats context menu
+* Options to prevent consecutive videos from the same source (maxRepeat and push)
+* missing infolabels in most views
+* clean up context menus
+* play all and play queue for channels/playlists/folders
+* warnings about kodi folders inside a cocllection failing to update or being empty
+
+* youtube comments
