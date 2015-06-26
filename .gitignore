@@ -107,8 +107,8 @@ $RECYCLE.BIN/
 
 
 #Eclipse project files
-*.project
-*.pydevproject
+#*.project
+#*.pydevproject
 
 #Compiled python files
 *.pyo
