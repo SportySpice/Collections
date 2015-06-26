@@ -106,7 +106,7 @@ class SettingsWindow(object):
         
 
         
-    def addTabs(self, tabs, bold=True, space=10, padX=-10, textXOffset=0):        
+    def addTabs(self, tabs, bold=False, space=10, padX=-10, textXOffset=0):        
         listC = pyxbmct.List(_space=space, _itemTextXOffset=textXOffset)
         
         if not self.hideTabs:

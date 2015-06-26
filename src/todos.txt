@@ -10,6 +10,7 @@
 * count in only some of the views if possible (select which via gui)
 * youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
 * more parsing methods for kodi folders (local dir list, jsonrpc walk, others?)
+* text settings profiles
 
 
 
