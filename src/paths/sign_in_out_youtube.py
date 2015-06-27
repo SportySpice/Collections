@@ -21,10 +21,13 @@ AUTHORIZE_LINK = 'https://accounts.google.com/o/oauth2/device/usercode'
 
     
 def signIn(showSuccessDialog=True):
+    from src.tools import platform
     import xbmc
         
-    
-    selection = signInDialog()
+    if platform.isAndroid():
+        selection = 1
+    else:
+        selection = signInDialog()
 
     if selection==-1:
         return False
