@@ -29,7 +29,7 @@ def browse(kodiFolderFile, rootFolder=False):
     
     if rootFolder:
         for folder in folders:
-            if folder.path != 'plugin://plugin.video.collections':
+            if not folder.path.startswith('plugin://plugin.video.collections'):                
                 items.addKodiFolder(folder, foldersVisual)
     
     else:
