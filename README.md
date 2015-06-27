@@ -5,6 +5,7 @@ You can use any of the predefined collections or easily create your own.
 
 
 ####Links
+* [Download Collection TV] (https://github.com/SportySpice/Collections/releases)
 * [Kodi Forum Thread](http://forum.kodi.tv/showthread.php?tid=227806)
 * [Future Features & Plans](https://github.com/SportySpice/Collections/wiki/Future-Features-&-Plans)
 * [How can you help?](https://github.com/SportySpice/Collections/wiki/How-can-you-help%3F)
