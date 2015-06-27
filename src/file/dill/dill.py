@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from src.tools import platform
+
 #
 # Author: Mike McKerns (mmckerns @caltech and @uqfoundation)
 # Copyright (c) 2008-2014 California Institute of Technology.
@@ -75,11 +78,15 @@ if sys.hexversion >= 0x20500f0:
 # new in python3.3
 if sys.hexversion < 0x03030000:
     FileNotFoundError = IOError
+    
 try:
     import ctypes
     HAS_CTYPES = True
 except ImportError:
     HAS_CTYPES = False
+
+#HAS_CTYPES = False
+
 try:
     from numpy import ufunc as NumpyUfuncType
     from numpy import ndarray as NumpyArrayType
@@ -525,11 +532,12 @@ class _attrgetter_helper(object):
         return type(self)(attrs, index)
 
 if HAS_CTYPES:
-    ctypes.pythonapi.PyCell_New.restype = ctypes.py_object
-    ctypes.pythonapi.PyCell_New.argtypes = [ctypes.py_object]
-    # thanks to Paul Kienzle for cleaning the ctypes CellType logic
-    def _create_cell(contents):
-        return ctypes.pythonapi.PyCell_New(contents)
+    if not platform.isAndroid():
+        ctypes.pythonapi.PyCell_New.restype = ctypes.py_object
+        ctypes.pythonapi.PyCell_New.argtypes = [ctypes.py_object]
+        # thanks to Paul Kienzle for cleaning the ctypes CellType logic
+        def _create_cell(contents):
+            return ctypes.pythonapi.PyCell_New(contents)
 
 def _create_weakref(obj, *args):
     from weakref import ref
