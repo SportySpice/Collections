@@ -16,3 +16,6 @@
 
 * Collection Store: download collections created by others and share your own collections with the world
 * Map collections/sources to "channels" like pseudo tv
+
+
+* find out why android version can't load ctypes.pythonapi.PyCell_New as required by dill, or at least keep note to yourself you added code there
