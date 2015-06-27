@@ -1,3 +1,7 @@
+[B]2.0.1[/B] 
+* Fixed many issues which prevented the add-on from loading/functioning correctly on Android (and possibly other platforms).
+* Collection TV is now hidden again when browsing add-ons
+
 [B]2.0.0 MAJOR UPDATE[/B]:
 
 General & Collection related:
