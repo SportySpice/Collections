@@ -1,5 +1,6 @@
 from src.videosource.Video import Video
 from datetime import datetime, timedelta
+from src.tools import fixedDatetime
 from src import router
 from src.tools import WatchedDic
 from src.paths.root import KODI_DATA_DIR
@@ -91,7 +92,7 @@ def _processDate(item):
         date = item['dateadded']
         
     if date is not None:
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = fixedDatetime.strptime(date, '%Y-%m-%d')
         date = pytz.UTC.localize(date)
         return date
         
@@ -115,7 +116,7 @@ def _processDuration(item):
 
 def _processLastPlayed(item):
     if _getValue(item, 'lastplayed'):
-        lastplayed = datetime.strptime(item['lastplayed'], '%Y-%m-%d %H:%M:%S')
+        lastplayed = fixedDatetime.strptime(item['lastplayed'], '%Y-%m-%d %H:%M:%S')
         return lastplayed
     
     return None
