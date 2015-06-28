@@ -416,21 +416,18 @@ msgstr ""
 
 msgctxt "#30571"
 msgid "Play All"
-msgstr "" 
+msgstr ""
 
 msgctxt "#30572"
 msgid "Browse In Original Folder"
-msgstr "" 
-    
-    
-    
-    
+msgstr ""
+
+
+
 #Sources Text Tab
 msgctxt "#30580"
 msgid "Source Title"
 msgstr ""
-
-    
 
 
 
