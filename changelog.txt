@@ -21,6 +21,7 @@
 * Secondary count
 * Counts can now be aligned for a cleaner look
 * Queue all videos when playing video inside a source
+* Max collection limit increased to a whopping 2000
 
 [B]2.0.1[/B] 
 * Fixed many issues which prevented the add-on from loading/functioning correctly on Android (and possibly other platforms).
