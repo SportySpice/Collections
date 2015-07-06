@@ -7,7 +7,17 @@ def play(videoId, collectionFile):
     collection.createCombinedList()   #not bad for now, might wanna cache collection in future
     
     playlist = ItemPlaylist()
-       
+    
+    
+    
+    for video in collection.videos:
+        playlist.addVideo(video, collection.feedSettings.TS.videosVisual())
+        
+        if video.id == videoId:
+            playlist.playFromLast()
+    
+    
+      
 #     for video in collection.videoList:
 #         if video.id == videoId:
 #             playlist.addVideoAndResolve(video, videosVisual)
@@ -17,9 +27,3 @@ def play(videoId, collectionFile):
     
     
 
-    for video in collection.videos:
-        playlist.addVideo(video, collection.feedSettings.TS.videosVisual())
-        
-        if video.id == videoId:
-            playlist.playFromLast()
-    
