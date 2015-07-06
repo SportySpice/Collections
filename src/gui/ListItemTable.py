@@ -3,8 +3,8 @@ from Row import Row
 from EnumButton import EnumMode
 import colors
 import pyxbmct.addonwindow as pyxbmct
-from src.li.visual.CountTextSettings import Location, CountTextSettings, CountType as ct
 from src.li.visual import FullTextSettings
+from src.li.visual.FullTextSettings import Location
 from src.li.visual import TextSettings
 from src.tools.addonSettings import string as st
 
@@ -12,13 +12,13 @@ from src.tools.addonSettings import string as st
 
 
 # COUNT_OPTIONS           =   (ct.VIEWS,      ct.SUBSCRIBERS,     ct.VIDEOS,      ct.NEW_VIDEOS)
-# COUNT_LABELS            =   (st(662),       st(663),            st(664),        st(665))
-ctToLabel   =   {ct.VIEWS:st(665),  ct.SUBSCRIBERS:st(666),   ct.VIDEOS:st(667),     ct.NEW_VIDEOS:st(668)}
+# COUNT_LABELS            =   (st(682),       st(683),            st(684),        st(685))
+#ctToLabel   =   {ct.VIEWS:st(685),  ct.SUBSCRIBERS:st(686),   ct.VIDEOS:st(687),     ct.NEW_VIDEOS:st(688)}
 
 
 
-LOCATION_OPTIONS        =   (Location.LEFT,     Location.MIDDLE,        Location.RIGHT)
-LOCATION_LABELS         =   (st(670),           st(671),               st(672))
+LOCATION_OPTIONS        =   (Location.LEFT_ALIGNED, Location.LEFT,     Location.MIDDLE,        Location.RIGHT)
+LOCATION_LABELS         =   (st(690),               st(691),           st(692),               st(693))
 
 
 
@@ -44,9 +44,9 @@ class ListItemTable(object):
                         
         headingRow = Row()
         
-        headingRow.addLabel(    st(650),    COLOR_COLUMN,   columnspan=2, bold=True)
-        headingRow.addLabel(    st(651),    BOLD_COLUMN,    columnspan=2, bold=True, padX=23)
-        headingRow.addLabel(    st(652),    ITALIC_COLUMN,  columnspan=3, bold=True, padX=23)
+        headingRow.addLabel(    st(670),    COLOR_COLUMN,   columnspan=2, bold=True)
+        headingRow.addLabel(    st(671),    BOLD_COLUMN,    columnspan=2, bold=True, padX=23)
+        headingRow.addLabel(    st(672),    ITALIC_COLUMN,  columnspan=3, bold=True, padX=23)
         #headingRow.addLabel(   st(653),    LOCATION_COLUMN,columnspan=2, bold=True, padX=LOCATION_COLUMN_PAD,     alignment=pyxbmct.ALIGN_LEFT)
         #headingRow.addLabel(   st(653),    LOCATION_COLUMN,columnspan=2, bold=True, padX=LOCATION_COLUMN_PAD+23,  alignment=pyxbmct.ALIGN_LEFT)        
         self.rows.append(headingRow)        
@@ -74,7 +74,7 @@ class ListItemTable(object):
                 self.exampleList.control.addItem(example) 
         
         else:
-            self.exampleList = self.exampleRow.addList(examplesToShow, SETTING_COLUMN, space=0, columnspan=7, rowspan=7)
+            self.exampleList = self.exampleRow.addList(examplesToShow, SETTING_COLUMN, space=0, columnspan=7, rowspan=9)
 
         
         
@@ -112,7 +112,7 @@ class ListItemTable(object):
         
         
         
-    def addFullItem(self, currentFTS, defaultFTS, saveCallback, titleExample, sourceExample=None, countExample=None, countlessTitleExample=None, countlessSourceExample=None):
+    def addFullItem(self, currentFTS, defaultFTS, saveCallback, titleExample, sourceExample=None, countlessTitleExample=None, countlessSourceExample=None):
         assignedFTS = FullTextSettings.fromOther(currentFTS)
         _saved = [False]
         
@@ -122,11 +122,25 @@ class ListItemTable(object):
                 saveCallback(assignedFTS)
                 _saved[0] = True
         
+        
+        
+        count  = '14hr'
+        count2 = '562k'        
+        maxChars  = 4
+        maxChars2 = 4
+        #textIfNone  =' '*11 
+        textIfNone2 =' '*12
+        
         def exampleText():
-            return assignedFTS.fullText(titleExample, sourceExample, countExample)
+                                              
+            
+            
+             
+            
+            return assignedFTS.fullText(titleExample, sourceExample, count, maxChars, countNumber2=count2, maxChars2=maxChars2)
          
         def countlessExampleText():
-            return assignedFTS.fullText(countlessTitleExample, countlessSourceExample)
+            return assignedFTS.fullText(countlessTitleExample, countlessSourceExample, count, maxChars, textIfNone2=textIfNone2)
 #             countTS = assignedFTS.countTS        
 #             assignedFTS.countTS = None        
 #             text = assignedFTS.fullText(countlessTitleExample, countlessSourceExample)
@@ -150,16 +164,14 @@ class ListItemTable(object):
         
         radioPadX = 0
         #radioPadX = -14
-        label = ctToLabel[currentFTS.countTS.countType]
-        self.addItemRow(label, currentFTS.countTS, defaultFTS.countTS, assignedFTS.countTS, exampleUpdate, showOptions=True, saveCallback=onSave, radioPadX=radioPadX) 
+        self.addItemRow(st(680),  currentFTS.countTS,   defaultFTS.countTS,   assignedFTS.countTS,    exampleUpdate, saveCallback=onSave, showOptions=True,  radioPadX=radioPadX, cLocHolder=currentFTS, dLocHolder=defaultFTS, aLocHolder=assignedFTS)
+        self.addItemRow(st(681),  currentFTS.count2TS,  defaultFTS.count2TS,  assignedFTS.count2TS,   exampleUpdate, saveCallback=onSave, showOptions=False, radioPadX=radioPadX) 
                      
-        label = st(660)       
+               
         radioPadX = 0
         #radioPadX = -14
-        self.addItemRow(label, currentFTS.sourceTS, defaultFTS.sourceTS, assignedFTS.sourceTS, exampleUpdate, showOptions=True, saveCallback=onSave, radioPadX=radioPadX)
-                                        
-        label = st(661)
-        self.addItemRow(label, currentFTS.titleTS, defaultFTS.titleTS, assignedFTS.titleTS, exampleUpdate, saveCallback=onSave)    
+        self.addItemRow(st(682),  currentFTS.sourceTS,  defaultFTS.sourceTS,  assignedFTS.sourceTS,   exampleUpdate, saveCallback=onSave, showOptions=True,  radioPadX=radioPadX)                                    
+        self.addItemRow(st(683),  currentFTS.titleTS,   defaultFTS.titleTS,   assignedFTS.titleTS,    exampleUpdate, saveCallback=onSave)    
             
 
 
@@ -182,7 +194,7 @@ class ListItemTable(object):
         
         
         
-    def addItemRow(self, label, currentTS, defaultTS, assignedTS, exampleUpdate, showOptions=False, saveCallback=None, radioPadX=0):
+    def addItemRow(self, label, currentTS, defaultTS, assignedTS, exampleUpdate, showOptions=False, saveCallback=None, radioPadX=0, cLocHolder=None, dLocHolder=None, aLocHolder=None):
         _assignedValue = [False]
         
         
@@ -248,13 +260,13 @@ class ListItemTable(object):
 
    
             
-        if type(assignedTS) is CountTextSettings:             
-            def locationCallback(location):            
-                assignedTS.location = location
+        if cLocHolder:             
+            def locationCallback(location):
+                aLocHolder.countLocation = location            
                 assignedValue()
                  
              
-            locationButton = row.addEnumButton(st(653), LOCATION_OPTIONS, currentTS.location, defaultTS.location, LOCATION_COLUMN, changeCallback=locationCallback, saveCallback=onSave, customLabels=LOCATION_LABELS, returnValue=True, alignment=pyxbmct.ALIGN_LEFT, columnspan=LOCATION_COLUMN_SPAN, padX=LOCATION_COLUMN_PAD, enabled=buttonsEnabled)
+            locationButton = row.addEnumButton(st(673), LOCATION_OPTIONS, cLocHolder.countLocation, dLocHolder.countLocation, LOCATION_COLUMN, changeCallback=locationCallback, saveCallback=onSave, customLabels=LOCATION_LABELS, returnValue=True, alignment=pyxbmct.ALIGN_LEFT, columnspan=LOCATION_COLUMN_SPAN, padX=LOCATION_COLUMN_PAD, enabled=buttonsEnabled)
             
         else:
             locationButton = None

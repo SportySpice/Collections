@@ -10,7 +10,6 @@ from src.videosource.youtube import batchUpdater
 from src.videosource.kodi import KodiFolder
 import src.cxml.loader as cxml
 from src.li.visual.TextSettings import TextSettings
-from src.li.visual.CountTextSettings import CountTextSettings
 from src.cxml import Node
 
 
@@ -309,56 +308,67 @@ def _processTS(textRowSettings, default, returnSeperated=False):
     return TextSettings(color, bold, italic, show)
 
 
-def _processCTS(textRowSettings, default):
-    s = textRowSettings
-    
-    color, bold, italic, show = _processTS (s, default, returnSeperated=True)
-    location   = _get(s,    st.CTS_LOACTION,  st.valueToLoc,        default.location)
-    countType  = _get(s,    st.CTS_TYPE,      st.valueToCt,         default.countType)
-    
-    return CountTextSettings(color, bold, italic, location, countType, show)
+# def _processCTS(textRowSettings, default):
+#     s = textRowSettings
+#      
+#     ts = _processTS (s, default)
+#     location   = _get(s,    st.CTS_LOACTION,  st.valueToLoc,        default.location)
+#      
+#     return ts, location 
     
      
 
 
 def _processFeedSettings(feedNode):
     ns = feedNode.settings
-    viewStyle =     ns.get(     st.VIEWSTYLE,                           fs.D_VIEWSTYLE)
-    onVideoClick =  _get(ns,    st.FEED_VIDEOCLICK, st.valueToOvc,      fs.D_VIDEOCLICK)               
-    unwatched =     ns.get(     st.FEED_UNWATCHED,                      fs.D_UNWATCHED)
-    limit =         ns.get(     st.FEED_LIMIT,                          fs.D_LIMIT)
-    sLimit =        ns.get(     st.FEED_SLIMIT,                         fs.D_SLIMIT)
+    viewStyle   =   ns.get(     st.VIEWSTYLE,                           fs.D_VIEWSTYLE)
+    videoSort   =   _get(ns,    st.FEED_SORT,       st.valueTovsr,      fs.D_SORT)
+    videoSort2  =   _get(ns,    st.FEED_SORT2,      st.valueTovsr,      fs.D_SORT2,         nonePossible=True)
+    revSort     =   ns.get(     st.FEED_REVSORT,                        fs.D_REVERSE_SORT)
+    countType   =   _get(ns,    st.FEED_COUNT_TYPE, st.valueToVct,      fs.D_COUNT_TYPE)
+    countType2  =   _get(ns,    st.FEED_COUNT_TYPE2,st.valueToVct,      fs.D_COUNT_TYPE2,   nonePossible=True)   
+    #repViews    =   ns.get(     st.FEED_REPVIEWS,                       fs.D_REPLACE_VIEWS)
+    onVideoClick=   _get(ns,    st.FEED_VIDEOCLICK, st.valueToOvc,      fs.D_VIDEOCLICK)               
+    unwatched   =   ns.get(     st.FEED_UNWATCHED,                      fs.D_UNWATCHED)
+    limit       =   ns.get(     st.FEED_LIMIT,                          fs.D_LIMIT)
+    sLimit      =   ns.get(     st.FEED_SLIMIT,                         fs.D_SLIMIT)
     
-    use =           ns.get(st.USE,      fs.D_USE)
-    useTS =         ns.get(st.USETS,    fTS.D_USE)
+    use =           ns.get(st.USE,          fs.D_USE)
+    useLimits =     ns.get(st.USELIMITS,    fs.D_USELIMITS)
+    useTS =         ns.get(st.USETS,        fTS.D_USE)
     
     
+    countLoc    =   _get(ns,    st.COUNT_LOACTION,  st.valueToLoc,      fTS.D_COUNT_LOCATION)
     
     
     
     browseSourcesTS =   fTS.D_BROWSE_SOURCES
-    settingsTS =        fTS.D_SETTINGS
-    playAllTS =         fTS.D_PLAY_ALL
+    settingsTS      =   fTS.D_SETTINGS
+    sortTS          =   fTS.D_SORT
+    playAllTS       =   fTS.D_PLAY_ALL
         
-    videoCount =        fTS.D_VIDEO_COUNT
-    videoSource =       fTS.D_VIDEO_SOURCE
-    videoTitle =        fTS.D_VIDEO_TITLE
+    countTS         =   fTS.D_COUNT
+    count2TS        =   fTS.D_COUNT2    
+    videoSource     =   fTS.D_VIDEO_SOURCE
+    videoTitle      =   fTS.D_VIDEO_TITLE
     
     for textRow in feedNode.textRows:
         if textRow.text == st.FEED_TR_BROWSE_SOURCES:   browseSourcesTS =   _processTS(textRow.settings,    fTS.D_BROWSE_SOURCES)
         if textRow.text == st.FEED_TR_SETTINGS:         settingsTS      =   _processTS(textRow.settings,    fTS.D_SETTINGS)
+        if textRow.text == st.FEED_TR_SORT:             sortTS          =   _processTS(textRow.settings,    fTS.D_SORT)
         if textRow.text == st.FEED_TR_PLAYALL:          playAllTS       =   _processTS(textRow.settings,    fTS.D_PLAY_ALL)
         
-        if textRow.text == st.FEED_TR_VIDEO_COUNT:      videoCount      =   _processCTS(textRow.settings,   fTS.D_VIDEO_COUNT)
+        if textRow.text == st.FEED_TR_VIDEO_COUNT:      countTS         =   _processTS(textRow.settings,   fTS.D_COUNT)
+        if textRow.text == st.FEED_TR_VIDEO_COUNT2:     count2TS        =   _processTS(textRow.settings,    fTS.D_COUNT2)
         if textRow.text == st.FEED_TR_VIDEO_SOURCE:     videoSource     =   _processTS(textRow.settings,    fTS.D_VIDEO_SOURCE)
         if textRow.text == st.FEED_TR_VIDEO_TITLE:      videoTitle      =   _processTS(textRow.settings,    fTS.D_VIDEO_TITLE)
         
         
         
-    feedTS = fTS.fromSeperated(browseSourcesTS, settingsTS, playAllTS, 
-                               videoCount, videoSource, videoTitle, useTS)
+    feedTS = fTS.fromSeperated(browseSourcesTS, settingsTS, sortTS, playAllTS,  countTS, count2TS, 
+                               countLoc, videoSource, videoTitle, useTS)
     
-    feedSettings = fs.FeedSettings(viewStyle, onVideoClick, unwatched, limit, sLimit, use, feedTS)    
+    feedSettings = fs.FeedSettings(viewStyle, videoSort, videoSort2, revSort, countType, countType2, onVideoClick, unwatched, limit, sLimit, use, useLimits, feedTS)    
     return feedSettings 
     
     
@@ -415,10 +425,13 @@ def _runInit():
 
 
 
-def _get (dic, key, conversionDic, default=None):
-    value = dic.get(key)
-    
-    if value is None:
+def _get (dic, key, conversionDic, default=None, nonePossible=False):
+    if not key in dic:
         return default
-    
-    return conversionDic[value]
+
+    else:
+        value = dic[key]
+        if (nonePossible) and (value is None):
+            return None
+        
+        return conversionDic[value]

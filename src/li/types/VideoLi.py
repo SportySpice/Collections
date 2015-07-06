@@ -7,7 +7,7 @@ class VideoLi(Li):
     def __init__(self, video, url, isPlayable, videoVisual, collection=None):        
         title = videoVisual.title(video) 
         
-        icon = video.thumb
+        icon = None
         thumb = video.thumb 
         
 
@@ -40,12 +40,21 @@ class VideoLi(Li):
 
     
         self.pi = (url, self.li)    #needs to be unpacked when using with playlist.add()
+        self.title = title
+        self.thumb = thumb
+        self.generalInfoLabels = generalInfoLabels
+        self.videoInfoLabels = videoInfoLabels
     
         if video.duration:
             self.li.addStreamInfo('video', { 'duration': video.duration.seconds})
             
         
-    
+        
+        
+        
+            
+        
+        
     
     @staticmethod
     def _generalInfoLabels(video):
@@ -105,7 +114,9 @@ class VideoLi(Li):
         
         
         
-        
+    
+
+
 
 
 
@@ -134,9 +145,17 @@ def playVideoLi(video, videoVisual, collection=None):
 
 
 
-def queueCollectionLi(video, collection, videoVisual):
-    url = router.playQueueCollectionUrl(video.id, collection.file)
+def queuePlaylistLi(video, videoIndex, videoVisual, collection=None):
+    url = router.playQueuePlaylistUrl(videoIndex)
     isPlayable = False
-    videoLi = VideoLi(video, url, isPlayable, videoVisual, collection)
-     
+    
+    videoLi = VideoLi(video, url, isPlayable, videoVisual, collection)    
     return videoLi
+
+
+# def queueCollectionLi(video, collection, videoVisual):
+#     url = router.playQueueCollectionUrl(video.id, collection.file)
+#     isPlayable = False
+#     videoLi = VideoLi(video, url, isPlayable, videoVisual, collection)
+#      
+#     return videoLi

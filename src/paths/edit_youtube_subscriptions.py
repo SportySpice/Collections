@@ -1,6 +1,6 @@
 from src.gui.SettingsWindow import SettingsWindow
 from src.gui.Tab import Tab
-import xbmc
+from src.tools import xbmcTool
 
 from src.videosource.youtube.Subscriptions import SubscriptionSorting as ss
 
@@ -19,6 +19,6 @@ def edit():
     window.addTabs([generalTab])
     
     
-    xbmc.executebuiltin('XBMC.Dialog.Close(all, true)')
+    xbmcTool.closeOpenDialogs()
     window.show()
     window.delete()

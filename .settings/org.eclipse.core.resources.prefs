@@ -2,5 +2,7 @@ eclipse.preferences.version=1
 encoding//src/cxml/exporter.py=utf-8
 encoding//src/cxml/loader.py=utf-8
 encoding//src/file/dill/dill.py=utf-8
+encoding//src/paths/sort_videolist.py=utf-8
+encoding//src/tools/humanize/number.py=utf-8
 encoding//src/tools/pytz/tests/test_tzinfo.py=ascii
 encoding//src/videosource/youtube/regionCodes.py=utf-8

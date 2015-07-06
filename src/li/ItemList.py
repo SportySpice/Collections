@@ -1,3 +1,4 @@
+from ItemPlayList import CachableItemPlaylist
 import xbmcplugin
 from src.tools.addonHandle import addonHandle
 from src.file import Folder
@@ -18,6 +19,7 @@ from types.SelectableFolderLi import SelectableFolderLi
 from types.SelectableCollectionLi import SelectableCollectionLi
 from types.CustomFileLi import CustomFileLi
 from types.CollectionSettingsLi import CollectionSettingsLi
+from types import VideoSortLi
 #import types.FolderLi as FolderLi
 #import types.VideoLi as VideoLi
 #import types.CollectionLi as CollectionLi
@@ -27,8 +29,21 @@ from types.CollectionSettingsLi import CollectionSettingsLi
 
 
 class ItemList(object):
-    def __init__(self):
+    def __init__(self, hasQeuingVideos=False):
         self.items = []
+        
+        
+        self.hasQueingVideos = hasQeuingVideos
+        if hasQeuingVideos:
+            self.playlist = CachableItemPlaylist()
+            self.numVideos = 0
+            
+        
+        
+            
+            
+            
+    
         
         
 
@@ -42,13 +57,26 @@ class ItemList(object):
         
     
     
-    def addVideoPlay(self, video, videoVisual, collection=None):
-        videoLi = VideoLi.playVideoLi(video, videoVisual, collection)        
-        self.items.append(videoLi.di)
         
-    def addVideoQueueCollection(self, video, collection, videoVisual):
-        videoLi = VideoLi.queueCollectionLi(video, collection, videoVisual)
-        self.items.append(videoLi.di)
+            
+        
+    def addVideo(self, video, videoVisual, collection=None):
+        if self.hasQueingVideos:
+            videoLi = VideoLi.queuePlaylistLi(video, self.numVideos, videoVisual, collection)
+        
+            self.items.append(videoLi.di)            
+            self.playlist.addItem(video.playUrl(), videoLi)
+        
+            self.numVideos += 1
+            
+        else:
+            videoLi = VideoLi.playVideoLi(video, videoVisual, collection)        
+            self.items.append(videoLi.di)
+        
+        
+#     def addVideoQueueCollection(self, video, collection, videoVisual):
+#         videoLi = VideoLi.queueCollectionLi(video, collection, videoVisual)
+#         self.items.append(videoLi.di)
         
         
         
@@ -121,6 +149,18 @@ class ItemList(object):
         collectionSettingsLi = CollectionSettingsLi(collection)
         self.items.append(collectionSettingsLi.di)
         
+    def addVideoSortCollection(self, collection):
+        videoSortLi = VideoSortLi.collectionVideoSortLi(collection)
+        self.items.append(videoSortLi.di)
+        
+    def addVideoSortYoutube(self, title):
+        videoSortLi = VideoSortLi.youtubeVideoSortLi(title)
+        self.items.append(videoSortLi.di)
+        
+    def addVideoSortKodi(self, title):
+        videoSortLi = VideoSortLi.kodiVideoSortLi(title)
+        self.items.append(videoSortLi.di)
+        
         
     def present(self, viewStyle):        
         xbmcplugin.setContent(addonHandle, viewStyle)
@@ -129,8 +169,10 @@ class ItemList(object):
         
 #         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_LISTENERS)         
 #         
-#         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_DATEADDED)
-#         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_STUDIO)
+        #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_DATE)
+        #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_DATEADDED)
+        #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+        #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_STUDIO)
 #         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_TITLE)
 #         #xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_LABEL)
 #         xbmcplugin.addSortMethod(addonHandle, xbmcplugin.SORT_METHOD_EPISODE)
@@ -148,3 +190,6 @@ class ItemList(object):
         
         
         xbmcplugin.endOfDirectory(addonHandle)
+        
+        if self.hasQueingVideos:
+            self.playlist.cache()

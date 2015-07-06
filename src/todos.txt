@@ -1,21 +1,12 @@
-* settings for all views and counts (also Feed TS in browse sources)
+* Options to prevent consecutive videos from the same source (maxRepeat and push)
 * Custom icons and titles for each source
-* service/process that runs date estimation algoritm in the background all the time
-* New items count for each source (figure out how to calculate and show this)
 * include in main feed option for each source
 * Video quality selection (currently always 720p)
-* override context menus
 * force refresh content menus (both outside and inside item. inside item and maybe also add an item, with other optionsa and settings)
-* clear cache once a week or so
-* count in only some of the views if possible (select which via gui)
+* clear cache once a week or so + some kind of protection that checks if script ended. if it didnt 2-3 times in a row, clear cache.
 * youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
-* more parsing methods for kodi folders (local dir list, jsonrpc walk, others?)
-* text settings profiles
-
-
-
-* Collection Store: download collections created by others and share your own collections with the world
-* Map collections/sources to "channels" like pseudo tv
-
-
-* find out why android version can't load ctypes.pythonapi.PyCell_New as required by dill, or at least keep note to yourself you added code there
+* service/process that runs date estimation algoritm in the background all the time
+* New items count for each source (figure out how to calculate and show this)
+* increase limit for kodi folders, and if possible find a way to do it for youtube sources as well
+* youtube charts (via search and order)
+* sort via api in youtube channels

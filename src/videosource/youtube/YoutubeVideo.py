@@ -26,7 +26,6 @@ class YoutubeVideo(Video):
         self.viewCount = None
         self.likeCount = None
         self.dislikeCount = None
-        self.favoriteCount = None
         self.commentCount = None    
         
 
@@ -45,7 +44,6 @@ class YoutubeVideo(Video):
         self.duration = isoduration.parse_duration(contentDetails['duration'])
                         
         self.viewCount = int(statistics['viewCount'])
-        self.favoriteCount = int(statistics['favoriteCount'])
         self.commentCount = int(statistics['commentCount'])
         
         likeCount = int(statistics['likeCount'])
@@ -56,7 +54,9 @@ class YoutubeVideo(Video):
         if likeCount>0:
             self.rating = (likeCount / float((likeCount + dislikeCount))) * 10
         else:
-            self.rating = 0
+            self.rating = 0 if dislikeCount > 0     else None
+            #self.rating = 0
+                
             
             
         self.date = isodatetime.parse_datetime(snippet['publishedAt'])  #date from this request is more accurate as the other request

@@ -13,7 +13,7 @@ VALUE_COLUMN = 7
 VALUE_COLUMN_SPAN = 3
 
 class Tab(object):
-    def __init__(self, title, rows=14, columns=10):
+    def __init__(self, title, rows=15, columns=10):
         self.title = title
         self.numRows = rows
         self.numColumns = columns
@@ -38,12 +38,12 @@ class Tab(object):
         
         
         
-    def addEnum(self, label, values, current, default, onSave, customLabels=None, mode=EnumMode.SELECT, returnValue=True):
+    def addEnum(self, label, values, current, default, onSave, customLabels=None, mode=EnumMode.SELECT, returnValue=True, changeCallback=None):
         row = self.addSettingRow(label)
-        row.addEnumButton(label, values, current, default, VALUE_COLUMN, onSave, customLabels=customLabels, mode=mode, returnValue=returnValue, 
-                           alignment=pyxbmct.ALIGN_LEFT, columnspan=VALUE_COLUMN_SPAN)        
+        button = row.addEnumButton(label, values, current, default, VALUE_COLUMN, onSave, customLabels=customLabels, mode=mode, returnValue=returnValue, 
+                           changeCallback=changeCallback, alignment=pyxbmct.ALIGN_LEFT, columnspan=VALUE_COLUMN_SPAN)        
         
-        
+        return button
         
     def addBool(self, label, current, default, onSave):
         row = self.addSettingRow(label)
@@ -68,9 +68,10 @@ class Tab(object):
         else:
             column = SETTING_COLUMN
             
-        row.addButton(label, column, onClick, columnspan=columnSpan,  padX=-5, alignment=pyxbmct.ALIGN_LEFT, bold=bold)
-        
+        button = row.addButton(label, column, onClick, columnspan=columnSpan,  padX=-5, alignment=pyxbmct.ALIGN_LEFT, bold=bold)        
         self.addRow(row)
+        
+        return button
     
     
         

@@ -28,7 +28,7 @@ class KodiVideo(Video):
         #playCount      =       _getValue(item, 'playcount')
         #lastPlayed     =       _processLastPlayed(item)
         
-        rating          =       item.get('rating', 0)
+        rating          =       item.get('rating', None)
 
 
 

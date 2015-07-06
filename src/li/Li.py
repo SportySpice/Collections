@@ -5,7 +5,7 @@ class Li(object):
     def __init__(self, title, icon, thumb, url, isFolder, isPlayalbe, 
                  videoInfoLabels, generalInfoLabels, contextMenus=None):    
               
-        li = xbmcgui.ListItem (title, iconImage=icon, thumbnailImage=thumb)
+        li = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
         
         if isPlayalbe:
             li.setProperty('IsPlayable', 'True')

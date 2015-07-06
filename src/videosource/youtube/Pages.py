@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.tools.enum import enum
 from src.videosource.VideoSource import SourceType
+from src.videosource.VideoList  import VideoSort
 from src.videosource.youtube import batchUpdater
 import service
 
@@ -386,7 +387,7 @@ class Page(object):
     def setItems(self, items, timeUpdated=datetime.now()):
         self.items = items
         self.timeUpdated = timeUpdated
-        self.numItems = len(items)
+        #self.numItems = len(items)
         
         if self.itemType == ItemType.VSOURCE:
             cacheableItems = []
@@ -405,7 +406,7 @@ class Page(object):
             raise ValueError('Page sorting is currently only supported for videos')
         
         
-        self.items.sort(key = lambda video: video.date, reverse=True)
+        self.items.sort(VideoSort.DATE)
 
         
         

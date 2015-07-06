@@ -122,17 +122,15 @@ def _processTS(name, TS, defaultTS, returnSettings=False):
     
 
 
-def _processCTS(name, CTS, defaultCTS):
-    s = _processTS(name, CTS, defaultCTS, returnSettings=True)
-    
-    s.addIfDifferent(   st.CTS_LOACTION,    CTS.location,   defaultCTS.location,        customValueDic=st.locToValue)
-    s.addIfDifferent(   st.CTS_TYPE,        CTS.countType,  defaultCTS.countType,       customValueDic=st.ctToValue)
-
-
-    if not s.hasValues():
-        return None
-    
-    return OrderedTextRow(name, s)
+# def _processCTS(name, CTS, defaultCTS):
+#     s = _processTS(name, CTS, defaultCTS, returnSettings=True)
+#     s.addIfDifferent(   st.CTS_LOACTION,    CTS.location,   defaultCTS.location,        customValueDic=st.locToValue)
+# 
+# 
+#     if not s.hasValues():
+#         return None
+#     
+#     return OrderedTextRow(name, s)
 
 
 
@@ -142,21 +140,32 @@ def _processFeedSettings(collection):
     fs = collection.feedSettings
     fts = fs.TS
     videoFTS = fts._videoFTS
-    
+
     ns.addIfDifferent(  st.VIEWSTYLE,       fs._viewStyle,      FS.D_VIEWSTYLE)
-    ns.addIfDifferent(  st.FEED_VIDEOCLICK, fs._onVideoClick,   FS.D_VIDEOCLICK,        customValueDic=st.ovcToValue)
+    ns.addIfDifferent(  st.FEED_SORT,       fs._sort,           FS.D_SORT,              customValueDic=st.vsrToValue)
+    ns.addIfDifferent(  st.FEED_SORT2,      fs._sort2,          FS.D_SORT2,             customValueDic=st.vsrToValue,   nonePossible=True)
+    ns.addIfDifferent(  st.FEED_REVSORT,    fs._reverseSort,    FS.D_REVERSE_SORT)
+    ns.addIfDifferent(  st.FEED_COUNT_TYPE, fs._countType,      FS.D_COUNT_TYPE,        customValueDic=st.vctToValue)
+    ns.addIfDifferent(  st.FEED_COUNT_TYPE2,fs._countType2,     FS.D_COUNT_TYPE2,       customValueDic=st.vctToValue,   nonePossible=True)
+    #ns.addIfDifferent(  st.FEED_REPVIEWS,   fs._replaceViews,   FS.D_REPLACE_VIEWS)
+    ns.addIfDifferent(  st.FEED_VIDEOCLICK, fs._onVideoClick,   FS.D_VIDEOCLICK,        customValueDic=st.ovcToValue)    
     ns.addIfDifferent(  st.FEED_UNWATCHED,  fs._unwatched,      FS.D_UNWATCHED)
     ns.addIfDifferent(  st.FEED_LIMIT,      fs._limit,          FS.D_LIMIT)
     ns.addIfDifferent(  st.FEED_SLIMIT,     fs.sLimit,          FS.D_SLIMIT)
     
-    ns.addIfDifferent(  st.USE,             fs.use,              FS.D_USE)
+    ns.addIfDifferent(  st.USE,             fs.use,             FS.D_USE)
+    ns.addIfDifferent(  st.USELIMITS,       fs.useLimits,       FS.D_USELIMITS)
     ns.addIfDifferent(  st.USETS,           fts.use,            FTS.D_USE)
+    
+    ns.addIfDifferent(  st.COUNT_LOACTION,  videoFTS.countLocation,  FTS.D_COUNT_LOCATION,   customValueDic=st.locToValue)
     
     browseSourcesTR =   _processTS( st.FEED_TR_BROWSE_SOURCES,  fts._browseSourcesTS,   FTS.D_BROWSE_SOURCES    )
     settingsTR      =   _processTS( st.FEED_TR_SETTINGS,        fts._settingsTS,        FTS.D_SETTINGS          )
+    sortTR          =   _processTS( st.FEED_TR_SORT,            fts._sortTS,            FTS.D_SORT              )
     playAllTR       =   _processTS( st.FEED_TR_PLAYALL,         fts._playAllTS,         FTS.D_PLAY_ALL          )
         
-    videoCountTR    =   _processCTS(st.FEED_TR_VIDEO_COUNT,     videoFTS.countTS,       FTS.D_VIDEO_COUNT       )
+    countTR         =   _processTS(st.FEED_TR_VIDEO_COUNT,      videoFTS.countTS,       FTS.D_COUNT             )
+    count2TR        =   _processTS(st.FEED_TR_VIDEO_COUNT2,     videoFTS.count2TS,      FTS.D_COUNT2            )
     videoSourceTR   =   _processTS( st.FEED_TR_VIDEO_SOURCE,    videoFTS.sourceTS,      FTS.D_VIDEO_SOURCE      )
     videoTitleTR    =   _processTS( st.FEED_TR_VIDEO_TITLE,     videoFTS.titleTS,       FTS.D_VIDEO_TITLE       )
     
@@ -165,9 +174,11 @@ def _processFeedSettings(collection):
     
     if browseSourcesTR: feedNode.addTextRow(browseSourcesTR)
     if settingsTR:      feedNode.addTextRow(settingsTR)
+    if sortTR:          feedNode.addTextRow(sortTR)
     if playAllTR:       feedNode.addTextRow(playAllTR)
     
-    if videoCountTR:    feedNode.addTextRow(videoCountTR)
+    if countTR:         feedNode.addTextRow(countTR)
+    if count2TR:        feedNode.addTextRow(count2TR)
     if videoSourceTR:   feedNode.addTextRow(videoSourceTR)
     if videoTitleTR:    feedNode.addTextRow(videoTitleTR)
     

@@ -1,6 +1,6 @@
 from visual.remove_from_collection import confirmDialog, successDialog
 from src.collection import Collection
-import xbmc
+from src.tools import xbmcTool
 
 
 def remove(collectionFile, sourceId, showConfirmDialog=True, showSuccessDialog=True, refreshContainer=True):
@@ -28,6 +28,6 @@ def removeDirect(cSource, showConfirmDialog=True, showSuccessDialog=True, refres
         
     
     if refreshContainer:
-        xbmc.executebuiltin('XBMC.Container.Refresh()')
+        xbmcTool.refreshContainer()
         
     return True

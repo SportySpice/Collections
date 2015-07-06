@@ -1,4 +1,5 @@
 from src.videosource.VideoSource import VideoSource, SourceType
+from src.videosource.VideoList import VideoList
 from KodiVideo import KodiVideo
 from src.paths.root import KODI_FOLDER_CACHE_DIR
 from src.tools import DataDictionary
@@ -118,7 +119,7 @@ class KodiFolder(VideoSource):
         allItems = []        
         folders = []        
         cacheableFolders = []        
-        videos = []
+        videos = VideoList()
         videosDic = {}
         
         index = 0

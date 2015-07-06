@@ -243,7 +243,11 @@ msgid "Settings"
 msgstr ""
 
 msgctxt "#30432"
-msgid "PLAY ALL"
+msgid "Sort"
+msgstr ""
+
+msgctxt "#30433"
+msgid "Play All"
 msgstr ""
 
 
@@ -271,14 +275,18 @@ msgid "Feed View"
 msgstr ""
 
 msgctxt "#30503"
-msgid "Feed Text"
+msgid "Feed Limits"
 msgstr ""
 
 msgctxt "#30504"
-msgid "Sources View"
+msgid "Feed Text"
 msgstr ""
 
 msgctxt "#30505"
+msgid "Sources View"
+msgstr ""
+
+msgctxt "#30506"
 msgid "Sources Text"
 msgstr ""
 
@@ -341,68 +349,114 @@ msgid "Unwatched Only"
 msgstr ""
 
 msgctxt "#30533"
-msgid "Collection Limit"
+msgid "Sort By"
 msgstr ""
 
 msgctxt "#30534"
-msgid "Source Limit"
+msgid "Secondary Sort"
 msgstr ""
 
 msgctxt "#30535"
-msgid "Set Individually"
+msgid "Reverse"
 msgstr ""
 
-    
-#Feed Text Tab
+msgctxt "#30536"
+msgid "Count Text"
+msgstr ""
+
+msgctxt "#30537"
+msgid "Count2 Text"
+msgstr ""
+
+#msgctxt "#30534"
+#msgid "Replace views text with sort"
+#msgstr ""
+
+
+
+
+
+
+#feed limits tab
 msgctxt "#30540"
-msgid "Browse Sources"
+msgid "Collection Limit"
 msgstr ""
 
 msgctxt "#30541"
-msgid "Settings"
+msgid "Source Limit"
 msgstr ""
 
 msgctxt "#30542"
+msgid "Set Individually"
+msgstr ""
+
+msgctxt "#30543"
+msgid "Source max consecutive videos"
+msgstr ""
+
+msgctxt "#30544"
+msgid "Videos in between"
+msgstr ""
+
+
+
+
+
+    
+#Feed Text Tab
+msgctxt "#30550"
+msgid "Browse Sources"
+msgstr ""
+
+msgctxt "#30551"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30552"
+msgid "Sort"
+msgstr ""
+
+msgctxt "#30553"
 msgid "Play All"
 msgstr ""
     
 
 
-msgctxt "#30550"
+msgctxt "#30560"
 msgid "YouTube Video Title"
 msgstr ""
 
-msgctxt "#30551"
+msgctxt "#30561"
 msgid "Channel Name"
 msgstr ""
 
-msgctxt "#30552"
+msgctxt "#30562"
 msgid "Kodi Video Title"
 msgstr ""
 
-msgctxt "#30553"
+msgctxt "#30563"
 msgid "Folder Name"
 msgstr ""
 
     
 #Sources Tab
-msgctxt "#30560"
+msgctxt "#30570"
 msgid "View Style"
 msgstr ""
 
-msgctxt "#30561"
+msgctxt "#30571"
 msgid "When clicking Kodi Source"
 msgstr ""
 
-msgctxt "#30562"
+msgctxt "#30572"
 msgid "When clicking YouTube Source"
 msgstr ""
 
-msgctxt "#30563"
+msgctxt "#30573"
 msgid "Set Individually"
 msgstr ""
 
-msgctxt "#30565"
+msgctxt "#30575"
 msgid "Source Click Behaviour"
 msgstr ""
 
@@ -410,22 +464,22 @@ msgstr ""
 
 
 
-msgctxt "#30570"
+msgctxt "#30580"
 msgid "Browse"
 msgstr "" 
 
-msgctxt "#30571"
+msgctxt "#30581"
 msgid "Play All"
 msgstr ""
 
-msgctxt "#30572"
+msgctxt "#30582"
 msgid "Browse In Original Folder"
 msgstr ""
 
 
 
 #Sources Text Tab
-msgctxt "#30580"
+msgctxt "#30590"
 msgid "Source Title"
 msgstr ""
 
@@ -460,6 +514,10 @@ msgstr ""
 
 msgctxt "#30606"
 msgid "Use Main"
+msgstr ""
+
+msgctxt "#30607"
+msgid "None"
 msgstr ""
 
 
@@ -500,71 +558,193 @@ msgstr ""
 
 
 
-#Video Click Options
+#Video Sort Options
 msgctxt "#30620"
-msgid "Play Video Only"
+msgid "Date"
 msgstr ""
 
 msgctxt "#30621"
+msgid "Views"
+msgstr ""
+
+msgctxt "#30622"
+msgid "Duration"
+msgstr ""
+
+msgctxt "#30623"
+msgid "Original Position (one video from each source)"
+msgstr ""
+
+msgctxt "#30624"
+msgid "Shuffle"
+msgstr ""
+
+msgctxt "#30625"
+msgid "Source Title"
+msgstr ""
+
+msgctxt "#30626"
+msgid "Video Title"
+msgstr ""
+
+msgctxt "#30627"
+msgid "Title"
+msgstr ""
+
+msgctxt "#30628"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#30629"
+msgid "Likes"
+msgstr ""
+
+msgctxt "#30630"
+msgid "Dislikes"
+msgstr ""
+
+msgctxt "#30631"
+msgid "Comment Count"
+msgstr ""
+
+msgctxt "#30632"
+msgid "Play Count"
+msgstr ""
+
+msgctxt "#30633"
+msgid "Last Played"
+msgstr ""
+
+
+
+
+#Video Count Options               
+msgctxt "#30640"
+msgid "Date"
+msgstr ""
+
+msgctxt "#30641"
+msgid "Views"
+msgstr ""
+
+msgctxt "#30642"
+msgid "Duration"
+msgstr ""
+
+msgctxt "#30643"
+msgid "Original Position"
+msgstr ""
+
+msgctxt "#30644"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#30645"
+msgid "Likes"
+msgstr ""
+
+msgctxt "#30646"
+msgid "Dislikes"
+msgstr ""
+
+msgctxt "#30647"
+msgid "Comment Count"
+msgstr ""
+
+msgctxt "#30648"
+msgid "Play Count"
+msgstr ""
+
+msgctxt "#30649"
+msgid "Last Played"
+msgstr ""
+
+
+
+
+
+
+
+#Video Click Options
+msgctxt "#30660"
+msgid "Play Video Only"
+msgstr ""
+
+msgctxt "#30661"
 msgid "Play & Queue Rest"
 msgstr ""
 
 
 
 
+
+
+
 #-----------ListItem Table----------
-msgctxt "#30650"
+msgctxt "#30670"
 msgid "Color"
 msgstr ""
 
-msgctxt "#30651"
+msgctxt "#30671"
 msgid "Bold"
 msgstr ""
 
-msgctxt "#30652"
+msgctxt "#30672"
 msgid "Italic"
 msgstr ""
 
-msgctxt "#30653"
+msgctxt "#30673"
 msgid "Location"
 msgstr ""
 
 
 
-msgctxt "#30660"
+msgctxt "#30680"
+msgid "Count"
+msgstr ""
+
+msgctxt "#30681"
+msgid "Count2"
+msgstr ""
+
+msgctxt "#30682"
 msgid "Source"
 msgstr ""
 
-msgctxt "#30661"
+msgctxt "#30683"
 msgid "Title"
 msgstr ""
 
-msgctxt "#30665"
-msgid "Views"
+#msgctxt "#30685"
+#msgid "Views"
+#msgstr ""
+
+#msgctxt "#30686"
+#msgid "Subscribers"
+#msgstr ""
+
+#msgctxt "#30687"
+#msgid "Videos"
+#msgstr ""
+
+#msgctxt "#30688"
+#msgid "New Videos"
+#msgstr ""
+
+
+msgctxt "#30690"
+msgid "Aligned"
 msgstr ""
 
-msgctxt "#30666"
-msgid "Subscribers"
-msgstr ""
-
-msgctxt "#30667"
-msgid "Videos"
-msgstr ""
-
-msgctxt "#30668"
-msgid "New Videos"
-msgstr ""
-
-
-msgctxt "#30670"
+msgctxt "#30691"
 msgid "Left"
 msgstr ""
 
-msgctxt "#30671"
+msgctxt "#30692"
 msgid "Middle"
 msgstr ""
 
-msgctxt "#30672"
+msgctxt "#30693"
 msgid "Right"
 msgstr ""
 
@@ -650,6 +830,10 @@ msgctxt "#30750"
 msgid "Add this folder to a collection"
 msgstr ""
 
+msgctxt "#30751"
+msgid "Sort"
+msgstr ""
+
 
 msgctxt "#30760"
 msgid "Parse Error"
@@ -674,10 +858,18 @@ msgctxt "#30771"
 msgid "Playlists"
 msgstr ""
 
+msgctxt "#30772"
+msgid "Sort"
+msgstr ""
+
 
 #-----------Browse YouTube Playlist----------
 msgctxt "#30780"
 msgid "Add this playlist to a collection"
+msgstr ""
+
+msgctxt "#30781"
+msgid "Sort"
 msgstr ""
 
 

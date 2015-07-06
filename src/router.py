@@ -9,8 +9,10 @@ ROOT                    =       'plugin://plugin.video.collections/'
 #HOME                   =        ?
 PLAY_VIDEO_KODI         =       'plugin://plugin.video.collections/play/video/kodi'
 PLAY_VIDEO_YOUTUBE      =       'plugin://plugin.video.collections/play/video/youtube'
+PLAY_QUEUE_PLAYLIST     =       'plugin://plugin.video.collections/play/queue/playlist'
 PLAY_QUEUE_COLLECTION   =       'plugin://plugin.video.collections/play/queue/collection'
 PLAY_COLLECTION         =       'plugin://plugin.video.collections/play/collection'
+
 
 BROWSE_FOLDER           =       'plugin://plugin.video.collections/browse/folder'
 BROWSE_COLLECTION       =       'plugin://plugin.video.collections/browse/collection'
@@ -43,6 +45,8 @@ EDIT_YT_PLAYLIST        =       'plugin://plugin.video.collections/edit/youtube/
 EDIT_YT_SUBSCRIPTIONS   =       'plugin://plugin.video.collections/edit/youtube/subscriptions'
 EDIT_YT_SEARCH          =       'plugin://plugin.video.collections/edit/youtube/search'
 EDIT_YT_CATEGORY        =       'plugin://plugin.video.collections/edit/youtube/subscriptions'
+
+SORT_VIDEOLIST          =       'plugin://plugin.video.collections/sort/videolist'
 
 DELETE_CACHE            =       'plugin://plugin.video.collections/delete/cache'
 
@@ -392,6 +396,16 @@ def editCollection(query):
         
     edit_collection.edit(collectionFile)
     
+def sortVideolistUrl(sourceType=None):
+    return _simpleUrl(SORT_VIDEOLIST, sourceType)
+
+def sortVideolist(query):
+    from src.paths import sort_videolist
+    
+    sourceType = _unsimpledQuery(query)
+    sort_videolist.sort(sourceType)
+    
+    
 def editKodiFolderUrl():
     return EDIT_KODI_FOLDER
 
@@ -411,7 +425,16 @@ def editYtSubscriptions(query):
 def editTemp(query):
     from src.tools.dialog import dialog
     dialog.ok('Soon', 'Coming Soon!')
+    
 
+def playQueuePlaylistUrl(videoIndex=0):
+    return _simpleUrl(PLAY_QUEUE_PLAYLIST, videoIndex)
+
+def playQueuePlaylist(query):
+    from src.paths import play_playlist
+    
+    videoIndex = _unsimpledQuery(query)
+    play_playlist.play(videoIndex)
 
 
 
@@ -437,7 +460,8 @@ def route(path, query):
                   EDIT_KODI_FOLDER:editTemp, EDIT_YT_CHANNEL:editTemp, 
                   EDIT_YT_CHANNEL_PLS:editTemp, EDIT_YT_PLAYLIST:editTemp,
                   EDIT_YT_SUBSCRIPTIONS:editTemp, EDIT_YT_SEARCH:editTemp, 
-                  EDIT_YT_CATEGORY:editTemp}
+                  EDIT_YT_CATEGORY:editTemp, SORT_VIDEOLIST:sortVideolist, 
+                  PLAY_QUEUE_PLAYLIST:playQueuePlaylist}
          
         pathes[path](query)
    

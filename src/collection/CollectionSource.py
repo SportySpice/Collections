@@ -64,7 +64,7 @@ class CollectionSource(object):
     
     
     def limit(self):
-        if not self.cfs.use:
+        if not self.cfs.useLimits:
             return gfs.sLimit
             
         return self._limit if self._limit else self.cfs.sLimit
@@ -98,18 +98,19 @@ class CollectionSource(object):
         return title, icon, thumb 
     
     
+        
+    #abstract
+    def allVideos(self):
+        return
     
     
-    def videos(self):
+    def limitedVideos(self):
         allVideos = self.allVideos()
         limit = self.limit()
       
         return allVideos[:limit]
     
-    
-    #abstract
-    def allVideos(self):
-        return
+
     
     
     

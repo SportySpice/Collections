@@ -5,6 +5,7 @@ from csource.YoutubeCollectionSource import YoutubeCollectionSource
 from src.tools.enum import enum
 from src import router
 from src.tools.addonSettings import string as st
+from src.videosource.VideoList import VideoList
 
 from datetime import datetime, MINYEAR
 from src.tools import pytz
@@ -66,37 +67,33 @@ class Collection(object):
 
 
 
-    def createCombinedList(self):                       
-        combinedVideoList = []
-        fs = self.feedSettings
+    def createCombinedList(self, customSort=None, reverse=None):
+        combinedVideoList = VideoList( cSources=self.cSources, limit=self.feedSettings.limit() )
         
-    
-        if fs.unwatched():
-            for source in self.cSources:
-                for video in source.videos():
-                    if not video.watched():
-                        combinedVideoList.append(video)
-            
-        else:            
-            for source in self.cSources:
-                for video in source.videos():
-                    combinedVideoList.append(video)
-
-
-        combinedVideoList.sort(key = lambda video: video.date if video.date else  datetime(MINYEAR, 1, 1, tzinfo=pytz.utc), 
-                                reverse=True)
+        vs = customSort if customSort else self.feedSettings.sort() 
+        vs2 = self.feedSettings.sort2()
+        reverse = reverse if reverse else self.feedSettings.reverseSort()
+        
+        combinedVideoList.sort(vs, vs2, reverse)
+        combinedVideoList.applyLimits()
                 
-        
-        
-        listLength = len(combinedVideoList)        
-        if listLength > fs.limit():                        
-            extraItems = listLength - fs.limit()
-            del combinedVideoList[-extraItems:]
-            
-        
-        
         self.videos = combinedVideoList        
-        #self.dump()
+        
+        
+        #     
+#         if fs.unwatched():
+#             for source in self.cSources:
+#                 for video in source.allVideos():
+#                     combinedVideoList.appendIfUnwatched(video)
+#             
+#         else:            
+#             for source in self.cSources:
+#                 for video in source.allVideos():
+#                     combinedVideoList.append(video)
+
+        
+        #customSort if customSort else self.feedSettings.sort()
+        
         
         
     
@@ -197,7 +194,9 @@ class Collection(object):
 
 
 
-    
+
+
+
 
 def init():
     global gc

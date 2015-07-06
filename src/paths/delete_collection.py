@@ -1,6 +1,6 @@
 from visual.delete_collection import confirmDialog, successDialog
 from src.collection import Collection
-import xbmc
+from src.tools import xbmcTool
 
 
 def delete(collectionFile, showConfirmDialog=True, showSuccessDialog=True, refreshContainer=True):
@@ -20,6 +20,6 @@ def delete(collectionFile, showConfirmDialog=True, showSuccessDialog=True, refre
     del collection    
     
     if refreshContainer:
-        xbmc.executebuiltin('XBMC.Container.Refresh()')
+        xbmcTool.refreshContainer()
         
     return True

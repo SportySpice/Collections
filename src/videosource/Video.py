@@ -3,6 +3,9 @@ from src.tools.enum import enum
 #VideoType = enum(PLUGIN=0, YOUTUBE=1)
 OnVideoClick = enum (PLAY_ONLY=1, PLAY_QUEUE_REST=2)
 
+
+
+
 class Video(object):
     def __init__(self, videoId, source, position, title, description, thumb, date, duration, rating):
         self.id = videoId
@@ -16,9 +19,8 @@ class Video(object):
         self.date = date
         self.duration = duration
         self.rating = rating
-        
-        
-        
+
+
     
 #     #abstract        
 #     def resolvedUrl(self):

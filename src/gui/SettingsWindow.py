@@ -7,7 +7,7 @@ import src.tools.addonSettings as addon
 SETTING_COLUMN = 2
 SETTING_COLUMN_PAD = 2
 
-MAX_PAGE_ROWS = 12
+#MAX_PAGE_ROWS = 12
 BUTTON_ROW = 13
 
 
@@ -30,7 +30,8 @@ class SettingsWindow(object):
         
         if showButtons:
             self.createButtons()
-        
+        else:
+            self.buttonRow = None
         
         
         self.tabs = []
@@ -61,12 +62,27 @@ class SettingsWindow(object):
             self.window.close()
             
             
-        buttonRow.addButton(    addon.string(600),  2, okAction,        columnspan=2, bold=True)
-        buttonRow.addButton(    addon.string(601),  4, cancelAction,    columnspan=2, bold=True)
-        buttonRow.addButton(    addon.string(602),  6, defaultsActions, columnspan=2, bold=True)
+        buttonRow.addButton(    addon.string(600),  2,      okAction,        columnspan=2, bold=True)
+        buttonRow.addButton(    addon.string(601),  4,      cancelAction,    columnspan=2, bold=True)
+        buttonRow.addButton(    addon.string(602),  6,      defaultsActions, columnspan=2, bold=True)
+        
+        
                 
         self._placeRow(buttonRow, BUTTON_ROW, forceLocation=True)                
         self.buttonRow = buttonRow
+        
+
+
+    def addCustomButton(self, label, column, onClick):
+        if self.buttonRow is None:
+            self.buttonRow = Row()
+            
+        button = self.buttonRow.addButton(label,             column, onClick,         columnspan=2, bold=True)
+        return button
+            
+    
+    def placeCustomButtons(self):    
+        self._placeRow(self.buttonRow, BUTTON_ROW, forceLocation=True)
         
 
 
@@ -110,7 +126,7 @@ class SettingsWindow(object):
         listC = pyxbmct.List(_space=space, _itemTextXOffset=textXOffset)
         
         if not self.hideTabs:
-            self.window.placeControl(listC, 0, 0, 8, 2, pad_x=padX)
+            self.window.placeControl(listC, 0, 0, 10, 2, pad_x=padX)
         
         
         index = 0
@@ -196,7 +212,8 @@ class SettingsWindow(object):
         
         
         for row in tab.rows:            
-            if currentPage.rowsFilled == MAX_PAGE_ROWS:
+            #if currentPage.rowsFilled == MAX_PAGE_ROWS:
+            if currentPage.rowsFilled == tab.numRows - 2:
                 lastPage = currentPage
                 currentPage = TabPage(lastPage.num + 1, tab, self, prevPage=lastPage)                     
                 lastPage.addNextPage(currentPage)

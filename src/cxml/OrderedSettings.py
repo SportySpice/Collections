@@ -3,12 +3,13 @@ class OrderedSettings:
         self._list = []
         self._dic = {}
         
-    def add(self, key, value, customValue=None, customValueDic=None):
+    def add(self, key, value, customValue=None, customValueDic=None, nonePossible=False):
         if customValue:
             value = customValue
                 
         if customValueDic:
-            value = customValueDic[value]
+            if (not nonePossible) or (value is not None):
+                value = customValueDic[value]
         
         self._dic[key] = value
         
@@ -22,9 +23,9 @@ class OrderedSettings:
             self.add(key, value, customValue, customValueDic)
             
             
-    def addIfDifferent(self, key, value, comparisonValue, customValue=None, customValueDic=None):
+    def addIfDifferent(self, key, value, comparisonValue, customValue=None, customValueDic=None, nonePossible=False):
         if value != comparisonValue:
-            self.add(key, value, customValue, customValueDic)
+            self.add(key, value, customValue, customValueDic, nonePossible)
         
         
     def insert(self, index, key, value):

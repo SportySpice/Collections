@@ -1,4 +1,5 @@
 from src.videosource.VideoSource import VideoSource, SourceType
+from src.videosource.VideoList import VideoList
 from Thumb import Thumb
 import settings as s
 from YoutubeVideo import YoutubeVideo
@@ -126,7 +127,7 @@ class Playlist(VideoSource):
         
         
         
-        videos = []       
+        videos = VideoList()
         
         items = response.get("items", [])
                        

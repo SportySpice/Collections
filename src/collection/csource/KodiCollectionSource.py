@@ -1,5 +1,6 @@
 from src.collection.CollectionSource import CollectionSource
 from src.collection.settings import globalCollection
+from src.videosource.VideoList import VideoList
 
 
 
@@ -27,11 +28,11 @@ class KodiCollectionSource(CollectionSource):
         
         
     def allVideos(self):
-        vSource = self.videoSource        
-        if vSource.isEmpty() or vSource.updateFailed():
-            return ();
+        kodiFolder = self.videoSource        
+        if kodiFolder.isEmpty() or kodiFolder.updateFailed():
+            return VideoList();
              
-        return vSource.videos()
+        return kodiFolder.videos()
     
     
     

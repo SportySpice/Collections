@@ -45,6 +45,25 @@ class EnumButton(object):
         else:
             self.button = pyxbmct.Button(label)
             
+            
+            
+    
+    
+    def update(self, value):
+        if self.currentValue != value:
+            self.currentValue = value
+            
+            if self.customLabels:
+                self._findCurrentIndex()
+                label = str(self.customLabels[self.currentIndex])
+            
+            else:
+                self.currentIndex = None
+                label = str(value)
+                
+            self.button.setLabel(label)
+            self.assignedValue = True
+            
         
             
             

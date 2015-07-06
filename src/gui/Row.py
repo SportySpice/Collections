@@ -64,7 +64,8 @@ class Row(object):
             label = ts.bold(label)                
         button = _createButton(label, alignment)
         
-        self.addRowControl(button, column, columnspan, padX, action=onClick)
+        rowControl = self.addRowControl(button, column, columnspan, padX, action=onClick)        
+        return rowControl
         
         
         
@@ -73,6 +74,8 @@ class Row(object):
     def addEnumButton(self, label, values, current, default, column, saveCallback=None, changeCallback=None, customLabels=None, mode=EnumMode.SELECT, returnValue=False, alignment=None, columnspan=1, padX=0, enabled=True):
         enumButton = EnumButton(label, values, current, default, changeCallback, saveCallback, customLabels, mode, returnValue, alignment)        
         rowControl = self.addRowControl(enumButton.button, column, columnspan, padX, action=enumButton.onClick, onDefault=enumButton.onDefault, onSave=enumButton.onSave, enabled=enabled)
+        
+        rowControl.update = enumButton.update
         
         return rowControl
 

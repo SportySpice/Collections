@@ -1,4 +1,8 @@
+* seperate youtube collections addon
+* more parsing methods for kodi folders (local dir list, jsonrpc walk, others?)
+* text settings profiles
 * http 500 error
+* find out why android version can't load ctypes.pythonapi.PyCell_New as required by dill, or at least keep note to yourself you added code there
 * different colors/text settings for queued playlists
 * items per page('pagesize' or 'pageitems") instead of climit. Also add options: 'play and queue page" 'play and queue entire collection'
 * for sources: instead of just limit. limit and limit per page
@@ -7,8 +11,6 @@
   inside the video class or keep it seperate? need to think of this
 * add cool sound when successfully added a source to a collection. (can do either when dialog pops up, or when user presses ok. or both)
 * kodi folder titles. currently all 3 use the user defined title. maybe "studioTitle" for example should be the plugin's title
-* auto set view
-* Custom video title formats
 * Add a default collection to my collections via context menu, or in browse mode
 * Add specific videos to a collection (all will go under a special "source" folder called "individual media' or "individual items" or something
 * Enable/Disable video fanart (currently disabled)
