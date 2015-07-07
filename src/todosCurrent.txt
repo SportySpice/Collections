@@ -6,6 +6,5 @@
 * video stats context menu
 * missing infolabels in most views
 * clean up context menus
-* play all and play queue for channels/playlists/folders
 * protection against youtube fails (at least in collection update)
 * warnings about sources failing to update
