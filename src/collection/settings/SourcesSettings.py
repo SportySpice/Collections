@@ -3,7 +3,7 @@ import globalCollection
 from src.li.visual.ViewStyle import ViewStyle
 from src.collection.CollectionSource import OnSourceClick 
 
-D_VIEWSTYLE = ViewStyle.TVSHOWS
+D_VIEWSTYLE = ViewStyle.FILES
 D_SOURCE_CLICK_KODI = OnSourceClick.BROWSE
 D_SOURCE_CLICK_YT   = OnSourceClick.BROWSE
 D_USE = False

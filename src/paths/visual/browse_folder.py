@@ -3,7 +3,7 @@ from src.li.visual.TextSettings import TextSettings
 from src.li.types.FolderVisual import FolderVisual
 from src.li.types.CollectionVisual import CollectionVisual
 
-viewStyle           =       ViewStyle.TVSHOWS
+viewStyle           =       ViewStyle.FILES
 
 
 foldersVisual = FolderVisual(

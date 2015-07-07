@@ -4,7 +4,7 @@ from src.li.types.FolderVisual import FolderVisual
 from src.li.types.CustomFolderVisual import CustomFolderVisual
 
 
-VIEW_STYLE           =       ViewStyle.TVSHOWS
+VIEW_STYLE           =       ViewStyle.FILES
 
 
 defaultCollectionsVisual = FolderVisual(
