@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <backgroundcolor>0x0000ff</backgroundcolor>
+
+    <defaultcontrol always="false">52</defaultcontrol>
+    <allowoverlay>yes</allowoverlay>  
+    <views>50,51,509,510</views>
+    <visible>Window.IsActive(Home)</visible>
+    <animation effect="fade" time="100">WindowOpen</animation>
+    <animation effect="slide" end="0,576" time="100">WindowClose</animation>
+    <zorder>1</zorder>
+    <coordinates>
+        <posx>40</posx>
+        <posy>50</posy>
+        <origin x="100" y="50">Window.IsActive(Home)</origin>
+    </coordinates>
+    <previouswindow>MyVideos</previouswindow>
+    
+    
+    <controls>
+        <control type="panel" id="52">
+                <!-- <viewtype label="536">wide</viewtype> -->
+                <!-- <orientation>horizontal</orientation> -->
+                <!-- <autoscroll>true</autoscroll> -->
+                <!--<pagecontrol>60</pagecontrol> -->            
+                <!--<include>contentpanelslide</include> -->
+                
+                <!--<onleft>9000</onleft>-->
+                <!--<onright>60</onright>-->
+                <!-- <onup>52</onup>-->
+                <!--<ondown>52</ondown>-->
+                
+                <posx>600</posx>
+                <posy>0</posy>
+                <width>1300</width>
+                <height>950</height>
+                            
+                <scrolltime tween="sine" easing="out">200</scrolltime>
+                
+                
+                
+                
+                
+                <itemlayout height="140" width="1300">
+                        <control type="image">
+                                <posx>10</posx>
+                                <posy>10</posy>
+                                <width>200</width>
+                                <height>125</height>
+                                <info>ListItem.Icon</info>
+                        </control>
+                        <control type="label">
+                                <posx>230</posx>
+                                <posy>10</posy>
+                                <width>1300</width>
+                                <height>22</height>
+                                <font>font13</font>
+                                <selectedcolor>green</selectedcolor>                            
+                                <info>ListItem.Label</info>
+                        </control>
+                        
+                        <control type="label">
+                                <posx>230</posx>
+                                <posy>60</posy>
+                                <width>1300</width>
+                                <height>22</height>
+                                <font>font13</font>
+                                <selectedcolor>green</selectedcolor>
+                                <label>by</label>
+                        </control>
+                        
+                        <control type="label">
+                                <posx>270</posx>
+                                <posy>60</posy>
+                                <width>1300</width>
+                                <height>22</height>
+                                <font>font13</font>
+                                <selectedcolor>green</selectedcolor>
+                                <info>ListItem.Property(sourceTitle)</info>
+                        </control>
+                        
+                        <control type="label">
+                                <posx>230</posx>
+                                <posy>90</posy>
+                                <width>1300</width>
+                                <height>22</height>
+                                <font>font13</font>
+                                <selectedcolor>green</selectedcolor>
+                                <label>$INFO[ListItem.Property(viewCount)] views</label>
+                        </control>
+                        
+                </itemlayout>
+                
+                
+                <focusedlayout height="141" width="120">
+                        <control type="image">
+                                <width>220</width>
+                                <height>160</height>
+                                <posx>5</posx>
+                                <posy>5</posy>
+                                <texture>folder-focus.png</texture>
+                                <animation effect="zoom" end="0,0,240,170" time="100">focus</animation>
+                        </control>
+                        <control type="image">
+                                <posx>10</posx>
+                                <posy>10</posy>
+                                <width>200</width>
+                                <height>150</height>
+                                <info>ListItem.Icon</info>
+                                <animation effect="zoom" end="5,5,220,160" time="100">focus</animation>
+                        </control>
+                
+                <!--
+                        <control type="label">
+                                <posx>60</posx>
+                                <posy>120</posy>
+                                <width>1300</width>
+                                <height>22</height>
+                                <font>font13</font>
+                                <selectedcolor>green</selectedcolor>
+                                <align>center</align>
+                                <info>ListItem.Label</info>
+                        </control>
+                -->
+                </focusedlayout>
+        </control>
+  
+  
+        
+    
+
+    
+    
+  </controls>
+</window>

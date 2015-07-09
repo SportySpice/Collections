@@ -11,14 +11,14 @@ class CollectionLi(Li):
         
         isPlayable = False
         playAllUrl = router.playCollectionUrl(collection.file)
-        
+    
         
         if onClick is None:                        
             onClick = collection.onClick()
-                    
         
         
-        isFolder = True    
+        isFolder = True
+        
                                  
         if  onClick == occ.FEED:            url = router.browseCollectionUrl(collection.file)
         elif onClick == occ.SOURCES:        url = router.browseCollectionSourcesUrl(collection.file)
