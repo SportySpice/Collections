@@ -1,5 +1,9 @@
+[B]2.2.0[/B] 
+* Date estimation algorithm for folder sources
+* Sort by original order for folder sources
+
 [B]2.1.1[/B] 
-	Fixed issue with icons showing stretched in some skins
+* Fixed issue with icons showing stretched in some skins
 	
 [B]2.1.0[/B] 
 * Sort video lists on the fly in 13 different ways:
