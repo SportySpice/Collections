@@ -2,6 +2,7 @@ import sort_videolist as svl
 from visual.browse_youtube_channel import viewStyle, addToCollectionVisual, playlistsVisual, videosVisual, nextPageVisual
 from src.li.ItemList import ItemList
 from src.videosource.youtube import Channel
+from src.videosource.VideoSource import SourceType
 from src.videosource.VideoList import VideoSort as vsr, vsToCounts
 from src.tools.addonSettings import string as st
 
@@ -28,7 +29,7 @@ def browse(channelFile, pageNum):
     videos = channel.videos
     videoList = videos.updatedPageItems(pageNum)
     
-    currentSort = svl.loadCurrentSort()
+    currentSort = svl.loadCurrentSort(SourceType.CHANNEL)
     selected = currentSort.selected
     
     if selected:

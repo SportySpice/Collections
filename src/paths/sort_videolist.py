@@ -9,11 +9,12 @@ from src.videosource.VideoSource import SourceType
 
 
 def sort(sourceType=None):
-    currentSort = loadCurrentSort()
+    currentSort = loadCurrentSort(sourceType)
                 
-    if sourceType is None:                                                          from edit_collection        import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS        
-    elif sourceType == SourceType.CHANNEL or sourceType == SourceType.PLAYLIST:     from browse_youtube_channel import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS        
-    else:                                                                           from browse_kodi_folder     import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS        
+    if sourceType is None:                  from edit_collection        import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS        
+    elif sourceType == SourceType.FOLDER:   from browse_kodi_folder     import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS
+    else:                                   from browse_youtube_channel import VIDEO_SORT_OPTIONS, VIDEO_SORT_LABELS                                                                           
+            
     
     labels = list(VIDEO_SORT_LABELS)    #copy list
     
@@ -38,11 +39,16 @@ def sort(sourceType=None):
     
     
     
-CURRENT_SORT_FILE = 'current_sort'
-currentSortFile = None
- 
+
+FEED_SORT_FILE      ='current_feed_sort'
+KODI_SORT_FILE      ='current_kodi_sort'
+YOUTUBE_SORT_FILE   ='current_youtube_sort'
+
+
 class CurrentSort(object):
-    def __init__(self):        
+    def __init__(self, sortFile):
+        self.sortFile = sortFile
+                
         self.current            = None
         self.currentReverse     = None
         self.currentIndex       = None
@@ -82,20 +88,23 @@ class CurrentSort(object):
         
         
     def cache(self):
-        currentSortFile.dumpObject(self)
+        self.sortFile.dumpObject(self)
     
     
 
 
-def loadCurrentSort():
-    global currentSortFile
-    currentSortFile = File.fromNameAndDir(CURRENT_SORT_FILE, GENERAL_CACHE_DIR)
+def loadCurrentSort(sourceType=None):
+    if sourceType is None:                      sortFile = FEED_SORT_FILE
+    elif sourceType == SourceType.FOLDER:       sortFile = KODI_SORT_FILE
+    else:                                       sortFile = YOUTUBE_SORT_FILE                                                                       
+    
+    sortFile = File.fromNameAndDir(sortFile, GENERAL_CACHE_DIR)
         
-    if currentSortFile.exists():        
-        currentSort = currentSortFile.loadObject()
+    if sortFile.exists():        
+        currentSort = sortFile.loadObject()
         return currentSort
     else:
-        return CurrentSort()
+        return CurrentSort(sortFile)
 
 
 

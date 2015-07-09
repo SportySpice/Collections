@@ -290,6 +290,10 @@ msgctxt "#30506"
 msgid "Sources Text"
 msgstr ""
 
+msgctxt "#30507"
+msgid "Folders"
+msgstr ""
+
 
 
 #general tab
@@ -479,9 +483,22 @@ msgstr ""
 
 
 #Sources Text Tab
-msgctxt "#30590"
+msgctxt "#30585"
 msgid "Source Title"
 msgstr ""
+
+
+#Folders Tab
+msgctxt "#30590"
+msgid "Estimate video dates"
+msgstr ""
+
+#Folders Tab
+msgctxt "#30591"
+msgid "Set Individually"
+msgstr ""
+
+
 
 
 
@@ -518,6 +535,14 @@ msgstr ""
 
 msgctxt "#30607"
 msgid "None"
+msgstr ""
+
+msgctxt "#30608"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#30609"
+msgid "No"
 msgstr ""
 
 
@@ -613,6 +638,10 @@ msgstr ""
 
 msgctxt "#30633"
 msgid "Last Played"
+msgstr ""
+
+msgctxt "#30634"
+msgid "Original"
 msgstr ""
 
 

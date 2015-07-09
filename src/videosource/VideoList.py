@@ -7,7 +7,7 @@ from src.tools.enum import enum
 
 
 VideoSort = enum (DATE=1, VIEWS=2, DURATION=3, POSITION=4, SHUFFLE=5, SOURCE_TITLE=6, VIDEO_TITLE=7, RATING=8, 
-                  LIKES=9, DISLIKES=10, COMMENTS=11, PLAYCOUNT=12, LASTPLAYED=13)
+                  LIKES=9, DISLIKES=10, COMMENTS=11, PLAYCOUNT=12, LASTPLAYED=13, ORIGINAL=14)
 
 vs = VideoSort
 vsToKey = {                                                                                                                                     #reverse
@@ -46,7 +46,7 @@ VideoCountType = enum (DATE=1, VIEWS=2, DURATION=3, POSITION=4, RATING=5, LIKES=
 
 
 class VideoList(object):
-    def __init__(self, videos=None, cSources=None, limit=None, unwatchedOnly=False):
+    def __init__(self, videos=None, cSources=None, limit=None, unwatchedOnly=False, keepOriginalOrder=False):
         if videos:
             self._videos = videos
             
@@ -77,6 +77,9 @@ class VideoList(object):
         self.cSources = cSources
         self.limit = limit
         
+        self.keepOriginalOrder = keepOriginalOrder
+        self.originalOrder = None
+        
         
     def __iter__(self):
         return iter(self._videos)
@@ -101,6 +104,14 @@ class VideoList(object):
             
 
     def sort(self, videoSort, videoSort2=None, reverseOrder=False):
+        if (self.keepOriginalOrder) and (self.originalOrder is None):
+            self.originalOrder = self._videos[:]
+        
+        if videoSort == vs.ORIGINAL:
+            oo = self.originalOrder
+            self._videos = oo[::-1] if reverseOrder      else oo
+            return
+        
         if videoSort == VideoSort.SHUFFLE:
             from random import shuffle
             shuffle(self._videos)
@@ -354,7 +365,9 @@ vsToCounts = {
     vs.DISLIKES     :   (vct.DISLIKES,  vct.DATE),
     vs.COMMENTS     :   (vct.COMMENTS,  vct.DATE),
     vs.PLAYCOUNT    :   (vct.PLAYCOUNT, None),
-    vs.LASTPLAYED   :   (vct.LASTPLAYED,None)       
+    vs.LASTPLAYED   :   (vct.LASTPLAYED,None),
+    
+    vs.ORIGINAL     :   (vct.DATE,      vct.VIEWS),
 }
 
 

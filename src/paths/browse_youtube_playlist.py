@@ -3,6 +3,7 @@ from src.videosource.VideoList import VideoSort as vsr, vsToCounts
 from visual.browse_youtube_playlist import viewStyle, addToCollectionVisual, videosVisual, nextPageVisual
 from src.li.ItemList import ItemList
 from src.videosource.youtube import Playlist
+from src.videosource.VideoSource import SourceType
 from src.tools.addonSettings import string as st
 
 def browse(playlistFile, pageNum):
@@ -20,7 +21,7 @@ def browse(playlistFile, pageNum):
     videos = playlist.videos
     videoList = videos.updatedPageItems(pageNum)
     
-    currentSort = svl.loadCurrentSort()
+    currentSort = svl.loadCurrentSort(SourceType.PLAYLIST)
     selected = currentSort.selected
     
     if selected:
