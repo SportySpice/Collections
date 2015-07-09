@@ -9,6 +9,7 @@ DATA_DIR                =       'special://profile/addon_data/plugin.video.colle
 GENERAL_DATA_DIR        =       'special://profile/addon_data/plugin.video.collections/data/general'
 VIEWS_DATA_DIR          =       'special://profile/addon_data/plugin.video.collections/data/views'
 KODI_DATA_DIR           =       'special://profile/addon_data/plugin.video.collections/data/kodi'
+KODI_ESTIMATION_DIR     =       'special://profile/addon_data/plugin.video.collections/data/kodi/estimation'
 YOUTUBE_DATA_DIR        =       'special://profile/addon_data/plugin.video.collections/data/youtube'
 
 
@@ -93,6 +94,7 @@ def createDataFolders():
         Folder.fromFullpath(VIEWS_DATA_DIR),
         Folder.fromFullpath(GENERAL_DATA_DIR),
         Folder.fromFullpath(KODI_DATA_DIR),
+        Folder.fromFullpath(KODI_ESTIMATION_DIR),
         Folder.fromFullpath(YOUTUBE_DATA_DIR),
     )
 

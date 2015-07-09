@@ -24,6 +24,7 @@ class CollectionSource(object):
         self.css = css
         self.csts = css.TS 
         self.cfs = self.collection.feedSettings
+        self.cfds = self.collection.folderSettings
         
         
         #methods
@@ -32,13 +33,14 @@ class CollectionSource(object):
         self.isPlaylist = self.videoSource.isPlaylist
         self.isYoutube = self.videoSource.isYoutube
         
-        self.browseUrl = self.videoSource.browseUrl
+        
 
 
 
 
-   
-
+    #abstract
+    def browseUrl(self):
+        pass
 
     #abstract
     def onClick(self):

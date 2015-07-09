@@ -4,6 +4,7 @@ from src.collection.settings import FeedSettings as FS
 from src.collection.settings import FeedTextSettings as FTS
 from src.collection.settings import SourcesSettings as SS
 from src.collection.settings import SourcesTextSettings as STS
+from src.collection.settings import FolderSettings as FDS
 from src.cxml.OrderedNode import OrderedNode
 from src.cxml.OrderedTextRow import OrderedTextRow
 from src.videosource.VideoSource import SourceType
@@ -32,7 +33,7 @@ def export(collection):
         s = OrderedSettings()
         
         vSource = cSource.videoSource
-        nodeName, textRow =  options[vSource.type](vSource, s)
+        nodeName, textRow =  options[vSource.type](cSource, vSource, s)
         
         s.addIfNotNone( st.ON_CLICK,                cSource._onClick,       customValueDic=st.oscToValue)                    
         s.addIfNotNone( st.CSOURCE_LIMIT,           cSource._limit)
@@ -49,13 +50,15 @@ def export(collection):
         node.addTextRow(textRow)
                     
     
-    feedNode    =   _processFeedSettings(collection)
-    sourcesNode =   _processSourcesSettings(collection) 
+    feedNode            = _processFeedSettings(collection)
+    sourcesNode         = _processSourcesSettings(collection)
+    folderSettingsNode  = _processFolderSettings(collection) 
     
-    if feedNode or sourcesNode:
+    if feedNode or sourcesNode or folderSettingsNode:
         views = OrderedNode(st.VIEWS_NODE)        
-        if feedNode:    views.addChild(feedNode)
-        if sourcesNode: views.addChild(sourcesNode)
+        if feedNode:            views.addChild(feedNode)
+        if sourcesNode:         views.addChild(sourcesNode)
+        if folderSettingsNode:  views.addChild(folderSettingsNode)
         
         nodeList.append(views)
     
@@ -69,7 +72,7 @@ def export(collection):
                  
                  
                     
-def _processChannel(channel, sourceSettings):
+def _processChannel(ytCSource, channel, sourceSettings):    
     if channel.username:
         text = channel.username
         comment = None
@@ -83,7 +86,7 @@ def _processChannel(channel, sourceSettings):
 
 
 
-def _processPlaylist(playlist, sourceSettings):
+def _processPlaylist(ytCSource, playlist, sourceSettings):
     text = playlist.playlistId   
     comment =  playlist.title
     
@@ -91,8 +94,9 @@ def _processPlaylist(playlist, sourceSettings):
 
 
 
-def _processKodiFolder(folder, sourceSettings):
+def _processKodiFolder(kodiCSource, folder, sourceSettings):
     text = folder.path
+    sourceSettings.addIfNotNone(st.FOLDER_ESTIMATE_DATES, kodiCSource._estimateDates)
     #sourceSettings.add('title', folder.title)
     
     return st.FOLDERS_NODE, OrderedTextRow(text, sourceSettings)
@@ -212,3 +216,19 @@ def _processSourcesSettings(collection):
         return None
     
     return sourcesNode
+
+
+def _processFolderSettings(collection):
+    ns = OrderedSettings()
+    fds = collection.folderSettings
+    
+    ns.addIfDifferent(  st.FOLDERS_SETTINGS_ESTIMATE,   fds.estimateDates,        FDS.D_ESTIMATE_DATES)
+    ns.addIfDifferent(st.USE, fds.use, FDS.D_USE)
+    
+    
+    folderSettingsNode = OrderedNode(st.FOLDERS_SETTINGS_NODE, ns)
+        
+    if (not folderSettingsNode.hasSettings()):
+        return None
+    
+    return folderSettingsNode

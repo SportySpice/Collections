@@ -26,14 +26,15 @@ D_ONCLICK = OnCollectionClick.FEED  #for global. for individual collection it's 
 
 gc = None
 class Collection(object):            
-    def __init__(self, title, thumb, feedSettings, sourcesSettings, collectionFile, default=False, onClick=None):        
+    def __init__(self, title, thumb, feedSettings, sourcesSettings, folderSettings, collectionFile, default=False, onClick=None):        
         self.title = title
         self.thumb = thumb
         self.default = default
         self._onClick = onClick      
-        
+                
         self.feedSettings = feedSettings
         self.sourcesSettings = sourcesSettings
+        self.folderSettings = folderSettings
         
         self.file = collectionFile
         
@@ -115,13 +116,13 @@ class Collection(object):
         
         
         
-    def addCollectionSource(self, vSource, onClick=None, limit=None, customTitle=None, customThumb=None):
+    def addCollectionSource(self, vSource, onClick=None, limit=None, customTitle=None, customThumb=None, kodiEstimateDates=None):
         if vSource.isYoutube():
             cSource = YoutubeCollectionSource(self.numSources, self, vSource, onClick, limit, customTitle, customThumb)
             self.cSourcesYt.append(cSource)
                 
         else:
-            cSource = KodiCollectionSource(self.numSources, self, vSource, onClick, limit, customTitle, customThumb)
+            cSource = KodiCollectionSource(self.numSources, self, vSource, kodiEstimateDates, onClick, limit, customTitle, customThumb)
             self.cSourcesKodi.append(cSource)
         
         self.cSources.append(cSource)
@@ -213,13 +214,14 @@ def init():
     
 
 def empty(title, collectionFile):
-    from settings import FeedSettings, SourcesSettings
+    from settings import FeedSettings, SourcesSettings, FolderSettings
     global loaded
     
-    fs = FeedSettings.default() 
-    ss = SourcesSettings.default()
+    fs  = FeedSettings.default() 
+    ss  = SourcesSettings.default()
+    fds = FolderSettings.default()
     
-    collection = Collection(title, D_THUMB, fs, ss, collectionFile)
+    collection = Collection(title, D_THUMB, fs, ss, fds, collectionFile)
     collection.setLoadedSources()
     
     loaded[collectionFile.fullpath] = collection    
