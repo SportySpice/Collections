@@ -1,6 +1,5 @@
 * seperate youtube collections addon
 * more parsing methods for kodi folders (local dir list, jsonrpc walk, others?)
-* text settings profiles
 * http 500 error
 * find out why android version can't load ctypes.pythonapi.PyCell_New as required by dill, or at least keep note to yourself you added code there
 * different colors/text settings for queued playlists

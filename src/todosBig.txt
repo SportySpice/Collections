@@ -1,4 +1,3 @@
-* settings for all views and counts (also Feed TS in browse sources)
 * override context menus
 * youtube comments
 * Collection Store: download collections created by others and share your own collections with the world

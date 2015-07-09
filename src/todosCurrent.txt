@@ -1,10 +1,8 @@
-* date estimation algoritm for kodi folders 
 * support plugins like genesis
-
-* choose image for collection when creating it (via built in icon packs and browse) + modify it later via context menus
-* browse/remove sources directly from video context menu (actualy browsing might not be possible? he did it on youtube plugin, need to check)
-* video stats context menu
-* missing infolabels in most views
-* clean up context menus
 * protection against youtube fails (at least in collection update)
 * warnings about sources failing to update
+* Options to prevent consecutive videos from the same source (maxRepeat and push)
+* include in main feed option for each source
+* Video quality selection (currently always 720p)
+* youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
+* youtube charts (either via search and order or find out if can get other way through api)

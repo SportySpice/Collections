@@ -1,0 +1,14 @@
+* choose image for collection when creating it (via built in icon packs and browse) + modify it later via context menus
+* browse/remove sources directly from video context menu (actualy browsing might not be possible? he did it on youtube plugin, need to check)
+* video stats context menu
+* missing infolabels in most views
+* clean up context menus
+* Custom icons and titles for each source
+* force refresh content menus (both outside and inside item. inside item and maybe also add an item, with other optionsa and settings)
+* service/process that runs date estimation algoritm in the background all the time
+* New items count for each source (figure out how to calculate and show this)
+* settings for all views and counts (also Feed TS in browse sources)
+* sort via api in youtube channels
+* sort collection feed using the channel api sorts
+* increase limit for kodi folders, and if possible find a way to do it for youtube sources as well
+* clear cache once a week or so + some kind of protection that checks if script ended. if it didnt 2-3 times in a row, clear cache.
