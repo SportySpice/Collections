@@ -6,6 +6,9 @@ class YoutubeCollectionSource(CollectionSource):
     def __init__(self, index, collection, vSourceYT, onClick=None, limit=None, customTitle=None, customThumb=None):
         super(YoutubeCollectionSource, self).__init__(index, collection, vSourceYT, onClick, limit, customTitle, customThumb)
         
+        #override
+        self.browseUrl = self.videoSource.browseUrl
+        
     
     def videosNeedUpdate(self):
         return self.videoSource.videos.pageNeedsUpdate(pageNum=1)
@@ -14,10 +17,13 @@ class YoutubeCollectionSource(CollectionSource):
     def updateVideosBatchRequest(self):
         return self.videoSource.videos.updatePageBatchRequest(pageNum=1)
     
+    
+    #override
     def allVideos(self):
         return self.videoSource.videos.pageItems(pageNum=1)
     
     
+    #override
     def onClick(self):
         if not self.css.use:
             return gss.onSourceClickYt

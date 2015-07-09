@@ -4,6 +4,7 @@ import src.collection.settings.FeedSettings as fs
 import src.collection.settings.FeedTextSettings as fTS
 import src.collection.settings.SourcesSettings as ss
 import src.collection.settings.SourcesTextSettings as sTS
+import src.collection.settings.FolderSettings as fds
 from src.videosource.youtube import Channel
 from src.videosource.youtube import Playlist
 from src.videosource.youtube import batchUpdater
@@ -11,6 +12,7 @@ from src.videosource.kodi import KodiFolder
 import src.cxml.loader as cxml
 from src.li.visual.TextSettings import TextSettings
 from src.cxml import Node
+from src.collection.csource import KodiCollectionSource
 
 
 
@@ -78,11 +80,11 @@ def load(collectionFile, loadSources=True, isGlobal=False):
     sourcesNodes, settingsNodes = _processNodes(root.children)
     
     title, onClick, default = _processRoot(root)          
-    fs, ss = _processSettings(settingsNodes)
+    fs, ss, fds = _processSettings(settingsNodes)
     thumb = _processThumb(collectionFile)
     
     
-    collection = Collection(title, thumb, fs, ss, collectionFile, default, onClick)
+    collection = Collection(title, thumb, fs, ss, fds, collectionFile, default, onClick)
     
         
     if loadSources: 
@@ -153,20 +155,24 @@ def _processNodes(nodes):
 
 def _processSettings(settingsNodes):
     feedSettings = None
-    sourcesSettings = None    
+    sourcesSettings = None
+    folderSettings = None
     
     
     for node in settingsNodes:        
         if node.name == st.FEED_NODE:
             feedSettings = _processFeedSettings(node)
-        else: 
+        elif node.name == st.SOURCES_NODE: 
             sourcesSettings = _processSourcesSettings(node)
+        else:
+            folderSettings = _processFolderSettings(node)
 
     feedSettings    = feedSettings if feedSettings          else _processFeedSettings(      Node.empty(st.FEED_NODE))         
     sourcesSettings = sourcesSettings if sourcesSettings    else _processSourcesSettings(   Node.empty(st.SOURCES_NODE))
+    folderSettings  = folderSettings if folderSettings      else _processFolderSettings(    Node.empty(st.FOLDERS_SETTINGS_NODE))
 
 
-    return feedSettings, sourcesSettings
+    return feedSettings, sourcesSettings, folderSettings
 
 
 
@@ -183,7 +189,7 @@ def _processSources(sourcesNodes, collection):
             onSourceClick, limit, customTitle, customThumb = _processCSourceSettings(textRow.settings)
             
             if node.name == st.FOLDERS_NODE:
-                vSource = _processFolder(textRow, customTitle, customThumb)
+                vSource, estimateDates = _processFolder(textRow, customTitle, customThumb)
                 
                                 
             else:
@@ -191,19 +197,22 @@ def _processSources(sourcesNodes, collection):
                     vSource, needsInfoUpdate = _processChannel(textRow)
                 else:
                     vSource, needsInfoUpdate = _processPlaylist(textRow)
+                    
+                estimateDates = None
                                      
                 if needsInfoUpdate:
                     ytSourcesToUpdate.append(vSource)
+                
+                
             
-            
-            cSourceItems.append((vSource, onSourceClick, limit, customTitle, customThumb))    
+            cSourceItems.append((vSource, onSourceClick, limit, customTitle, customThumb, estimateDates))    
                         
                         
     batchUpdater.infoUpdate(ytSourcesToUpdate, forceUpdate=True)
 
     for cSourceItem in cSourceItems:
-        videoSource, onSourceClick, limit, customTitle, customThumb = cSourceItem
-        collection.addCollectionSource(videoSource, onSourceClick, limit, customTitle, customThumb)
+        videoSource, onSourceClick, limit, customTitle, customThumb, estimateDates = cSourceItem
+        collection.addCollectionSource(videoSource, onSourceClick, limit, customTitle, customThumb, estimateDates)
         
     collection.setLoadedSources()
 
@@ -278,6 +287,8 @@ def _processPlaylist(textrow):
 
 def _processFolder(textrow, customTitle, customThumb):    
     path = textrow.text    
+    settings = textrow.settings
+    estimateDates = settings.get(st.FOLDER_ESTIMATE_DATES)
     
     title = customTitle   #we give it same title and thumb as custom title and thumb, which are the original listed title
     thumb = customThumb   #and thumb if unchanged by the user later. best solution i can currently think of for now.
@@ -285,7 +296,7 @@ def _processFolder(textrow, customTitle, customThumb):
         
     kodiFolder = KodiFolder.fromPath(path, title, thumb)
         
-    return kodiFolder
+    return kodiFolder, estimateDates
 
 
 
@@ -400,12 +411,24 @@ def _processSourcesSettings(sourcesNode):
 
 
 
+def _processFolderSettings(folderSettingsNode):
+    ns = folderSettingsNode.settings        
+    estimateDates   = ns.get(st.FOLDERS_SETTINGS_ESTIMATE,  fds.D_ESTIMATE_DATES)    
+    use             = ns.get(st.USE,                        fds.D_USE)
+    
+    
+    folderSettings = fds.FolderSettings(estimateDates, use)
+    return folderSettings
+
+
+
+
 
 
 def _runInit():   
     from src.collection import Collection as c
     from src.collection import CollectionSource as cs
-    from src.collection.csource import KodiCollectionSource, YoutubeCollectionSource
+    from src.collection.csource import YoutubeCollectionSource
     
     
     c.init()
@@ -417,6 +440,7 @@ def _runInit():
     fTS.init()
     ss.init()
     sTS.init()
+    fds.init()
     
     global ranInit
     ranInit = True

@@ -66,7 +66,7 @@ COLLECTION_DEFAULT  = 'default'
 VIEWS_NODE              = 'views'
 
 
-#feed
+#feed settings
 FEED_NODE               = 'feed'
 FEED_SORT               = 'sort'
 FEED_SORT2              = 'sort2'
@@ -89,12 +89,19 @@ FEED_TR_VIDEO_SOURCE    = 'video_source'
 FEED_TR_VIDEO_TITLE     = 'video_title'
     
 
-#sources
+#sources settings
 SOURCES_NODE                = 'sources'
 SOURCES_SOURCE_CLICK_KODI   = 'sourceClickKodi'
 SOURCES_SOURCE_CLICK_YT     = 'sourceClickYt'
 
-SOURCES_TR_CSOURCE          = 'source'    
+SOURCES_TR_CSOURCE          = 'source'
+
+
+#folder settings
+FOLDERS_SETTINGS_NODE       = 'folderSettings'
+FOLDERS_SETTINGS_ESTIMATE   = 'estimateDates'
+
+ 
 
     
 
@@ -117,3 +124,4 @@ PLAYLISTS_NODE          = 'playlists'
 
 #kodiFolders
 FOLDERS_NODE            = 'folders'
+FOLDER_ESTIMATE_DATES   = 'estimateDates'

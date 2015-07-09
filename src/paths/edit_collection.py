@@ -10,6 +10,7 @@ from src.collection.settings import FeedSettings as FS
 from src.collection.settings import FeedTextSettings as FTS
 from src.collection.settings import SourcesSettings as SS
 from src.collection.settings import SourcesTextSettings as STS
+from src.collection.settings import FolderSettings as FDS
 from src.videosource.VideoList import VideoSort as vsr, VideoCountType as vct, vsToCounts
 from src.videosource.Video import OnVideoClick as ovc
 from src.li.visual.ViewStyle import ViewStyle as vs
@@ -18,6 +19,7 @@ from src.tools.dialog import dialog
 from src.paths import remove_from_collection 
 from src.tools import xbmcTool
 from src.tools.addonSettings import string as st
+from src.collection.settings.FeedTextSettings import FeedTextSettings
 
 
 
@@ -201,7 +203,7 @@ def edit(collectionFile=None):
     
     
     
-######SOURCES TEXT TAB######    
+######SOURCES TEXT TAB######
     sourcesTextTab = Tab( st(506) , rows=18, columns=10)        
     sts = ss.TS   
     
@@ -209,21 +211,38 @@ def edit(collectionFile=None):
         sourcesTextTab.addUseGlobalButton(not sts.use, not STS.D_USE, lambda state: sts.setUse(not state))
              
     table = ListItemTable()
-    table.addCustomItem(st(590),   sts._cSourceTS,   STS.D_CSOURCE,   lambda TS: sts.setCSource(TS))    
+    table.addCustomItem(st(585),   sts._cSourceTS,   STS.D_CSOURCE,   lambda TS: sts.setCSource(TS))    
     table.addEmptyRow()    
     table.addExamples()
     
     sourcesTextTab.addListItemTable(table)
     
     
-    window.addTabs([generalTab, feedTab, flTab, feedTextTab, sourcesTab, sourcesTextTab])
+######FOLDER SETTINGS TAB######
+    folderSettingsTab = Tab( st(507) )        
+    fds = collection.folderSettings
+    
+    if not globalC:
+        folderSettingsTab.addUseGlobalButton(not fds.use, not FDS.D_USE, lambda state: fds.setUse(not state))
+    
+    folderSettingsTab.addEmptyRow()
+    folderSettingsTab.addBool(      st(590), fds.estimateDates, FDS.D_ESTIMATE_DATES, lambda state: fds.setEstimateDates(state))
+    
+    if not globalC:
+        folderSettingsTab.addButton( st(591), lambda: estimateDatesWindow(collection), bold=False)
     
     
     
     
+    
+    window.addTabs([generalTab, feedTab, flTab, feedTextTab, sourcesTab, sourcesTextTab, folderSettingsTab])
     xbmcTool.closeOpenDialogs()
     window.show()
     window.delete()
+    
+    
+
+    
     
     
     
@@ -262,11 +281,8 @@ def limitsWindow(collection):
     
     
     
-    values = [None]                  
-    labels = [USE_MAIN_TEXT]
-    
-    values.extend(SOURCE_LIMIT_VALUES)
-    labels.extend(SOURCE_LIMIT_VALUES)
+    values = (None,)             +   SOURCE_LIMIT_VALUES        
+    labels = (USE_MAIN_TEXT,)    +   SOURCE_LIMIT_VALUES
     
     
     for cSource in collection.cSources:
@@ -284,15 +300,11 @@ def sourceClickWindow(collection):
     window = SettingsWindow(st(575), width=600, height=550, hideTabs=True)
     tab = Tab('')
     
-    kodiValues = [None]                  
-    kodiLabels = [USE_MAIN_TEXT]    
-    kodiValues.extend(SOURCE_CLICK_KODI_OPTIONS)
-    kodiLabels.extend(SOURCE_CLICK_KODI_LABELS)
+    kodiValues = (None,)            +   SOURCE_CLICK_KODI_OPTIONS
+    kodiLabels = (USE_MAIN_TEXT,)   +   SOURCE_CLICK_KODI_LABELS
     
-    ytValues = [None]                  
-    ytLabels = [USE_MAIN_TEXT]    
-    ytValues.extend(SOURCE_CLICK_YT_OPTIONS)
-    ytLabels.extend(SOURCE_CLICK_YT_LABELS)
+    ytValues = (None,)              +   SOURCE_CLICK_YT_OPTIONS
+    ytLabels = (USE_MAIN_TEXT,)     +   SOURCE_CLICK_YT_LABELS
     
     
     for cSource in collection.cSources:
@@ -304,6 +316,28 @@ def sourceClickWindow(collection):
             labels = ytLabels
             
         tab.addEnum(cSource.videoSource.title,         values,      cSource._onClick,          None,        lambda value, cSource=cSource: cSource.setOnClick(value), customLabels=labels)
+    
+    
+    window.addTabs([tab])
+    
+    window.show()
+    window.delete()
+    
+    
+def estimateDatesWindow(collection):
+    window = SettingsWindow(st(590), width=600, height=550, hideTabs=True)
+    tab = Tab('')
+    
+    
+    
+    values = (None,             True,       False)          
+    labels = (USE_MAIN_TEXT,    st(608),    st(609))    
+    
+    
+    
+    
+    for cSource in collection.cSourcesKodi:
+        tab.addEnum(cSource.videoSource.title,         values,      cSource._estimateDates,          None,        lambda value, cSource=cSource: cSource.setEstimateDates(value), customLabels=labels)
     
     
     window.addTabs([tab])

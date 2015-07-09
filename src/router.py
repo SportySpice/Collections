@@ -174,17 +174,17 @@ def browseForSources(query):
     
     
     
-def browseKodiFolderUrl(kodiFolderFile, root=False):
-    return _encodedUrl(BROWSE_KODI_FOLDER, (kodiFolderFile.fullpath, root))
+def browseKodiFolderUrl(kodiFolderFile, root=False, estimateDates=False):
+    return _encodedUrl(BROWSE_KODI_FOLDER, (kodiFolderFile.fullpath, root, estimateDates))
 
 def browseKodiFolder(query):
     from paths import browse_kodi_folder
     from file import File
     
-    kodiFolderFile, root = _decodedUrl(query)
+    kodiFolderFile, root, estimateDates = _decodedUrl(query)
     kodiFolderFile = File.fromFullpath(kodiFolderFile)
     
-    browse_kodi_folder.browse(kodiFolderFile, root)
+    browse_kodi_folder.browse(kodiFolderFile, root, estimateDates)
     
     
     

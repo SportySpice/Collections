@@ -2,18 +2,19 @@ import sort_videolist as svl
 from visual.browse_kodi_folder import viewStyle, addToCollectionVisual, foldersVisual, videosVisual
 from src.li.ItemList import ItemList
 from src.videosource.kodi import KodiFolder
+from src.videosource.VideoSource import SourceType
 from src.tools import dialog
 from src.tools.addonSettings import string as st
 from src.videosource.VideoList import VideoSort as vsr, vsToCounts
 
 
-VIDEO_SORT_OPTIONS  = (vsr.DATE,    vsr.DURATION,  vsr.SHUFFLE,    vsr.VIDEO_TITLE,         vsr.PLAYCOUNT,  vsr.LASTPLAYED)
-VIDEO_SORT_LABELS   = (st(620),     st(622),       st(624),        st(627),                 st(632),        st(633)       )
+VIDEO_SORT_OPTIONS  = (vsr.ORIGINAL,        vsr.DATE,    vsr.DURATION,  vsr.SHUFFLE,    vsr.VIDEO_TITLE,         vsr.PLAYCOUNT,  vsr.LASTPLAYED)
+VIDEO_SORT_LABELS   = (st(634),             st(620),     st(622),       st(624),        st(627),                 st(632),        st(633)       )
 
 
-def browse(kodiFolderFile, rootFolder=False):
+def browse(kodiFolderFile, rootFolder=False, estimateDates=False):
     kodiFolder = KodiFolder.fromCacheFile(kodiFolderFile)
-    folders, videos, allItems = kodiFolder.updatedContents()
+    folders, videos, allItems = kodiFolder.updatedContents(estimateDates)
     
     if kodiFolder.updateFailed():
         dialog.ok(  st(760), st(761), st(762)   )       #parse error dialog
@@ -45,7 +46,7 @@ def browse(kodiFolderFile, rootFolder=False):
             items.addAddToCollection(kodiFolder, addToCollectionVisual)
             
             items.addVideoSortKodi(st(751))                
-            currentSort = svl.loadCurrentSort()
+            currentSort = svl.loadCurrentSort(SourceType.FOLDER)
             selected = currentSort.selected
             
             if selected:
@@ -54,7 +55,7 @@ def browse(kodiFolderFile, rootFolder=False):
                 customVcts = vsToCounts[selected]
                 videosVisual.setCustomVcts(customVcts)                
             else:           
-                currentSort.setCurrent(vsr.DATE, 0, False)
+                currentSort.setCurrent(vsr.ORIGINAL, 0, False)
             
 
         for folder in folders:

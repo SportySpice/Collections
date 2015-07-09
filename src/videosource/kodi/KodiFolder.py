@@ -1,3 +1,4 @@
+import FolderRecord
 from src.videosource.VideoSource import VideoSource, SourceType
 from src.videosource.VideoList import VideoList
 from KodiVideo import KodiVideo
@@ -62,7 +63,7 @@ class KodiFolder(VideoSource):
 #####################
 ## Private Methods ##
 #####################  
-    def _list(self, mediaType=MediaType.VIDEO):
+    def _list(self, estimateDates=False):
         requests = (
             jsonRpcDir(self.path, MediaType.VIDEO),
             jsonRpcDir(self.path, MediaType.MUSIC),
@@ -119,13 +120,19 @@ class KodiFolder(VideoSource):
         allItems = []        
         folders = []        
         cacheableFolders = []        
-        videos = VideoList()
+        videos = VideoList(keepOriginalOrder=True)
         videosDic = {}
         
         index = 0
         videoPosition = 1
         
         firstRun = True
+        
+        if estimateDates:
+            folderRecord = FolderRecord.fromPath(self.path)
+            folderRecord.startEstimations()
+        else:
+            folderRecord = None
         
         for response in nonEmptyResponses:        
             items = response['result']['files']
@@ -145,7 +152,7 @@ class KodiFolder(VideoSource):
                     if path in videosDic:       #this means the same video/media was already added in one of the other requests
                         continue
                     
-                    item = KodiVideo(self, videoPosition, item)                    
+                    item = KodiVideo(self, videoPosition, item, folderRecord)                    
                     videos.append(item)
                     videosDic[path] = item
                     videoPosition += 1
@@ -158,7 +165,8 @@ class KodiFolder(VideoSource):
                 
             firstRun = False
                 
-             
+        if estimateDates:
+            folderRecord.endEstimations()     
              
             
         self._allItems = allItems
@@ -169,6 +177,8 @@ class KodiFolder(VideoSource):
         self._listSuccess = True
         self._empty = False
         self._contentsUpdatedAt = datetime.now()
+        
+        
             
         self.cache()
     
@@ -180,21 +190,21 @@ class KodiFolder(VideoSource):
 ## Public Methods ##
 ####################    
     #override
-    def updateContents(self):
-        return self._list()
+    def updateContents(self, estimateDates=False):
+        return self._list(estimateDates)
 
         
         
-    def updateContentsIfDated(self):
+    def updateContentsIfDated(self, estimateDates=False):
         if self.contentsNeedUpdate():
-            self.updateContents()
+            self.updateContents(estimateDates)
     
         return self._listSuccess
     
     
     
-    def updateContentsThread(self):
-        return ContentsUpdater(self)
+    def updateContentsThread(self, estimateDates=False):
+        return ContentsUpdater(self, estimateDates)
     
 
     
@@ -235,15 +245,15 @@ class KodiFolder(VideoSource):
     
     
     
-    def updatedContents(self, force=False):
+    def updatedContents(self, estimateDates=False, force=False):
         if force or self.contentsNeedUpdate():
-            self.updateContents()
+            self.updateContents(estimateDates)
             
         return self.contents()
     
     
-    def updatedVideos(self, force=False):
-        return self.updatedContents()[1]
+    def updatedVideos(self, estimateDates=False, force=False):
+        return self.updatedContents(estimateDates)[1]
     
     
     
@@ -321,8 +331,8 @@ class KodiFolder(VideoSource):
         
         
         
-    def browseUrl(self, root=False):
-        return router.browseKodiFolderUrl(self.cacheFile, root)
+    def browseUrl(self, root=False, estimateDates=False):
+        return router.browseKodiFolderUrl(self.cacheFile, root=root, estimateDates=estimateDates)
     
     def browseOriginUrl(self):
         return self.path
@@ -333,12 +343,13 @@ class KodiFolder(VideoSource):
 
 
 class ContentsUpdater(threading.Thread):
-    def __init__(self, kodiFolder):
+    def __init__(self, kodiFolder, estimateDates=False):
         threading.Thread.__init__(self)
         self.kodiFolder = kodiFolder
+        self.estimateDates = estimateDates
         
     def run(self):
-        self.kodiFolder.updateContents()
+        self.kodiFolder.updateContents(self.estimateDates)
             
         
         
