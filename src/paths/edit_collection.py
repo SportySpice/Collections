@@ -6,6 +6,7 @@ from src.collection.settings import globalCollection
 from src.collection.Collection import OnCollectionClick as occ
 from src.collection.CollectionSource import OnSourceClick as osc
 from src.collection import Collection as c
+from src.videosource.kodi.FolderVideo import ParseMethod as pm
 from src.collection.settings import FeedSettings as FS
 from src.collection.settings import FeedTextSettings as FTS
 from src.collection.settings import SourcesSettings as SS
@@ -19,7 +20,6 @@ from src.tools.dialog import dialog
 from src.paths import remove_from_collection 
 from src.tools import xbmcTool
 from src.tools.addonSettings import string as st
-from src.collection.settings.FeedTextSettings import FeedTextSettings
 
 
 
@@ -102,9 +102,10 @@ def edit(collectionFile=None):
     generalTab.addEnum(             st(515),    clickOptions,       collection._onClick,    clickDefault,       lambda value: collection.setOnClick(value), customLabels=clickLabels)
     
     if not globalC:
-        generalTab.addButton(st(516), lambda: removeSourceWindow(collection), bold=False)
         generalTab.addEmptyRow()
-        generalTab.addButton(st(517), lambda: switchToGlobalSettings(window), bold=False)
+        generalTab.addButton(st(516), lambda: useInFeedWindow(collection),      bold=False, columnSpan=4)
+        generalTab.addButton(st(517), lambda: removeSourceWindow(collection),   bold=False, columnSpan=4)        
+        generalTab.addButton(st(518), lambda: switchToGlobalSettings(window),   bold=False, columnSpan=4)
         
     
     
@@ -229,8 +230,9 @@ def edit(collectionFile=None):
     folderSettingsTab.addBool(      st(590), fds.estimateDates, FDS.D_ESTIMATE_DATES, lambda state: fds.setEstimateDates(state))
     
     if not globalC:
-        folderSettingsTab.addButton( st(591), lambda: estimateDatesWindow(collection), bold=False)
-    
+        folderSettingsTab.addButton( st(591), lambda: estimateDatesWindow(collection),  bold=False)
+        folderSettingsTab.addEmptyRow()
+        folderSettingsTab.addButton( st(592), lambda: parseMethodWindow(collection),    bold=False)
     
     
     
@@ -246,6 +248,21 @@ def edit(collectionFile=None):
     
     
     
+def useInFeedWindow(collection):
+    window = SettingsWindow(st(516), width=500, height=550, hideTabs=True)
+    tab = Tab('')
+        
+     
+    
+    for cSource in collection.cSources:
+        tab.addBoolFullSpan(cSource.title(),         cSource.useInFeed,      True, lambda value, cSource=cSource: cSource.setUseInFeed(value))
+    
+    
+    window.addTabs([tab])
+    
+    window.show()
+    window.delete()
+    
 
 
 def removeSourceWindow(collection):
@@ -257,14 +274,14 @@ def removeSourceWindow(collection):
 #             window.close()
 #     
 #     for cSource in collection.cSources:
-#         tab.addButton(cSource.videoSource.title, lambda cSource=cSource: onClick(cSource), columnSpan=8, centered=False)
+#         tab.addButton(cSource.title(), lambda cSource=cSource: onClick(cSource), columnSpan=8, centered=False)
 #         
 #     window.addTabs([tab])
 #     
 #     window.show()
 #     window.delete()
     
-    selectedIndex = dialog.select(st(516), list(cSource.videoSource.title for cSource in collection.cSources))
+    selectedIndex = dialog.select(st(517), list(cSource.title() for cSource in collection.cSources))
     if selectedIndex == -1:
         return
     
@@ -286,7 +303,7 @@ def limitsWindow(collection):
     
     
     for cSource in collection.cSources:
-        tab.addEnum(cSource.videoSource.title,         values,      cSource._limit,          None,        lambda value, cSource=cSource: cSource.setLimit(value), customLabels=labels)
+        tab.addEnum(cSource.title(),         values,      cSource._limit,          None,        lambda value, cSource=cSource: cSource.setLimit(value), customLabels=labels)
     
     
     window.addTabs([tab])
@@ -315,7 +332,7 @@ def sourceClickWindow(collection):
             values = ytValues
             labels = ytLabels
             
-        tab.addEnum(cSource.videoSource.title,         values,      cSource._onClick,          None,        lambda value, cSource=cSource: cSource.setOnClick(value), customLabels=labels)
+        tab.addEnum(cSource.title(),         values,      cSource._onClick,          None,        lambda value, cSource=cSource: cSource.setOnClick(value), customLabels=labels)
     
     
     window.addTabs([tab])
@@ -327,17 +344,30 @@ def sourceClickWindow(collection):
 def estimateDatesWindow(collection):
     window = SettingsWindow(st(590), width=600, height=550, hideTabs=True)
     tab = Tab('')
-    
-    
-    
+
     values = (None,             True,       False)          
     labels = (USE_MAIN_TEXT,    st(608),    st(609))    
     
+    for cSource in collection.cSourcesKodi:
+        tab.addEnum(cSource.title(),         values,      cSource._estimateDates,          None,        lambda value, cSource=cSource: cSource.setEstimateDates(value), customLabels=labels)
     
     
+    window.addTabs([tab])
+    
+    window.show()
+    window.delete()
+    
+    
+def parseMethodWindow(collection):
+    window = SettingsWindow(st(593), width=600, height=550, hideTabs=True)
+    tab = Tab('')
+        
+    
+    values = (pm.NORMAL,        pm.FIRST_IN_FOLDER  )     #pm.FOLDERS_AS_VIDEOS          
+    labels = (st(595),          st(596),            )     #st(597)    
     
     for cSource in collection.cSourcesKodi:
-        tab.addEnum(cSource.videoSource.title,         values,      cSource._estimateDates,          None,        lambda value, cSource=cSource: cSource.setEstimateDates(value), customLabels=labels)
+        tab.addEnum(cSource.title(),         values,      cSource.parseMethod,          None,        lambda value, cSource=cSource: cSource.setParseMethod(value), customLabels=labels)
     
     
     window.addTabs([tab])
