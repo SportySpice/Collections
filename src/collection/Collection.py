@@ -6,9 +6,9 @@ from src.tools.enum import enum
 from src import router
 from src.tools.addonSettings import string as st
 from src.videosource.VideoList import VideoList
+from src.videosource.kodi.FolderVideo import ParseMethod
 
-from datetime import datetime, MINYEAR
-from src.tools import pytz
+
 
 
 loaded = {}
@@ -69,7 +69,7 @@ class Collection(object):
 
 
     def createCombinedList(self, customSort=None, reverse=None):
-        combinedVideoList = VideoList( cSources=self.cSources, limit=self.feedSettings.limit() )
+        combinedVideoList = VideoList(collection=self, limit=self.feedSettings.limit())
         
         vs = customSort if customSort else self.feedSettings.sort() 
         vs2 = self.feedSettings.sort2()
@@ -116,18 +116,23 @@ class Collection(object):
         
         
         
-    def addCollectionSource(self, vSource, onClick=None, limit=None, customTitle=None, customThumb=None, kodiEstimateDates=None):
+    def addCollectionSource(self, vSource, onClick=None, useInFeed=True, limit=None, customTitle=None, customThumb=None, kodiParseMethod=ParseMethod.NORMAL, kodiEstimateDates=None):
+        if self.hasSource(vSource.id):
+            raise ValueError('Collection Source is already in collection: %s, %s' %(vSource.title, vSource.id)) 
+        
         if vSource.isYoutube():
-            cSource = YoutubeCollectionSource(self.numSources, self, vSource, onClick, limit, customTitle, customThumb)
+            cSource = YoutubeCollectionSource(self.numSources, self, vSource, onClick, useInFeed, limit, customTitle, customThumb)
             self.cSourcesYt.append(cSource)
                 
         else:
-            cSource = KodiCollectionSource(self.numSources, self, vSource, kodiEstimateDates, onClick, limit, customTitle, customThumb)
+            cSource = KodiCollectionSource(self.numSources, self, vSource, kodiParseMethod, kodiEstimateDates, onClick, useInFeed, limit, customTitle, customThumb)
             self.cSourcesKodi.append(cSource)
         
         self.cSources.append(cSource)
         self.cSourcesDic[cSource.id] = cSource     
         self.numSources  += 1
+        
+        return cSource
         
         
     def setLoadedSources(self):

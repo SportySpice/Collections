@@ -3,8 +3,8 @@ from src.collection.settings import globalCollection
 
 gss = None
 class YoutubeCollectionSource(CollectionSource):
-    def __init__(self, index, collection, vSourceYT, onClick=None, limit=None, customTitle=None, customThumb=None):
-        super(YoutubeCollectionSource, self).__init__(index, collection, vSourceYT, onClick, limit, customTitle, customThumb)
+    def __init__(self, index, collection, vSourceYT, onClick=None, useInFeed=True, limit=None, customTitle=None, customThumb=None):
+        super(YoutubeCollectionSource, self).__init__(index, collection, vSourceYT, onClick, useInFeed, limit, customTitle, customThumb)
         
         #override
         self.browseUrl = self.videoSource.browseUrl

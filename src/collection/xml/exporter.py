@@ -1,5 +1,6 @@
 import strings as st
 import src.collection.Collection as c
+from src.collection.csource import KodiCollectionSource as KCS
 from src.collection.settings import FeedSettings as FS
 from src.collection.settings import FeedTextSettings as FTS
 from src.collection.settings import SourcesSettings as SS
@@ -35,7 +36,8 @@ def export(collection):
         vSource = cSource.videoSource
         nodeName, textRow =  options[vSource.type](cSource, vSource, s)
         
-        s.addIfNotNone( st.ON_CLICK,                cSource._onClick,       customValueDic=st.oscToValue)                    
+        s.addIfNotNone( st.ON_CLICK,                cSource._onClick,       customValueDic=st.oscToValue)
+        s.addIfFalse  ( st.CSOURCE_USE_IN_FEED,     cSource.useInFeed)                    
         s.addIfNotNone( st.CSOURCE_LIMIT,           cSource._limit)
         s.addIfNotNone( st.CSOURCE_CUSTOM_TITLE,    cSource.customTitle)
         s.addIfNotNone( st.CSOURCE_CUSTOM_THUMB,    cSource.customThumb)
@@ -96,7 +98,9 @@ def _processPlaylist(ytCSource, playlist, sourceSettings):
 
 def _processKodiFolder(kodiCSource, folder, sourceSettings):
     text = folder.path
-    sourceSettings.addIfNotNone(st.FOLDER_ESTIMATE_DATES, kodiCSource._estimateDates)
+    
+    sourceSettings.addIfDifferent(  st.FOLDER_PARSE_METHOD,     kodiCSource.parseMethod,        KCS.D_PARSE_METHOD,     customValueDic=st.pmToValue)
+    sourceSettings.addIfNotNone(    st.FOLDER_ESTIMATE_DATES,   kodiCSource._estimateDates)
     #sourceSettings.add('title', folder.title)
     
     return st.FOLDERS_NODE, OrderedTextRow(text, sourceSettings)

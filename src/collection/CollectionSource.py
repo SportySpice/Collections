@@ -6,16 +6,18 @@ from src.tools.enum import enum
 
 OnSourceClick = enum(BROWSE=1, PLAYALL=2, BROWSE_ORIGIN=3)
 
+
 gfs = None
 gss = None
 class CollectionSource(object):
-    def __init__(self, index, collection, videoSource, onClick=None, limit=None, customTitle=None, customThumb=None):
+    def __init__(self, index, collection, videoSource, onClick=None, useInFeed=True, limit=None, customTitle=None, customThumb=None):
         self.id = videoSource.id
         self.index = index
         self.collection = collection        
-        self.videoSource = videoSource
+        self.videoSource = videoSource        
         
         self._onClick = onClick
+        self.useInFeed = useInFeed
         self._limit = limit
         self.customTitle = customTitle
         self.customThumb = customThumb
@@ -32,6 +34,7 @@ class CollectionSource(object):
         self.isChannel = self.videoSource.isChannel
         self.isPlaylist = self.videoSource.isPlaylist
         self.isYoutube = self.videoSource.isYoutube
+        self.typeText = self.videoSource.typeText
         
         
 
@@ -78,7 +81,15 @@ class CollectionSource(object):
             return self.customTitle
         
         return self.videoSource.title
+    
+    def titles(self):
+        cTitle = self.customTitle
+        if cTitle:            
+            return cTitle, cTitle, cTitle
         
+        return self.videoSource.titles()
+
+            
         
     def thumb(self):
         if self.customThumb:
@@ -118,6 +129,9 @@ class CollectionSource(object):
     
     def setOnClick(self, onSourceClick):
         self._onClick = onSourceClick
+        
+    def setUseInFeed(self, state):
+        self.useInFeed = state
     
     def setLimit(self, value):
         self._limit = value

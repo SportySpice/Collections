@@ -12,7 +12,7 @@ from src.videosource.kodi import KodiFolder
 import src.cxml.loader as cxml
 from src.li.visual.TextSettings import TextSettings
 from src.cxml import Node
-from src.collection.csource import KodiCollectionSource
+from src.collection.csource import KodiCollectionSource as kcs
 
 
 
@@ -186,10 +186,10 @@ def _processSources(sourcesNodes, collection):
     
     for node in sourcesNodes:
         for textRow in node.textRows:            
-            onSourceClick, limit, customTitle, customThumb = _processCSourceSettings(textRow.settings)
+            onSourceClick, useInFeed, limit, customTitle, customThumb = _processCSourceSettings(textRow.settings)
             
             if node.name == st.FOLDERS_NODE:
-                vSource, estimateDates = _processFolder(textRow, customTitle, customThumb)
+                vSource, parseMethod, estimateDates = _processFolder(textRow)
                 
                                 
             else:
@@ -197,7 +197,8 @@ def _processSources(sourcesNodes, collection):
                     vSource, needsInfoUpdate = _processChannel(textRow)
                 else:
                     vSource, needsInfoUpdate = _processPlaylist(textRow)
-                    
+                
+                parseMethod = None
                 estimateDates = None
                                      
                 if needsInfoUpdate:
@@ -205,14 +206,14 @@ def _processSources(sourcesNodes, collection):
                 
                 
             
-            cSourceItems.append((vSource, onSourceClick, limit, customTitle, customThumb, estimateDates))    
+            cSourceItems.append((vSource, onSourceClick, useInFeed, limit, customTitle, customThumb, parseMethod, estimateDates))    
                         
                         
     batchUpdater.infoUpdate(ytSourcesToUpdate, forceUpdate=True)
 
     for cSourceItem in cSourceItems:
-        videoSource, onSourceClick, limit, customTitle, customThumb, estimateDates = cSourceItem
-        collection.addCollectionSource(videoSource, onSourceClick, limit, customTitle, customThumb, estimateDates)
+        videoSource, onSourceClick, useInFeed, limit, customTitle, customThumb, parseMethod, estimateDates = cSourceItem
+        collection.addCollectionSource(videoSource, onSourceClick, useInFeed, limit, customTitle, customThumb, parseMethod, estimateDates)
         
     collection.setLoadedSources()
 
@@ -243,7 +244,8 @@ def _processThumb(collectionFile):
 
 
 def _processCSourceSettings(textrowSettings):    
-    onClick     =   _get(textrowSettings,   st.ON_CLICK,                st.valueToOsc)        
+    onClick     =   _get(textrowSettings,   st.ON_CLICK,                st.valueToOsc)
+    useInFeed   =   textrowSettings.get(    st.CSOURCE_USE_IN_FEED,     True)            
     limit       =   textrowSettings.get(    st.CSOURCE_LIMIT)                        
     customTitle =   textrowSettings.get(    st.CSOURCE_CUSTOM_TITLE)
     customThumb =   textrowSettings.get(    st.CSOURCE_CUSTOM_THUMB)
@@ -252,7 +254,7 @@ def _processCSourceSettings(textrowSettings):
         limit = fs.MAX_LIMIT
         
                     
-    return onClick, limit, customTitle, customThumb
+    return onClick, useInFeed, limit, customTitle, customThumb
         
 
 
@@ -285,18 +287,16 @@ def _processPlaylist(textrow):
 
 
 
-def _processFolder(textrow, customTitle, customThumb):    
+def _processFolder(textrow):    
     path = textrow.text    
-    settings = textrow.settings
-    estimateDates = settings.get(st.FOLDER_ESTIMATE_DATES)
+    s = textrow.settings
     
-    title = customTitle   #we give it same title and thumb as custom title and thumb, which are the original listed title
-    thumb = customThumb   #and thumb if unchanged by the user later. best solution i can currently think of for now.
-                                            
+    parseMethod   =     _get(s, st.FOLDER_PARSE_METHOD,     st.valueToPm,   kcs.D_PARSE_METHOD)
+    estimateDates =     s.get(  st.FOLDER_ESTIMATE_DATES)
+                                                        
+    kodiFolder = KodiFolder.fromPath(path)
         
-    kodiFolder = KodiFolder.fromPath(path, title, thumb)
-        
-    return kodiFolder, estimateDates
+    return kodiFolder, parseMethod, estimateDates
 
 
 
@@ -433,7 +433,7 @@ def _runInit():
     
     c.init()
     cs.init()
-    KodiCollectionSource.init()
+    kcs.init()
     YoutubeCollectionSource.init()
     
     fs.init()

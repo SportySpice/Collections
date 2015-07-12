@@ -1,5 +1,6 @@
 from src.collection.Collection import OnCollectionClick as occ
 from src.collection.CollectionSource import OnSourceClick as osc
+from src.videosource.kodi.FolderVideo import ParseMethod as pm
 from src.videosource.Video import OnVideoClick as ovc
 from src.videosource.VideoList import VideoSort as vsr
 from src.videosource.VideoList import VideoCountType as vct
@@ -19,8 +20,8 @@ valueToOvc  =   {'playOnly':ovc.PLAY_ONLY,      'playQueue':ovc.PLAY_QUEUE_REST}
 vsrToValue =   {vsr.DATE:'date',   vsr.VIEWS:'views',       vsr.DURATION:'duration',    vsr.POSITION:'position',    vsr.SHUFFLE:'shuffle',  vsr.SOURCE_TITLE:'sTitle',      vsr.VIDEO_TITLE:'vTitle',       vsr.RATING:'rating',    vsr.LIKES:'likes',  vsr.DISLIKES:'dislikes',    vsr.COMMENTS:'comments',        vsr.PLAYCOUNT:'playCount',  vsr.LASTPLAYED:'lastPlayed'}
 valueTovsr =   {'date':vsr.DATE,   'views':vsr.VIEWS,       'duration':vsr.DURATION,    'position':vsr.POSITION,    'shuffle':vsr.SHUFFLE,  'sTitle':vsr.SOURCE_TITLE,      'vTitle':vsr.VIDEO_TITLE,       'rating':vsr.RATING,    'likes':vsr.LIKES,  'dislikes':vsr.DISLIKES,    'comments':vsr.COMMENTS,        'playCount':vsr.PLAYCOUNT,  'lastPlayed':vsr.LASTPLAYED}
 
-vctToValue = {vct.DATE:'date',  vct.VIEWS:'views',    vct.DURATION:'duration',    vct.POSITION:'position',    vct.RATING:'rating',    vct.LIKES:'likes',  vct.DISLIKES:'dislikes',  vct.COMMENTS:'comments',    vct.PLAYCOUNT:'playCount',  vct.LASTPLAYED:'lastPlayed'}
-valueToVct = {'date':vct.DATE,  'views':vct.VIEWS,    'duration':vct.DURATION,    'position':vct.POSITION,   'rating':vct.RATING,    'likes':vct.LIKES,  'dislikes':vct.DISLIKES,   'comments':vct.COMMENTS,     'playCount':vct.PLAYCOUNT,  'lastPlayed':vct.LASTPLAYED}
+vctToValue =   {vct.DATE:'date',  vct.VIEWS:'views',    vct.DURATION:'duration',    vct.POSITION:'position',    vct.RATING:'rating',    vct.LIKES:'likes',  vct.DISLIKES:'dislikes',  vct.COMMENTS:'comments',    vct.PLAYCOUNT:'playCount',  vct.LASTPLAYED:'lastPlayed'}
+valueToVct =   {'date':vct.DATE,  'views':vct.VIEWS,    'duration':vct.DURATION,    'position':vct.POSITION,   'rating':vct.RATING,    'likes':vct.LIKES,  'dislikes':vct.DISLIKES,   'comments':vct.COMMENTS,     'playCount':vct.PLAYCOUNT,  'lastPlayed':vct.LASTPLAYED}
 
 
 
@@ -31,6 +32,8 @@ valueToLoc  =   {'leftAligned':loc.LEFT_ALIGNED,    'left':loc.LEFT,   'middle':
 #valueToCt   =   {'views':ct.VIEWS,  'subscribers':ct.SUBSCRIBERS,   'videos':ct.VIDEOS,     'newVideos':ct.NEW_VIDEOS}
 
 
+pmToValue   =   {pm.NORMAL:'normal',    pm.FIRST_IN_FOLDER:'firstInFolder',     pm.FOLDERS_AS_VIDEOS:'foldersAsVideos'}
+valueToPm   =   {'normal':pm.NORMAL,    'firstInFolder':pm.FIRST_IN_FOLDER,     'foldersAsVideos':pm.FOLDERS_AS_VIDEOS}
 
 
 
@@ -42,8 +45,9 @@ valueToLoc  =   {'leftAligned':loc.LEFT_ALIGNED,    'left':loc.LEFT,   'middle':
 ON_CLICK            = 'onClick'
 VIEWSTYLE           = 'viewStyle'
 USE                 = 'use'
-USELIMITS          = 'useLimits'
+USELIMITS           = 'useLimits'
 USETS               = 'useTS'
+
 
 #TS
 TS_COLOR            = 'color'
@@ -107,9 +111,11 @@ FOLDERS_SETTINGS_ESTIMATE   = 'estimateDates'
 
 
 #cSource
+CSOURCE_USE_IN_FEED     = 'useInFeed'
 CSOURCE_LIMIT           = 'limit'
 CSOURCE_CUSTOM_TITLE    = 'title'
 CSOURCE_CUSTOM_THUMB    = 'thumb'
+
 
 
 
@@ -124,4 +130,5 @@ PLAYLISTS_NODE          = 'playlists'
 
 #kodiFolders
 FOLDERS_NODE            = 'folders'
+FOLDER_PARSE_METHOD     = 'parse'
 FOLDER_ESTIMATE_DATES   = 'estimateDates'

@@ -5,9 +5,12 @@ import urlparse
 # debug.start()
 
 
+
+
 ROOT                    =       'plugin://plugin.video.collections/'
 #HOME                   =        ?
 PLAY_VIDEO_KODI         =       'plugin://plugin.video.collections/play/video/kodi'
+PLAY_VIDEO_KODI_FOLDER  =       'plugin://plugin.video.collections/play/video/kodi/folder'
 PLAY_VIDEO_YOUTUBE      =       'plugin://plugin.video.collections/play/video/youtube'
 PLAY_QUEUE_PLAYLIST     =       'plugin://plugin.video.collections/play/queue/playlist'
 PLAY_QUEUE_COLLECTION   =       'plugin://plugin.video.collections/play/queue/collection'
@@ -435,6 +438,18 @@ def playQueuePlaylist(query):
     
     videoIndex = _unsimpledQuery(query)
     play_playlist.play(videoIndex)
+    
+    
+def playVideoKodiFolderUrl(kodiFolderFile, parseMethod):
+    return _encodedUrl(PLAY_VIDEO_KODI_FOLDER, [kodiFolderFile.fullpath, parseMethod])
+
+def playVideoKodiFolder(query):
+    from paths import play_video_kodi_folder
+    from src.file import File
+    
+    kodiFolderFile, parseMethod = _decodedUrl(query) 
+    kodiFolderFile = File.fromFullpath(kodiFolderFile)
+    play_video_kodi_folder.play(kodiFolderFile, parseMethod)
 
 
 
@@ -461,7 +476,7 @@ def route(path, query):
                   EDIT_YT_CHANNEL_PLS:editTemp, EDIT_YT_PLAYLIST:editTemp,
                   EDIT_YT_SUBSCRIPTIONS:editTemp, EDIT_YT_SEARCH:editTemp, 
                   EDIT_YT_CATEGORY:editTemp, SORT_VIDEOLIST:sortVideolist, 
-                  PLAY_QUEUE_PLAYLIST:playQueuePlaylist}
+                  PLAY_QUEUE_PLAYLIST:playQueuePlaylist, PLAY_VIDEO_KODI_FOLDER:playVideoKodiFolder}
          
         pathes[path](query)
    

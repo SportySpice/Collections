@@ -305,12 +305,15 @@ msgctxt "#30515"
 msgid "On Click"
 msgstr ""
 
-
 msgctxt "#30516"
-msgid "Remove Source"
+msgid "Sources to include in feed"
 msgstr ""
 
 msgctxt "#30517"
+msgid "Remove Source"
+msgstr ""
+
+msgctxt "#30518"
 msgid "Open Global Settings"
 msgstr ""
 
@@ -498,6 +501,30 @@ msgctxt "#30591"
 msgid "Set Individually"
 msgstr ""
 
+#Folders Tab
+msgctxt "#30592"
+msgid "Set parse methods"
+msgstr ""
+
+#Folders Tab
+msgctxt "#30593"
+msgid "Parse Method"
+msgstr ""
+
+#Folders Tab
+msgctxt "#30595"
+msgid "Normal"
+msgstr ""
+
+#Folders Tab
+msgctxt "#30596"
+msgid "First in folder"
+msgstr ""
+
+#Folders Tab
+msgctxt "#30597"
+msgid "Folders as videos"
+msgstr ""
 
 
 
@@ -932,33 +959,57 @@ msgstr ""
 
 #-----------Add To Collection----------
 msgctxt "#30810"
-msgid "Choose collection to add to"
+msgid "Parse Selection"
 msgstr ""
 
 msgctxt "#30811"
-msgid "Oops!"
+msgid "This folder contains %d sub-folders but no videos."
 msgstr ""
 
 msgctxt "#30812"
-msgid "%s [B]%s[/B] is already in collection [B]%s[/B]."
+msgid "Please specify how should Collection TV handle it."
 msgstr ""
 
 msgctxt "#30813"
-msgid "Success!"
+msgid "Add as source only, do not include in feed"
 msgstr ""
 
 msgctxt "#30814"
+msgid "Use first video in each sub-folder"
+msgstr ""
+
+msgctxt "#30815"
+msgid "How would you like this source to be named?"
+msgstr ""
+
+msgctxt "#30816"
+msgid "Choose collection to add to"
+msgstr ""
+
+msgctxt "#30817"
+msgid "Oops!"
+msgstr ""
+
+msgctxt "#30818"
+msgid "%s [B]%s[/B] is already in collection [B]%s[/B]."
+msgstr ""
+
+msgctxt "#30819"
+msgid "Success!"
+msgstr ""
+
+msgctxt "#30820"
 msgid "%s [B]%s[/B] has been successfully added to collection [B]%s[/B]."
 msgstr ""
 
 
 
 #-----------Add To Collection Browse----------
-msgctxt "#30820"
+msgctxt "#30825"
 msgid "New Folder"
 msgstr ""
 
-msgctxt "#30821"
+msgctxt "#30826"
 msgid "New Collection"
 msgstr ""
 

@@ -1,4 +1,4 @@
-from visual.add_to_collection import BROWSE_DIALOG_HEADING, alreadyInCollectionDialog, successDialog
+from visual.add_to_collection import noVideosDialog, customTitleDialog, BROWSE_DIALOG_HEADING, alreadyInCollectionDialog, successDialog
 from src.tools import dialog
 from src.tools.dialog import BrowseType
 from src import router
@@ -8,6 +8,7 @@ from src.videosource.VideoSource import SourceType
 from src.videosource.youtube import Channel
 from src.videosource.youtube import Playlist
 from src.videosource.kodi import KodiFolder
+from src.videosource.kodi.FolderVideo import ParseMethod
 from add_to_collection_browse import NEW_COLLECTION_STR, NEW_FOLDER_STR, USE_LAST_FOLDER_STR
 from src.paths.root import MY_COLLECTIONS_DIR
 
@@ -21,8 +22,32 @@ def add(vSourceId, vSourceFile, sourceType, relStartPath=''):
 #     myCollectionFolder = Folder.fromFullpath(MY_COLLECTIONS_DIR)
 #     add_to_collection_browse2.browse(myCollectionFolder)
 #     return
+
     
+
+    if sourceType == SourceType.FOLDER:
+        parseMethod = ParseMethod.NORMAL
+        useInFeed = True  
+              
+        kodiFolder = KodiFolder.fromPath(vSourceId)
+        if not kodiFolder.videos():
+            result = noVideosDialog(kodiFolder)
+            if result == -1:
+                return
+            
+            if result == 0:
+                useInFeed = False
     
+            if result == 1:
+                parseMethod = ParseMethod.FIRST_IN_FOLDER
+                
+        
+        kfTitle = customTitleDialog(kodiFolder).strip()
+        if not kfTitle:
+            return
+        
+        vSource = kodiFolder
+            
         
     path = router.addToCollectionBrowseUrl(relStartPath + '/')
     
@@ -65,12 +90,16 @@ def add(vSourceId, vSourceFile, sourceType, relStartPath=''):
         return
     
     
-    if sourceType == SourceType.CHANNEL:        vSource                     = Channel.fromCacheFile(vSourceFile)        
-    elif sourceType == SourceType.PLAYLIST:     vSource, needsInfoUpdate    = Playlist.fromPlaylistId(vSourceId)
-    else:                                       vSource                     = KodiFolder.fromPath(vSourceId)
-        
+    if sourceType == SourceType.FOLDER:
+        cSource = collection.addCollectionSource(kodiFolder, useInFeed=useInFeed, kodiParseMethod=parseMethod, customTitle=kfTitle)
     
-    collection.addCollectionSource(vSource)
+    else:
+        if sourceType == SourceType.CHANNEL:    vSource                     = Channel.fromCacheFile(vSourceFile)        
+        else:                                   vSource, needsInfoUpdate    = Playlist.fromPlaylistId(vSourceId)
+        
+        cSource = collection.addCollectionSource(vSource)
+        
+
     collection.writeCollectionFile()
     
-    successDialog(vSource, collection)
+    successDialog(cSource, collection)

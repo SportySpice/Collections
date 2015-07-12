@@ -9,7 +9,7 @@ viewStyle           =       ViewStyle.TVSHOWS
 
 
 createNewFolderVisual = CustomFileVisual (
-      st(820),  #title
+      st(825),  #title
       TextSettings(
           None,                 #color
           True,                 #bold?
@@ -31,7 +31,7 @@ foldersVisual = FolderVisual(
 
 
 createNewCollectionVisual = CustomFileVisual (
-    st(821),  #title
+    st(826),  #title
     TextSettings(
         None,                 #color
         True,                 #bold?

@@ -42,9 +42,9 @@ def browse(kodiFolderFile, rootFolder=False, estimateDates=False):
                 items.addKodiFolder(folder, foldersVisual)
     
     else:
-        if videos:
-            items.addAddToCollection(kodiFolder, addToCollectionVisual)
-            
+        items.addAddToCollection(kodiFolder, addToCollectionVisual)
+        
+        if videos:                        
             items.addVideoSortKodi(st(751))                
             currentSort = svl.loadCurrentSort(SourceType.FOLDER)
             selected = currentSort.selected
