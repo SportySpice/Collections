@@ -21,6 +21,10 @@ class OrderedSettings:
     def addIfNotNone(self, key, value, customValue=None, customValueDic=None):
         if value is not None:                
             self.add(key, value, customValue, customValueDic)
+    
+    def addIfFalse(self, key, value):
+        if value is False:
+            self.add(key, False)
             
             
     def addIfDifferent(self, key, value, comparisonValue, customValue=None, customValueDic=None, nonePossible=False):
