@@ -1,4 +1,5 @@
 from src.file import File
+import threading
 
 loadedDics = {}
 
@@ -13,6 +14,8 @@ class DataDictionary(object):
             
         global loadedDics
         loadedDics[dicFile.fullpath] = self
+        
+        self.lock = threading.Lock()
         
         
       
@@ -30,8 +33,11 @@ class DataDictionary(object):
     
     
     def set(self, key, value):
+        self.lock.acquire()                 #these dictionaries are sometimes used with threads and it causes
+                                            #problems, especially when dumping the dic. this shoudl sovle it
         self.dic[key] = value
-        self.dicFile.dumpObject(self.dic)
+        self.dicFile.dumpObject(self.dic)        
+        self.lock.release()
     
 
     def setIfNonExistent(self, key, value):
