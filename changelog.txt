@@ -1,11 +1,36 @@
-[B]2.2.0[/B] 
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.3.0[/B][/COLOR]
+[COLOR seashell][B]-------------------[/B][/COLOR]
+* Custom feed parse handling for Kodi Folders:
+    First video in each sub-folder
+    Add source but exclude from feed
+    More to come...
+
+* Truly add any folder to a collection, even if it doesn't have videos
+* Choose which sources to include in feed
+* Custom titles for folders
+* General better handling of custom source titles and thumbnails
+* Small GUI improvements
+* Many small code improvements
+* Prettier Changelog!
+
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.2.0[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
 * Date estimation algorithm for folder sources
 * Sort by original order for folder sources
 
-[B]2.1.1[/B] 
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.1.1[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
 * Fixed issue with icons showing stretched in some skins
-	
-[B]2.1.0[/B] 
+
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.1.0[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
 * Sort video lists on the fly in 13 different ways:
     Date
     Views
@@ -20,7 +45,7 @@
     Comment Count
     Play Count
     Last Played
-	
+
 * Set collection feed sort permanently
 * Secondary sort option for collection feed	
 * Counts can now show all the different sorting values(as opposed to only views in previous versions)
@@ -30,13 +55,19 @@
 * Queue all videos when playing video inside a source
 * Max collection limit increased to a whopping 2000
 
-[B]2.0.1[/B] 
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.0.1[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
 * Fixed many issues which prevented the add-on from loading/functioning correctly on Android (and possibly other platforms).
 * Collection TV is now hidden again when browsing other add-ons
 
-[B]2.0.0 MAJOR UPDATE[/B]:
 
-General & Collection related:
+[B][COLOR seashell]-----------------------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.0.0 MAJOR UPDATE[/B][/COLOR]
+[B][COLOR seashell]-----------------------------------[/B][/COLOR]
+
+[B]General & Collection related:[/B]
  * Add-on name changed to CollectionTV
  * New icon (still needs work)
  * Ability to add [B]ANY[/B] folder inside Kodi, whether local or in a different add-on, as collection source
@@ -45,7 +76,7 @@ General & Collection related:
  * Choose starting point for each collection (feed/sources/play all)
  * All strings moved to language PO files as requested by Team Kodi
  
-UI Related:
+[B]UI Related:[/B]
 (everything can now be done with a UI inside the add-on, no more need for manual XML editing!)
  * Create collections
  * Create new directories
@@ -54,12 +85,12 @@ UI Related:
  * Edit settings for each individual collection 
  * Delete collections
   
- Kodi Sources:
+ [B]Kodi Sources:[/B]
  * Browse other Kodi Add-Ons within Collection TV and add them as a collections source
  * Browse local media within Collection TV and add it as a collection source
  * Choose how each source gets browsed. Either using the internal parser with all its benefits, or going straight to the original folder (same functionality as favorties/super favorites)
  
- YouTube Sources:
+ [B]YouTube Sources:[/B]
  * Sign in to YouTube
  * Search YouTube
  * Browse subscriptions
@@ -74,14 +105,19 @@ UI Related:
  * Thumb quality settings
  * Fixed issue with "wrong" dates. Dates are now the same as seen on youtube.com
  
- Cache related:
+ [B]Cache related:[/B]
  * Individual caching for each source: Everything loads faster, plugin is more stable, and cache uses less space.
  * Customize cache settings
  * Clear cache via the menu at any time
 
  
- 
- 
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v1.0.0[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
+* Release
 
-1.0.0 Release
-0.1.1 First beta release
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v0.1.1[/B][/COLOR]
+[B][COLOR seashell]-------------------[/B][/COLOR]
+* First beta release
