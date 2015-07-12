@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.collections" name="Collection TV" version="2.2.0" provider-name="SportySpice">
+<addon id="plugin.video.collections" name="Collection TV" version="2.3.0" provider-name="SportySpice">
     <requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.youtube.dl" version="15.318.0"/>
