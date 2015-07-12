@@ -26,6 +26,9 @@ vsToKey = {                                                                     
 }
 
 
+    
+        
+
 
 VideoCountType = enum (DATE=1, VIEWS=2, DURATION=3, POSITION=4, RATING=5, LIKES=6, DISLIKES=7, 
                        COMMENTS=8, PLAYCOUNT=9, LASTPLAYED=10)
@@ -46,12 +49,19 @@ VideoCountType = enum (DATE=1, VIEWS=2, DURATION=3, POSITION=4, RATING=5, LIKES=
 
 
 class VideoList(object):
-    def __init__(self, videos=None, cSources=None, limit=None, unwatchedOnly=False, keepOriginalOrder=False):
+    def __init__(self, videos=None, collection=None, limit=None, unwatchedOnly=False, keepOriginalOrder=False):
         if videos:
             self._videos = videos
             
             
-        elif cSources:
+        elif collection:
+            cSources = []
+            
+            for cSource in collection.cSources:
+                if cSource.useInFeed:
+                    cSources.append(cSource)
+                         
+                         
             videos = []
             
             if unwatchedOnly:
@@ -64,9 +74,10 @@ class VideoList(object):
                     for video in source.allVideos():
                         videos.append(video)
                         
+            
             self._videos = videos
-                    
-                    
+            self.cSources = cSources        
+            
             
             
             
@@ -74,7 +85,7 @@ class VideoList(object):
             self._videos = []
             
         
-        self.cSources = cSources
+        self.collection = collection
         self.limit = limit
         
         self.keepOriginalOrder = keepOriginalOrder
@@ -117,10 +128,19 @@ class VideoList(object):
             shuffle(self._videos)
             return
         
-        keyGetter, reverse = vsToKey[videoSort]
+        
+        if self.collection and ((videoSort==vs.SOURCE_TITLE) or (videoSort2==vs.SOURCE_TITLE)):
+            def vsToCSourceTitle(video):
+                cSource = self.collection.getCSource(video.source.id)
+                return cSource.title()
+        
+        
+        if self.collection and videoSort==vs.SOURCE_TITLE:  keyGetter, reverse = vsToCSourceTitle, False              
+        else:                                               keyGetter, reverse = vsToKey[videoSort]
         
         if videoSort2:
-            keyGetter2 =  vsToKey[videoSort2][0]
+            if self.collection and videoSort2==vs.SOURCE_TITLE: keyGetter2 =  vsToCSourceTitle
+            else:                                               keyGetter2 =  vsToKey[videoSort2][0]
             key = lambda video: (keyGetter(video), keyGetter2(video))
              
         else:
@@ -137,7 +157,7 @@ class VideoList(object):
     
 
     def applyLimits(self):        
-        if self.cSources:
+        if self.collection:
             limitedVideos = []            
             
             limitInfoDic = {}

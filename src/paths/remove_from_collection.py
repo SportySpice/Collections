@@ -13,10 +13,9 @@ def remove(collectionFile, sourceId, showConfirmDialog=True, showSuccessDialog=T
     
 def removeDirect(cSource, showConfirmDialog=True, showSuccessDialog=True, refreshContainer=True):
     collection = cSource.collection
-    vSource = cSource.videoSource
     
     if showConfirmDialog:
-        if not confirmDialog(vSource, collection): 
+        if not confirmDialog(cSource, collection): 
             return False
         
         
@@ -24,7 +23,7 @@ def removeDirect(cSource, showConfirmDialog=True, showSuccessDialog=True, refres
     collection.writeCollectionFile()
     
     if showSuccessDialog:
-        successDialog(vSource, collection)
+        successDialog(cSource, collection)
         
     
     if refreshContainer:

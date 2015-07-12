@@ -4,11 +4,22 @@ from src.li.Li import Li
 
 
 class VideoLi(Li):
-    def __init__(self, video, url, isPlayable, videoVisual, collection=None):        
-        title = videoVisual.title(video) 
+    def __init__(self, video, url, isPlayable, videoVisual, collection=None):
+        
+        vSource = video.source
+        if collection:
+            cSource = collection.getCSource(vSource.id)
+            sourceTitle, studioTitle, tvShowTitle = cSource.titles()
+            thumb = cSource.thumb()
+        else:
+            sourceTitle, studioTitle, tvShowTitle = vSource.titles()
+            thumb = video.thumb 
+            
+        title = videoVisual.title(video, sourceTitle)
+
         
         icon = None
-        thumb = video.thumb 
+        
         
 
         
@@ -16,7 +27,7 @@ class VideoLi(Li):
         
         
         generalInfoLabels = self._generalInfoLabels(video)
-        videoInfoLabels = self._videoInfoLabels(video, title)
+        videoInfoLabels = self._videoInfoLabels(video, title, studioTitle, tvShowTitle)
         
         
         if collection: 
@@ -67,16 +78,15 @@ class VideoLi(Li):
         
     
     @staticmethod        
-    def _videoInfoLabels(video, title):
-        source = video.source    
+    def _videoInfoLabels(video, title, studioTitle, tvShowTitle):
         date = video.date
         
         
         return {
                 'title':        title,
                 #'originaltitle':video.title,
-                'studio':       source.studioTitle,
-                'tvshowtitle':  source.tvShowTitle,
+                'studio':       studioTitle,
+                'tvshowtitle':  tvShowTitle,
                 'plot':         video.description,
                 
                 

@@ -51,6 +51,9 @@ class VideoSource(object):
     def typeText(self):
         return stToText[self.type]
     
+    def titles(self):
+        return self.title, self.studioTitle, self.tvShowTitle
+    
     
 #    abstract
 #    def browseUrl(self):

@@ -27,10 +27,11 @@ class VideoVisual(object):
         
         
     
-    def title(self, video):                
+    def title(self, video, sourceTitle):                            
         countNumber  = self.countGetter(video)
         
         countNumber2 = self.countGetter2(video) if self.countGetter2 else None
         hasCount2    = True                     if self.countGetter2 else False
             
-        return self.videoFTS.fullText(video.title, video.source.title, countNumber, self.maxChars, self.textIfNone, countNumber2, self.maxChars2, self.textIfNone2, hasCount2)
+        
+        return self.videoFTS.fullText(video.title, sourceTitle, countNumber, self.maxChars, self.textIfNone, countNumber2, self.maxChars2, self.textIfNone2, hasCount2)
