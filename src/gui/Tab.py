@@ -46,8 +46,14 @@ class Tab(object):
         return button
         
     def addBool(self, label, current, default, onSave):
-        row = self.addSettingRow(label)
+        row = self.addSettingRow(label)            
         row.addRadioButton(VALUE_COLUMN, current, default, onSave, columnspan=VALUE_COLUMN_SPAN)
+        
+    def addBoolFullSpan(self, label, current, default, onSave):
+        row = Row()                                
+        row.addRadioButton(SETTING_COLUMN, current, default, onSave, label=label, columnspan=self.numColumns - 2)        
+        self.addRow(row)
+        
 
         
     def addInputEdit(self, label, current, default, onSave):
