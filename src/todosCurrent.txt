@@ -1,6 +1,4 @@
-* support plugins like genesis / folders that are actually videos/ choose to not parse in feed at all
-* include in main feed option for each source
-* choose custom name when adding a folder
+* first in folder parse: find out when video fails playing and then play the next until found one that is good
 
 * youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
 * youtube charts (either via search and order or find out if can get other way through api)
