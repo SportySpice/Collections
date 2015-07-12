@@ -36,7 +36,7 @@ class YoutubeVideo(Video):
         duration = None #need another api request for this and call addInfo()
         rating = None   #same                  
                 
-        super(YoutubeVideo, self).__init__(videoId, source, position, title, description, thumb, date, duration, rating)
+        super(YoutubeVideo, self).__init__(videoId, source, position, title, description, thumb, date, duration, rating, watchedDic)
         
         
     
@@ -77,14 +77,6 @@ class YoutubeVideo(Video):
 #         import urlResolver
 #         streamurl = urlResolver.resolve(self.id)
 #         return streamurl
-        
-
-    
-    def watched(self):
-        return watchedDic.watched(self.id)
-    
-    def watchedInfo(self):
-        return watchedDic.info(self.id)
     
     
     

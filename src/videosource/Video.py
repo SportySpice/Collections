@@ -7,7 +7,7 @@ OnVideoClick = enum (PLAY_ONLY=1, PLAY_QUEUE_REST=2)
 
 
 class Video(object):
-    def __init__(self, videoId, source, position, title, description, thumb, date, duration, rating):
+    def __init__(self, videoId, source, position, title, description, thumb, date, duration, rating, watchedDic):
         self.id = videoId
         #self.type = videoType
         
@@ -19,6 +19,7 @@ class Video(object):
         self.date = date
         self.duration = duration
         self.rating = rating
+        self.watchedDic = watchedDic
 
 
     
@@ -30,13 +31,11 @@ class Video(object):
     def playUrl(self):
         return
     
-    #abstract
     def watched(self):
-        return
+        return self.watchedDic.watched(self.id)
     
-    #abstract (returns playCount, lastPlayed)
     def watchedInfo(self):
-        return 
+        return self.watchedDic.info(self.id)
         
     def playCount(self):
         return self.watchedInfo()[0]
