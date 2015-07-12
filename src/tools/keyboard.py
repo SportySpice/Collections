@@ -2,7 +2,10 @@ import xbmc
 
 kb = xbmc.Keyboard()
 
-def show(heading):
+def show(heading, default=None):
+    if default:
+        kb.setDefault(default)
+        
     kb.setHeading(heading)
     kb.doModal()
     
