@@ -13,11 +13,11 @@ def search(searchType=None, searchFile=None, pageNum=1):
         heading = keyboardHeading[searchType]
         keyboard.show(heading)
     
-        if keyboard.gotInput():
-            query = keyboard.text()
-            search = Search(query, searchType)
-        else:
+        if not keyboard.gotInput():
             return
+        
+        query = keyboard.text()
+        search = Search(query, searchType)
     
         
     
