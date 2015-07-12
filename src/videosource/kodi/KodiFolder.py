@@ -1,4 +1,5 @@
 import FolderRecord
+import itemProcess
 from src.videosource.VideoSource import VideoSource, SourceType
 from src.videosource.VideoList import VideoList
 from KodiVideo import KodiVideo
@@ -19,44 +20,75 @@ from src import router
 PATH_DIC_FILE = '__pathes.dic'
 MediaType = enum(VIDEO='video', MUSIC='music', PICTURES='pictures', FILES='files', PROGRAMS='programs')
 
+
 foldersLoaded = {}
+pathDic = DataDictionary.load(PATH_DIC_FILE, KODI_FOLDER_CACHE_DIR)
 
 
 class KodiFolder(VideoSource):
-    def __init__(self, path, title, thumb):
-        self.path = path        
+    def __init__(self, path, title, thumb, description=None, date=None, dateType=None, duration=None, rating=None):
+        studioTitle = title         #maybe original's plugin name?
+        tvShowTitle = title
+        
+        sourceType = SourceType.FOLDER
+        sourceId = path
+        
+        super(KodiFolder, self).__init__(title, studioTitle, tvShowTitle, description, thumb, sourceType, sourceId)
+        
+        
+        self.path = path
+        self.description = description
+        self.date = date
+        self.dateType = dateType
+        self.duration = duration
+        self.rating = rating
+        
+        
+        
+                
         #self.path = self.path.replace('\\', '/')        #HIGHLY UNSURE IF THIS WORKS FOR ALL CASES
         
         cacheFileName = str(uuid.uuid4()) + '.kfd'
         cacheFile = File.fromNameAndDir(cacheFileName, KODI_FOLDER_CACHE_DIR)
         self.cacheFile = cacheFile
-        
-        pathDic = DataDictionary.load(PATH_DIC_FILE, KODI_FOLDER_CACHE_DIR)
+                
         pathDic.setIfNonExistent(path, cacheFile.fullpath)
         
         
         self._contentsUpdatedAt = None
         self._cacheMode = False
-        self.updateInfo(title, thumb)
         
+        self.cache()
         
         global foldersLoaded
         foldersLoaded[path] = self
         
         
-    def updateInfo(self, title, thumb):
-        studioTitle = title         #maybe original's plugin name?
-        tvShowTitle = title
-        description = None 
-               
-           
-        sourceType = SourceType.FOLDER
-        sourceId = self.path
+        
+     
+
+        
+        
+        
+        
+    def updateInfo(self, title, thumb, description=None, date=None, dateType=None, duration=None, rating=None):
+        self.title = title
+        self.studioTitle = title
+        self.tvShowTitle = title
+        
+        self.thumb = thumb
                 
-        super(KodiFolder, self).__init__(title, studioTitle, tvShowTitle, description, thumb, sourceType, sourceId)
-       
+        if description: self.description = description
+        if duration:    self.duration = duration
+        if rating:      self.rating = rating
+                       
+        if date:
+            self.date = date
+            self.dateType = dateType
         
         self.cache()
+        
+ 
 
 
 
@@ -142,10 +174,10 @@ class KodiFolder(VideoSource):
                 
                 if filetype == 'directory':
                     if firstRun:
-                        item = fromItem(item)
-                        folders.append(item)
-                        cacheableFolders.append((item.path, item.title, item.thumb, index))
-                    
+                        f = fromItem(item)
+                        folders.append(f)
+                        cacheableFolders.append((index, f.path, f.title, f.thumb, f.description, f.date, f.dateType, f.duration, f.rating))
+                        
                 
                 elif filetype == 'file':
                     path = item['file']
@@ -281,7 +313,7 @@ class KodiFolder(VideoSource):
             
         allItems = self._allItems        
         for folder in self._cacheableFolders:
-            index = folder[3]
+            index = folder[0]
             self._allItems[index] = None
         
         
@@ -315,9 +347,10 @@ class KodiFolder(VideoSource):
         folders = []
         
         for folder in self._cacheableFolders:
-            path, title, thumb, index = folder
+            index, path, title, thumb, description, date, dateType, duration, rating = folder 
             
-            kodiFolder = fromPath(path, title, thumb)
+            
+            kodiFolder = fromPath(path, title, thumb, description, date, dateType, duration, rating)
             folders.append(kodiFolder)
             
             if self._allItems[index] is not None:
@@ -359,17 +392,7 @@ class ContentsUpdater(threading.Thread):
 
   
 
-#############
-## Helpers ##
-#############  
-def _processTitle(item):
-    if item['title'] != '':
-        return item['title']
-    
-    if item['label'] != '':
-        return item['label']
-    
-    return ''
+
 
 
 
@@ -400,7 +423,6 @@ def _fromMemoryOrCache(path):
         return foldersLoaded[path]
     
     
-    pathDic = DataDictionary.load(PATH_DIC_FILE, KODI_FOLDER_CACHE_DIR)
     if pathDic.has(path):
         cacheFilePath = pathDic.get(path)
         cacheFile = File.fromFullpath(cacheFilePath)
@@ -412,27 +434,23 @@ def _fromMemoryOrCache(path):
 
 
 def fromItem(item):
-    path = item['file']
-    title = _processTitle(item)
-    thumb = item['thumbnail']
+    path, title, description, thumb, date, dateType, duration, rating = itemProcess.processAll(item)
     
     kodiFolder = _fromMemoryOrCache(path)
     if kodiFolder:
-        kodiFolder.updateInfo(title, thumb)
+        kodiFolder.updateInfo(title, thumb, description, date, dateType, duration, rating)
         return kodiFolder
-
     
-    
-    return KodiFolder(path, title, thumb)        
+    return KodiFolder(path, title, thumb, description, date, dateType, duration, rating)        
     
     
 
 
-def fromPath(path, title=None, thumb=None):
+def fromPath(path, title=None, thumb=None, description=None, date=None, dateType=None, duration=None, rating=None):
     kodiFolder = _fromMemoryOrCache(path)
     if kodiFolder:
         if title and not kodiFolder.title:      #not sure about this
-            kodiFolder.updateInfo(title, thumb)
+            kodiFolder.updateInfo(title, thumb, description, date, dateType, duration, rating)
         return kodiFolder
     
-    return KodiFolder(path, title, thumb)
+    return KodiFolder(path, title, thumb, description, date, dateType, duration, rating)
