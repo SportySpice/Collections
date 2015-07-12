@@ -7,80 +7,6 @@ from src.li.ItemList import ItemList
 
 
 
-import xbmcgui
-import xbmc
-from src.videosource.youtube import urlResolver
-from src.videosource.youtube.YoutubeVideo import watchedDic
-from src.tools import videoResolve
-
-
-
-
-    
-    
-
-
-
-
-class Window(xbmcgui.WindowXML):
-    def __init__(self, *args, **kwargs):
-        xbmcgui.WindowXMLDialog.__init__( self )
-        self.lis = kwargs['lis']
-    
-    def onInit(self):
-        self.listctrl = self.getControl(52)
-        self.listctrl.addItems(self.lis)
-        
-    def onClick(self, controlID):
-        if (controlID == 52):
-            print '1111111111111111111111111111111'
-            li = self.listctrl.getSelectedItem()
-            videoId = li.getProperty('videoId')
-            url = urlResolver.resolve(videoId)
-            print '22222222222222222222222222222222'
-            watchedDic.videoPlayed(videoId)
-            
-            
-            print 'playing video'
-            xbmc.executebuiltin('XBMC.PlayMedia(%s)' %url)
-            
-            print 'played video'
-
-
-
-
-
-
-def present2(collectionFile):
-    collection = Collection.fromFile(collectionFile)
-    collection.updateDatedSources()
-    
-    lis = []
-    for video in collection.videos:
-        li = xbmcgui.ListItem(video.title, iconImage=video.thumb, thumbnailImage=video.thumb)
-        li.setProperty('sourceTitle', video.source.title)
-        li.setProperty('viewCount', str(video.viewCount))
-        li.setProperty('videoId', str(video.id))
-        
-        lis.append(li)
-        
-    
-    window = Window('vloody.xml', 'C:\\Users\Vlood\\AppData\Roaming\\Kodi\\addons\\plugin.video.collections', lis=lis)
-    #list = window.getControl(51)
-    #list.additem(li)
-    
-    #window.addItem(li, position=1)
-    
-    
-    window.doModal()
-     
-
-
-
-
-
-
-
 
 
 def present(collectionFile):
@@ -132,3 +58,80 @@ def present(collectionFile):
       
       
     items.present(collection.feedSettings.viewStyle())
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+# import xbmcgui
+# import xbmc
+# from src.videosource.youtube import urlResolver
+# from src.videosource.youtube.YoutubeVideo import watchedDic
+# from src.tools import videoResolve
+# 
+# 
+# 
+# 
+#     
+#     
+# 
+# 
+# 
+# 
+# class Window(xbmcgui.WindowXML):
+#     def __init__(self, *args, **kwargs):
+#         xbmcgui.WindowXMLDialog.__init__( self )
+#         self.lis = kwargs['lis']
+#     
+#     def onInit(self):
+#         self.listctrl = self.getControl(52)
+#         self.listctrl.addItems(self.lis)
+#         
+#     def onClick(self, controlID):
+#         if (controlID == 52):
+#             print '1111111111111111111111111111111'
+#             li = self.listctrl.getSelectedItem()
+#             videoId = li.getProperty('videoId')
+#             url = urlResolver.resolve(videoId)
+#             print '22222222222222222222222222222222'
+#             watchedDic.videoPlayed(videoId)
+#             
+#             
+#             print 'playing video'
+#             xbmc.executebuiltin('XBMC.PlayMedia(%s)' %url)
+#             
+#             print 'played video'
+# 
+# 
+# 
+# 
+# 
+# 
+# def present2(collectionFile):
+#     collection = Collection.fromFile(collectionFile)
+#     collection.updateDatedSources()
+#     
+#     lis = []
+#     for video in collection.videos:
+#         li = xbmcgui.ListItem(video.title, iconImage=video.thumb, thumbnailImage=video.thumb)
+#         li.setProperty('sourceTitle', video.source.title)
+#         li.setProperty('viewCount', str(video.viewCount))
+#         li.setProperty('videoId', str(video.id))
+#         
+#         lis.append(li)
+#         
+#     
+#     window = Window('vloody.xml', 'C:\\Users\Vlood\\AppData\Roaming\\Kodi\\addons\\plugin.video.collections', lis=lis)
+#     #list = window.getControl(51)
+#     #list.additem(li)
+#     
+#     #window.addItem(li, position=1)
+#     
+#     
+#     window.doModal()

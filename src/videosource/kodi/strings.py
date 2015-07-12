@@ -1,6 +1,6 @@
 import simplejson as json
     
-    #unused =     "fanart", "studio", "sorttitle","season","episode", "genre", "tagline", "plotoutline", "album","artist","showtitle","description","duration"
+#unused =     "fanart", "studio", "sorttitle","season","episode", "genre", "tagline", "plotoutline", "album","artist","showtitle","description","duration"
         
 DESCRIPTION_PROPS = '"title","plot"'
 IMAGE_PROPS =  '"thumbnail"'   

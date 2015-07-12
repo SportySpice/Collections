@@ -11,4 +11,5 @@
 * sort via api in youtube channels
 * sort collection feed using the channel api sorts
 * increase limit for kodi folders, and if possible find a way to do it for youtube sources as well
+* note that currently kodi folders do 3 seperate list requests one after another, this is slow (even when just browsing) and I think also sometimes raises errors in the 2nd/3rd request. see how to solve this, maybe ask the user what is the folder contents, if maybe ask kodi devs how to get all 3 in one request.
 * clear cache once a week or so + some kind of protection that checks if script ended. if it didnt 2-3 times in a row, clear cache.

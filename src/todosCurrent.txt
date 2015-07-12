@@ -1,8 +1,14 @@
-* support plugins like genesis
+* support plugins like genesis / folders that are actually videos/ choose to not parse in feed at all
+* include in main feed option for each source
+* choose custom name when adding a folder
+
+* youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
+* youtube charts (either via search and order or find out if can get other way through api)
+* Video quality selection (currently always 720p)
+
 * protection against youtube fails (at least in collection update)
 * warnings about sources failing to update
 * Options to prevent consecutive videos from the same source (maxRepeat and push)
-* include in main feed option for each source
-* Video quality selection (currently always 720p)
-* youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
-* youtube charts (either via search and order or find out if can get other way through api)
+
+* add more default collections
+* take better screenshots?
