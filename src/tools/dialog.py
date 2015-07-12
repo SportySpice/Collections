@@ -4,7 +4,7 @@ dialog = xbmcgui.Dialog()
 
 
 def ok(heading, line1, line2=None, line3=None):
-    dialog.ok(heading, line1, line2, line3)
+    return dialog.ok(heading, line1, line2, line3)
     
     
 def select(heading, stringList, autoclose=0):
