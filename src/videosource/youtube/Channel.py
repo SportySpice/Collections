@@ -17,6 +17,7 @@ CACHE_FILE_EXTENSION = '.cha'
  
  
 channelsLoaded = {}
+usernameDic = DataDictionary.load(USERNAME_DIC_FILE, CHANNEL_CACHE_DIR)
 
 
 class Channel(VideoSource):
@@ -68,8 +69,7 @@ class Channel(VideoSource):
         
         
         
-        if self.username:
-            usernameDic = DataDictionary.load(USERNAME_DIC_FILE, CHANNEL_CACHE_DIR)
+        if self.username:            
             usernameDic.setIfNonExistent(self.username, channelId)
         
         
@@ -282,7 +282,6 @@ def _fromMemoryOrCache(channelId=None, username=None):
         raise ValueError('Channel loader must get either username or channelId. Got neither.')
     
     if username and not channelId:
-        usernameDic = DataDictionary.load(USERNAME_DIC_FILE, CHANNEL_CACHE_DIR)
         if not usernameDic.has(username):
             return None
         

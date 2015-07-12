@@ -9,7 +9,7 @@ PATH_DIC_FILE = '__pathes.dic'
 
 
 loaded = {}
-pathDic = None
+pathDic = DataDictionary.load(PATH_DIC_FILE, KODI_ESTIMATION_DIR)       #from data file
 
 
 class FolderRecord(object):
@@ -101,12 +101,10 @@ class VideoRecord(object):
 
 def fromPath(folderPath):
     global loaded
-    global pathDic
     
     if folderPath in loaded:                                                #from memory
         return loaded[folderPath]
-    
-    pathDic = DataDictionary.load(PATH_DIC_FILE, KODI_ESTIMATION_DIR)       #from data file
+        
     if pathDic.has(folderPath):
         recordFilePath = pathDic.get(folderPath)
         recordFile = File.fromFullpath(recordFilePath)        
