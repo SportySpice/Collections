@@ -97,9 +97,10 @@ class KodiFolder(VideoSource):
 #####################  
     def _list(self, estimateDates=False):
         requests = (
-            jsonRpcDir(self.path, MediaType.VIDEO),
-            jsonRpcDir(self.path, MediaType.MUSIC),
-            jsonRpcDir(self.path, MediaType.PICTURES),
+            #jsonRpcDir(self.path, MediaType.VIDEO),
+            #jsonRpcDir(self.path, MediaType.MUSIC),
+            #jsonRpcDir(self.path, MediaType.PICTURES),
+            jsonRpcDir(self.path, MediaType.FILES),
         )
         
         
