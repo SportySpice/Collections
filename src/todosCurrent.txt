@@ -1,5 +1,3 @@
-* first in folder parse: find out when video fails playing and then play the next until found one that is good
-
 * youtube watch later pl, liked/disliked videos, my playlists, my channel playlists, history, etc
 * youtube charts (either via search and order or find out if can get other way through api)
 * Video quality selection (currently always 720p)
