@@ -1,14 +1,20 @@
 [B][COLOR seashell]-------------------[/B][/COLOR]
+[COLOR red][B]Collection TV v2.3.1[/B][/COLOR]
+[COLOR seashell][B]-------------------[/B][/COLOR]
+* Improved folder parsing. Folder sources should now load 3x times faster.
+* Fixed issue with videos showing the source's thumbnail instead of their own in the feed.
+
+[B][COLOR seashell]-------------------[/B][/COLOR]
 [COLOR red][B]Collection TV v2.3.0[/B][/COLOR]
 [COLOR seashell][B]-------------------[/B][/COLOR]
-* Custom feed parse handling for Kodi Folders:
+* Custom feed parse handling for folder sources:
     First video in each sub-folder
     Add source but exclude from feed
     More to come...
 
 * Truly add any folder to a collection, even if it doesn't have videos
 * Choose which sources to include in feed
-* Custom titles for folders
+* Custom titles for folder sources
 * General better handling of custom source titles and thumbnails
 * Small GUI improvements
 * Many small code improvements
