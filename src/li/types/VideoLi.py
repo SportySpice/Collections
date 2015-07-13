@@ -10,14 +10,13 @@ class VideoLi(Li):
         if collection:
             cSource = collection.getCSource(vSource.id)
             sourceTitle, studioTitle, tvShowTitle = cSource.titles()
-            thumb = cSource.thumb()
         else:
             sourceTitle, studioTitle, tvShowTitle = vSource.titles()
-            thumb = video.thumb 
-            
-        title = videoVisual.title(video, sourceTitle)
-
         
+        title = videoVisual.title(video, sourceTitle)
+            
+            
+        thumb = video.thumb             
         icon = None
         
         
