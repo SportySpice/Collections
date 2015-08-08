@@ -13,4 +13,6 @@
 * sort collection feed using the channel api sorts
 * increase limit for kodi folders, and if possible find a way to do it for youtube sources as well
 * note that currently kodi folders do 3 seperate list requests one after another, this is slow (even when just browsing) and I think also sometimes raises errors in the 2nd/3rd request. see how to solve this, maybe ask the user what is the folder contents,  maybe ask kodi devs how to get all 3 in one request.
+* give other developers option to add their own custom counts/sortings by simply adding it to the listitem
+* ask if folder contains live streams. if it does, first of all don't estimate dates(or think of something even smarter), and also find an interesting way to present an item which is a live stream, and even give a view that shows live streams only.
 * clear cache once a week or so + some kind of protection that checks if script ended. if it didnt 2-3 times in a row, clear cache.

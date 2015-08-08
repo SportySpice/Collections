@@ -6,5 +6,7 @@
 * warnings about sources failing to update
 * Options to prevent consecutive videos from the same source (maxRepeat and push)
 
+* find out how to access list items directly
+
 * add more default collections
 * take better screenshots?

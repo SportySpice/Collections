@@ -37,3 +37,6 @@ def italic(text):
     
 def fromOther(ts):
     return TextSettings(ts.color, ts.bold, ts.italic, ts.show)
+
+def regular():
+    return TextSettings(None, False, False)

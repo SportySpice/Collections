@@ -13,17 +13,19 @@ from src import router
 
 USERNAME_DIC_FILE = '__usernames.dic'
 CACHE_FILE_EXTENSION = '.cha'
- 
+MY_CHANNEL_FILE = '_mine.cha'
  
  
 channelsLoaded = {}
+mineLoaded = None
 usernameDic = DataDictionary.load(USERNAME_DIC_FILE, CHANNEL_CACHE_DIR)
 
 
 class Channel(VideoSource):
-    def __init__(self, channelId=None, username=None):
+    def __init__(self, channelId=None, username=None, mine=False):
         self.username = username
         self.channelId = channelId 
+        self.mine = mine
             
         self._uploadPlaylist = None
         self.playlists = None
@@ -74,12 +76,27 @@ class Channel(VideoSource):
         
         
         if contentDetails:
-            playlistId = contentDetails['relatedPlaylists']['uploads']
-             
-            if (self._uploadPlaylist is None) or (self._uploadPlaylist and self._uploadPlaylist.playlistId != playlistId):
-                self._uploadPlaylist = Playlist.Playlist(playlistId, None, channelSource=self)
+            relatedPlaylists = contentDetails['relatedPlaylists']
+            
+            uploadsPID = relatedPlaylists['uploads']            
+            if (self._uploadPlaylist is None) or (self._uploadPlaylist and self._uploadPlaylist.playlistId != uploadsPID):
+                self._uploadPlaylist = Playlist.Playlist(uploadsPID, None, channelSource=self)
                 self.videos = self._uploadPlaylist.videos
                 #self._uploadPlaylist.fetchInfo()
+                
+            if self.mine:                         
+                likesPID        = relatedPlaylists['likes'] 
+                favoritesPID    = relatedPlaylists['favorites']
+                watchHistoryPID = relatedPlaylists['watchHistory']                
+                watchLaterPID   = relatedPlaylists['watchLater']
+                
+                self.likesPL       = Playlist.Playlist(likesPID,       None, channelSource=self)
+                self.favoritesPL   = Playlist.Playlist(favoritesPID,   None, channelSource=self)
+                self.watchHistoryPL= Playlist.Playlist(watchHistoryPID,None, channelSource=self)
+                self.watchLaterPL  = Playlist.Playlist(watchLaterPID,  None, channelSource=self)
+
+                
+                
                 
         if statistics:
             self.viewCount = int(statistics['viewCount'])
@@ -101,14 +118,17 @@ class Channel(VideoSource):
 
 
         
+        if self.mine:
+            global mineLoaded
+            mineLoaded = self
         
-        
-        global channelsLoaded
-        if self.channelId in channelsLoaded:
-            if channelsLoaded[self.channelId] != self:
-                raise ValueError('Channel is in memory but with a different instance. This should never happen.')
-        else:            
-            channelsLoaded[self.channelId] = self
+        else:        
+            global channelsLoaded
+            if self.channelId in channelsLoaded:
+                if channelsLoaded[self.channelId] != self:
+                    raise ValueError('Channel is in memory but with a different instance. This should never happen.')
+            else:            
+                channelsLoaded[self.channelId] = self
         
         
         self._gotInfo = True
@@ -188,14 +208,20 @@ class Channel(VideoSource):
 ## Private Methods##
 ####################
     def _channelInfoRequest(self):
-        request = service.service().channels().list(part = "contentDetails,snippet,statistics", forUsername=None if self.channelId else self.username, id=self.channelId)
+        requestInfo = dict(part = "contentDetails,snippet,statistics")
+        
+        if self.mine:           requestInfo['mine'] = True
+        elif self.channelId:    requestInfo['id'] = self.channelId
+        else:                   requestInfo['forUsername'] = self.username
+        
+        request = service.service().channels().list(**requestInfo)
         return request 
         
     
     def _processChannelInfoResposne(self, response):
         items = response.get("items", [])
         if len(items) != 1:
-            raise ValueError('Channel list request by username or id should return exactly 1 result. Returned: %s \nusername: %s. channelId:%s' % (len(items), self.username, self.channelId))
+            raise ValueError('Channel list request by username, id, or mine should return exactly 1 result. Returned: %s \nusername: %s. channelId:%s' % (len(items), self.username, self.channelId))
         
         item = items[0]
         
@@ -258,7 +284,19 @@ class Channel(VideoSource):
 
 
 
-def fromCacheFile(cacheFile):
+def fromCacheFile(cacheFile, mine=False):
+    if mine:
+        global mineLoaded
+        if mineLoaded:
+            raise ValueError("Tried loading my channel from cache when it's already in memory")
+        
+        channel = cacheFile.loadObject()
+        channel.playlists.loadFromCachedMode()
+        mineLoaded = channel
+        
+        return channel
+            
+    
     global channelsLoaded 
     
     channel = cacheFile.loadObject()
@@ -275,11 +313,22 @@ def fromCacheFile(cacheFile):
 
 
 
-def _fromMemoryOrCache(channelId=None, username=None):
-    global channelsLoaded
+def _fromMemoryOrCache(channelId=None, username=None, mine=None):
+    if username is None and channelId is None and mine is None:
+        raise ValueError('Channel loader must get either username, channelId or mine. Got neither.')
     
-    if username is None and channelId is None:
-        raise ValueError('Channel loader must get either username or channelId. Got neither.')
+    if mine:
+        if mineLoaded:
+            return mineLoaded
+        
+        cacheFile = File.fromNameAndDir(MY_CHANNEL_FILE, CHANNEL_CACHE_DIR)
+        if cacheFile.exists():
+            channel = fromCacheFile(cacheFile, mine=True)
+            return channel
+        
+        return None
+    
+    
     
     if username and not channelId:
         if not usernameDic.has(username):
@@ -310,17 +359,19 @@ def fromUserOrId(channelId=None, username=None):
     channel = _fromMemoryOrCache(channelId, username)
     if not channel:
         channel = Channel(channelId, username)
-        
-    if channel.needsInfoUpdate():
-        needsInfoUpdate = True
-    else:
-        needsInfoUpdate = False
-    
+            
+    needsInfoUpdate = True if channel.needsInfoUpdate() else False                
     return channel, needsInfoUpdate
         
         
         
+def mine():
+    channel = _fromMemoryOrCache(mine=True)
+    if not channel:
+        channel = Channel(mine=True)
         
+    needsInfoUpdate = True if channel.needsInfoUpdate() else False
+    return channel, needsInfoUpdate
         
         
 
@@ -365,3 +416,4 @@ def fromSubscriptionsRequest(item):
         videoCount = None 
 
     return _fromSnippet(channelId, snippet, videoCount=videoCount, subNewItemCount=newItemCount)        #incomplete info, need to call fetchInfo if channel not found in cache
+
